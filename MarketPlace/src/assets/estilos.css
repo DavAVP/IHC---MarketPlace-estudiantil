@@ -1,0 +1,180 @@
+/* Asegurar que todo el árbol HTML ocupe 100% del alto */
+/* Bloquea scroll y fuerza alto completo */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* ← evita que se pueda mover la página */
+}
+
+
+/* Contenedor que centra cualquier contenido */
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* ahora 100% del #root */
+  background-color: #f0f4f8;
+}
+
+
+/* Card de login */
+.login-card {
+  background-color: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  width: 350px;
+  text-align: center;
+}
+
+/* Inputs y botones */
+.login-card input, .login-card button {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.login-card button {
+  background-color: #0077cc;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+.login-card button:hover {
+  background-color: #005fa3;
+}
+
+.login-card p.error {
+  color: #e74c3c;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Home */
+/* Home Page */
+.home-page {
+  display: flex;
+  flex-direction: column; /* Navbar + contenido + Footer */
+  min-height: 100vh;
+  background-color: #f0f4f8;
+}
+
+/* Contenido principal */
+.home-content {
+  flex: 1; /* crece y empuja footer abajo */
+  padding: 30px;
+  text-align: center;
+  overflow-y: auto;
+}
+
+/* Banner */
+.home-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-banner img {
+  border-radius: 50%;
+  width: 120px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Acciones por rol */
+.home-actions {
+  margin: 20px 0;
+}
+
+.home-actions button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #0077cc;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.home-actions button:hover {
+  background-color: #005fa3;
+}
+
+/* Grid de productos */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.producto-card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.producto-card:hover {
+  transform: translateY(-5px);
+}
+
+.producto-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #0077cc;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.navbar-links a {
+  margin: 0 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+.navbar-user img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #0077cc;
+  color: white;
+  border-radius: 8px 8px 0 0;
+}
