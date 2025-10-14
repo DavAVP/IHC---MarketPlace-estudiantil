@@ -11,3 +11,7 @@ Para la realizacion del sistema utilizamos el framework react para el desarrollo
 utilizamos un diagrama de entidad relacion para tener una estructura de las entidades que se crearan a lo largo del desarrollo
 
 hoy 10/10/2025 se creo el login y el home basico con un Mock para simular una base de datos
+
+hoy 11/10/2025 se cambio el estilo de la pagina, se añadió una funcionalidad de carrousel en el home y se
+añadio un boton de categorias en el nav del home, hay un añadido de barra de busqueda aún no funcional debido a que se usará
+supabase para manejar los productos.
