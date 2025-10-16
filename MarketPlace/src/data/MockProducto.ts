@@ -30,5 +30,15 @@ export const Productos: IProducto[] = [
     descripcion_producto: 'Collar artesanal colorido',
     ubicacion_producto: 'Campus A',
     fecha_Publicacion: '2025-10-08'
+  },
+    {
+    id_producto: 4,
+    Usuario_id: 1,
+    categoria_id: 1,
+    nombre_producto: 'Collar',
+    precio: 5,
+    descripcion_producto: 'Collar artesanal',
+    ubicacion_producto: 'Campus B',
+    fecha_Publicacion: '2025-09-10'
   }
 ]

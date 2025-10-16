@@ -1,27 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface IbarraBusqueda {
   onSearch: (query: string) => void;
 }
 
 const BarraBusqueda: React.FC<IbarraBusqueda> = ({ onSearch }) => {
-  const [query, setQuery] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearch(query);
-  };
-
   return (
-    <form className="search-bar" onSubmit={handleSubmit}>
+    <div className="search-bar">
       <input
         type="text"
         placeholder="Buscar productos, categorías..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => onSearch(e.target.value)}
       />
-      <button type="submit">🔍</button>
-    </form>
+      <button type="button">🔍</button>
+    </div>
   );
 };
 
