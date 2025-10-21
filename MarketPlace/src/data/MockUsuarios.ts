@@ -1,4 +1,4 @@
-import type {IUsuario} from '../entidades/Usuario'
+import type {IUsuario} from '../entidades/IUsuario'
 
 
 export const Usuario: IUsuario[] = [

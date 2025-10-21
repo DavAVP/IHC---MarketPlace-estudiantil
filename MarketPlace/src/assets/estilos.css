@@ -483,3 +483,133 @@ html, body, #root {
     width: 180px;
   }
 }
+
+
+/* === ADMIN PANEL === */
+
+/* Contenedor general de la página admin (aprovecha existing .home-page/.home-main) */
+.admin-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f2f8fc;
+}
+
+/* Card central del panel (usa mismo estilo que login-card pero más ancho) */
+.admin-card {
+  background-color: #ffffff;
+  padding: 28px 28px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto 30px;
+}
+
+/* Títulos */
+.admin-card h2 {
+  color: #0077cc;
+  margin-bottom: 18px;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+/* Formulario (inputs y selects y textarea usan look consistente con login-card) */
+.admin-card form input,
+.admin-card form select,
+.admin-card form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  border: 1px solid #cfd9e0;
+  font-size: 15px;
+  outline: none;
+  background: white;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.admin-card form input:focus,
+.admin-card form select:focus,
+.admin-card form textarea:focus {
+  border-color: #0077cc;
+  box-shadow: 0 0 6px rgba(0,119,204,0.16);
+}
+
+/* Textarea específico */
+.admin-card form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* Botón primario (coherente con login-card) */
+.admin-card .btn-primary {
+  background-color: #0077cc;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.admin-card .btn-primary:hover {
+  background-color: #005fa3;
+  transform: translateY(-1px);
+}
+
+/* Contenedor de lista de ferias */
+.ferias-list {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+/* Card por cada feria */
+.feria-item {
+  background: #fff;
+  padding: 12px 14px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,119,204,0.05);
+}
+
+.feria-item h4 {
+  margin: 0 0 8px;
+  color: #0077cc;
+}
+
+.feria-item p {
+  margin: 3px 0;
+  color: #444;
+  font-size: 14px;
+}
+
+/* Mensajes de error coherentes */
+.admin-card p.error {
+  color: #e74c3c;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* Ajustes responsive para admin */
+@media (max-width: 992px) {
+  .admin-card {
+    padding: 20px;
+    max-width: 720px;
+  }
+
+  .ferias-list {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-card {
+    padding: 18px;
+    max-width: 100%;
+    border-radius: 12px;
+  }
+}

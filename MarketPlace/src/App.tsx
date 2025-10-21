@@ -3,6 +3,7 @@ import Login from './paginas/login/Login';
 import Registro from './paginas/login/crearCuenta';
 import Home from './paginas/home/Home';
 import AdminFeria from './paginas/administrador/AdminFeria';
+import { Perfil } from './paginas/home/Perfil';
 import { UsuarioProvider, useUsuario } from './context/UsuarioContext';
 import type { JSX } from 'react';
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
         <Route path="/admin/feria" element={<PrivateRoute admin><AdminFeria /></PrivateRoute>} />
+        <Route path="/Perfil" element={<Perfil/>} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </UsuarioProvider>

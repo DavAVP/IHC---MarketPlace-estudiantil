@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Usuario } from '../../data/MockUsuarios';
-import type { IUsuario } from '../../entidades/Usuario';
+import type { IUsuario } from '../../entidades/IUsuario';
 
 const Registro: React.FC = () => {
   const [nombre, setNombre] = useState('');

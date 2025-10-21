@@ -1,10 +1,9 @@
 
 export interface IUsuario{
-    id_usuario: number
+    id: string
     nombre: string
     correo: string
     esAdmin?: boolean; 
     password: string
-    fotoPerfil?: string
 }
 
