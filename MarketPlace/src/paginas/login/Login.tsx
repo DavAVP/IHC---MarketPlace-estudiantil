@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 import { useUsuario } from '../../context/UsuarioContext';
-import { Usuario } from '../../data/MockUsuarios';
+import { supabase } from '../../../supabase.config';
 
 const Login: React.FC = () => {
   const { setUsuario } = useUsuario();
@@ -10,18 +10,39 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
 
-    const user = Usuario.find(u => u.correo === correo && u.password === password);
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email: correo,
+        password: password
+      });
 
-    if (!user) {
-      setError('Correo o contraseña incorrectos');
-      return;
+      if (authError || !data.user) {
+        setError('Correo o contraseña incorrectos');
+        return;
+      }
+
+      // Opcional: traer datos adicionales de tu tabla 'usuarios'
+      const { data: usuarioDB, error: dbError } = await supabase
+        .from('Usuarios')
+        .select('*')
+        .eq('auth_id', data.user.id) 
+        .maybeSingle();
+
+      if (!usuarioDB) {
+        setError('Usuario no encontrado en la base de datos');
+        return;
+      }
+      setUsuario(usuarioDB);
+      navigate('/home');
+
+    } catch (err: any) {
+      console.error(err);
+      setError('Ocurrió un error en el login');
     }
-
-    setUsuario(user);
-    navigate('/home');
   };
 
   return (

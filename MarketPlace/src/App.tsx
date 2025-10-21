@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './paginas/login/Login';
-import Registro from './paginas/login/crearCuenta';
+import Registro from './paginas/login/Registro';
 import Home from './paginas/home/Home';
 import AdminFeria from './paginas/administrador/AdminFeria';
 import { Perfil } from './paginas/home/Perfil';

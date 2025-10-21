@@ -26,10 +26,10 @@ export const UsuarioProvider: React.FC<{ children: ReactNode }> = ({ children })
       }
 
       const { data, error } = await supabase
-        .from('usuarios')
+        .from('Usuarios')
         .select('*')
-        .eq('id', userAuth.id)
-        .single();
+        .eq('auth_id', userAuth.id)
+        .maybeSingle();
 
       if (error) {
         console.error('Error al obtener usuario:', error);

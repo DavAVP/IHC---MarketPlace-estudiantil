@@ -51,7 +51,7 @@ export const EditarPerfil: React.FC<IUsuarioProp> = ({ usuario }) => {
       };
 
       const { error: dbError } = await supabase
-        .from('usuarios')
+        .from('Usuarios')
         .update(updates)
         .eq('id', usuario.id);
 
