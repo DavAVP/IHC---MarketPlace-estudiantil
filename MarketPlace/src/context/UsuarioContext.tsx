@@ -26,7 +26,7 @@ export const UsuarioProvider: React.FC<{ children: ReactNode }> = ({ children })
       }
 
       const { data, error } = await supabase
-        .from<IUsuario>('usuarios')
+        .from('usuarios')
         .select('*')
         .eq('id', userAuth.id)
         .single();

@@ -6,7 +6,7 @@ async function obtenerUsuarioCompleto(): Promise<IUsuario | null> {
   if (!userAuth.user) return null;
 
   const { data, error } = await supabase
-    .from<IUsuario>('usuarios')
+    .from('usuarios')
     .select('*')
     .eq('id', userAuth.user.id)
     .single();
@@ -18,3 +18,5 @@ async function obtenerUsuarioCompleto(): Promise<IUsuario | null> {
 
   return data;
 }
+
+export { obtenerUsuarioCompleto };
