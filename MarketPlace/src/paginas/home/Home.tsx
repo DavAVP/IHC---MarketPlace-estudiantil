@@ -4,26 +4,17 @@ import Footer from '../../componentes/footer'
 import Sidebar from '../../componentes/SideBar'
 import Carrusel from '../../componentes/carrusel'
 import { Productos } from '../../data/MockProducto'
-import { useUsuario } from '../../context/UsuarioContext'
 import type { IFeria } from '../../entidades/Feria'
 import type { IUsuario } from '../../entidades/IUsuario'
 import { useLocation } from 'react-router-dom'
 
-
-const imagenes = [
-  '/img/imagen1.jpg',
-  '/img/imagen2.jpg',
-  '/img/imagen3.jpg'
-/*   '/img/imagen4.jpg' */
-/*   '/img/imagen5.jpg' */
-];
-
 const Home: React.FC = () => {
-  const location = useLocation();
-  const usuario = (location.state as { usuario: IUsuario })?.usuario;
-  const [productos, setProductos] = useState(Productos);
+  const location = useLocation()
+  const usuario = (location.state as { usuario?: IUsuario })?.usuario ?? null
 
-  // Ferias de ejemplo
+  const [allProductos] = useState(Productos)
+  const [productos, setProductos] = useState(allProductos)
+
   const [ferias] = useState<IFeria[]>([
     {
       id: 1,
@@ -45,7 +36,7 @@ const Home: React.FC = () => {
 
   const handleSearch = (query: string) => {
     setProductos(
-      Productos.filter(
+      allProductos.filter(
         (p) =>
           p.nombre_producto.toLowerCase().includes(query.toLowerCase()) ||
           p.descripcion_producto.toLowerCase().includes(query.toLowerCase())
@@ -55,13 +46,12 @@ const Home: React.FC = () => {
 
   const imagenes = ['/img/imagen1.jpg', '/img/imagen2.jpg', '/img/imagen3.jpg']
 
-  // Mezclamos imágenes y ferias como slides
   const slides = useMemo(() => {
     const imageSlides: Array<string | React.ReactNode> = imagenes.slice()
 
     const feriaSlides: Array<React.ReactNode> = ferias.map((f) => (
       <div
-        key={feria-${f.id}}
+        key={`feria-${f.id}`}
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -96,7 +86,7 @@ const Home: React.FC = () => {
                 justifyContent: 'center',
                 color: '#0077cc',
                 fontWeight: 700,
-                fontSize: 24,
+                fontSize: 24
               }}
             >
               {f.nombre.slice(0, 2).toUpperCase()}
@@ -104,8 +94,12 @@ const Home: React.FC = () => {
           </div>
           <div style={{ flex: 1 }}>
             <h3 style={{ margin: 0, color: '#0b63a8', fontSize: 22 }}>{f.nombre}</h3>
-            <p style={{ margin: '6px 0', color: '#555' }}><b>Tipo:</b> {f.tipo}</p>
-            <p style={{ margin: '6px 0', color: '#555' }}>📅 {f.fechaInicio} → {f.fechaFin}</p>
+            <p style={{ margin: '6px 0', color: '#555' }}>
+              <b>Tipo:</b> {f.tipo}
+            </p>
+            <p style={{ margin: '6px 0', color: '#555' }}>
+              📅 {f.fechaInicio} → {f.fechaFin}
+            </p>
             <p style={{ margin: '8px 0 0', color: '#333' }}>{f.reglas}</p>
           </div>
         </div>

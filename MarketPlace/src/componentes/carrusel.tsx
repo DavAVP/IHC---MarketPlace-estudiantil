@@ -32,18 +32,16 @@ const Carrusel: React.FC<ICarrusel> = ({ slides, interval = 5000, className }) =
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <div className={carrusel ${className ?? ""}}>
-      {/* Track con slides (imagen o JSX) */}
+    <div className={`carrusel ${className ?? ""}`}>
       <div
         className="carrusel-track"
-        style={{ transform: translateX(-${current * 100}%) }}
+        style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {slides.map((slide, index) => (
           <div className="carrusel-slide" key={index}>
             {typeof slide === "string" ? (
-              <img src={slide} alt={slide-${index}} />
+              <img src={slide} alt={`slide-${index}`} />
             ) : (
-              // Si es JSX, lo renderizamos dentro del slide
               <div className="carrusel-slide-content" style={{ height: "100%", width: "100%" }}>
                 {slide}
               </div>
@@ -52,7 +50,6 @@ const Carrusel: React.FC<ICarrusel> = ({ slides, interval = 5000, className }) =
         ))}
       </div>
 
-      {/* Botones de navegación */}
       <button className="carrusel-btn prev" onClick={prevSlide} aria-label="Anterior">
         ❮
       </button>
@@ -60,19 +57,18 @@ const Carrusel: React.FC<ICarrusel> = ({ slides, interval = 5000, className }) =
         ❯
       </button>
 
-      {/* Dots de control */}
       <div className="carrusel-dots">
         {slides.map((_, index) => (
           <button
             key={index}
-            className={dot ${index === current ? "active" : ""}}
+            className={`dot ${index === current ? "active" : ""}`}
             onClick={() => goTo(index)}
-            aria-label={Ir a slide ${index + 1}}
+            aria-label={`Ir a slide ${index + 1}`}
           ></button>
         ))}
       </div>
     </div>
-  );
+  )
 };
 
 export default Carrusel;

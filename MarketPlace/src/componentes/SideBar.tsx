@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import { FaHome, FaUser, FaCog, FaBoxOpen, FaShoppingCart, FaSignOutAlt } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
@@ -23,7 +22,7 @@ const Sidebar: React.FC = () => {
   }
 
   return (
-    <aside className={sidebar ${expanded ? 'sidebar-expanded' : 'sidebar-collapsed'}}>
+    <aside className={`sidebar ${expanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
       <button className="sidebar-toggle" onClick={() => setExpanded(!expanded)}>
         {expanded ? '◀' : '▶'}
       </button>
@@ -36,7 +35,7 @@ const Sidebar: React.FC = () => {
           </a>
         ))}
 
-        {/* 🔹 Botón Cerrar Sesión: mismo estilo y hover que los demás */}
+        {/* 🔹 Botón Cerrar Sesión */}
         <button
           onClick={handleLogout}
           className="sidebar-item logout-btn"
@@ -49,9 +48,9 @@ const Sidebar: React.FC = () => {
             border: 'none',
             cursor: 'pointer',
             padding: '10px 15px',
-            fontSize: '1rem', // mismo tamaño de letra
+            fontSize: '1rem',
             color: 'inherit',
-            transition: 'background 0.2s ease', // para efecto hover
+            transition: 'background 0.2s ease',
           }}
           onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.05)')}
           onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
