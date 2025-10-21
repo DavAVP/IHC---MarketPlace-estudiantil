@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { FaHome, FaUser, FaCog, FaBoxOpen, FaShoppingCart, FaSignOutAlt } from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom'
-import { useUsuario } from '../context/UsuarioContext'
+import React, { useState } from 'react';
+import { FaHome, FaUser, FaCog, FaBoxOpen, FaShoppingCart, FaSignOutAlt, FaInfoCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { useUsuario } from '../context/UsuarioContext';
 
 const Sidebar: React.FC = () => {
-  const [expanded, setExpanded] = useState(false) // sidebar inicia cerrado
-  const { setUsuario } = useUsuario()
-  const navigate = useNavigate()
+  const [expanded, setExpanded] = useState(false); // sidebar inicia cerrado
+  const { setUsuario } = useUsuario();
+  const navigate = useNavigate();
 
   const menuItems = [
     { icon: <FaHome />, label: 'Inicio', link: '/home' },
@@ -14,12 +14,13 @@ const Sidebar: React.FC = () => {
     { icon: <FaShoppingCart />, label: 'Mis Compras', link: '/compras' },
     { icon: <FaUser />, label: 'Perfil', link: '/perfil' },
     { icon: <FaCog />, label: 'Configuración', link: '/config' },
-  ]
+    { icon: <FaInfoCircle />, label: 'Acerca de', link: '/acerca-de' }, // 🔹 nuevo botón
+  ];
 
   const handleLogout = () => {
-    setUsuario(null)
-    navigate('/login')
-  }
+    setUsuario(null);
+    navigate('/login');
+  };
 
   return (
     <aside className={`sidebar ${expanded ? 'sidebar-expanded' : 'sidebar-collapsed'}`}>
@@ -60,7 +61,7 @@ const Sidebar: React.FC = () => {
         </button>
       </nav>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
