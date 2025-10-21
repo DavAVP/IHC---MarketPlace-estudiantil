@@ -7,7 +7,6 @@ export const Usuario: IUsuario[] = [
         nombre: 'David',
         password: '123',
         correo: 'david@gmail.com',
-        rol: 'estudiante'
     },
 
     {
@@ -15,7 +14,6 @@ export const Usuario: IUsuario[] = [
         nombre: 'Taylor',
         password: '1234',
         correo: 'taylor@gmail.com',
-        rol: 'comprador'
     },
 
     {
@@ -23,6 +21,6 @@ export const Usuario: IUsuario[] = [
         nombre: 'Administrador',
         correo: 'admin@gmail.com',
         password: 'admin',
-        rol: 'admin'
+        esAdmin: true,
     }
 ]

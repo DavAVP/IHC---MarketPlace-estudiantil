@@ -1,72 +1,53 @@
-import { useLocation } from 'react-router-dom';
-import type { IUsuario } from '../../entidades/Usuario';
-import { Productos } from '../../data/MockProducto';
+import React, { useState } from 'react';
 import Navbar from '../../componentes/NavBar';
 import Footer from '../../componentes/footer';
-import Carrusel from '../../componentes/carrusel';
 import Sidebar from '../../componentes/SideBar';
-import React, { useState } from 'react';
+import Carrusel from '../../componentes/carrusel';
+import { Productos } from '../../data/MockProducto';
+import { useUsuario } from '../../context/UsuarioContext';
 
-const imagenes = [
-  '/img/imagen1.jpg',
-  '/img/imagen2.jpg',
-  '/img/imagen3.jpg'
-];
+const imagenes = ['/img/imagen1.jpg','/img/imagen2.jpg','/img/imagen3.jpg'];
 
 const Home: React.FC = () => {
-  const location = useLocation();
-  const usuario = (location.state as { usuario: IUsuario })?.usuario;
+  const { usuario } = useUsuario();
   const [productos, setProductos] = useState(Productos);
 
-  // Filtrado de productos
   const handleSearch = (query: string) => {
-    const filtrados = Productos.filter(prod =>
-      prod.nombre_producto.toLowerCase().includes(query.toLowerCase()) ||
-      prod.descripcion_producto.toLowerCase().includes(query.toLowerCase())
-    );
-    setProductos(filtrados);
+    setProductos(Productos.filter(p => 
+      p.nombre_producto.toLowerCase().includes(query.toLowerCase()) || 
+      p.descripcion_producto.toLowerCase().includes(query.toLowerCase())
+    ));
   };
 
   return (
     <div className="home-page" style={{ display: 'flex' }}>
-      {/* Sidebar */}
       <Sidebar />
-
-      {/* Contenedor principal */}
       <div className="home-main" style={{ flex: 1 }}>
-        {/* Navbar con barra de búsqueda integrada */}
-        <Navbar
-          usuario={usuario ?? { nombre: 'Invitado', rol: 'visitante' }}
-          onSearch={handleSearch}
-        />
+        <Navbar onSearch={handleSearch} />
 
-        {/* Contenido */}
         <div className="home-content">
-          {/* Banner */}
           <div className="home-banner">
-            <h2>Bienvenido a la Feria, {usuario?.nombre}!</h2>
-            {usuario?.fotoPerfil && <img src={usuario.fotoPerfil} alt="Avatar" />}
+            <h2>Bienvenido a la Feria, {usuario?.nombre || 'Invitado'}!</h2>
+            {usuario?.fotoPerfil && <img src={usuario.fotoPerfil} alt="Avatar" className="user-avatar" />}
           </div>
 
-          {/* Carrusel */}
-          <div className="home-carrusel">
-            <Carrusel images={imagenes} interval={4000} />
-          </div>
+          <Carrusel images={imagenes} interval={4000} />
 
-          {/* Acciones */}
           <div className="home-actions">
-            {usuario?.rol === 'estudiante' && <button>Subir Producto</button>}
-            {usuario?.rol === 'comprador' && <button>Explorar Productos</button>}
+            {!usuario?.esAdmin && <button className="btn-primary">Subir Producto</button>}
+            <button className="btn-secondary">Explorar Productos</button>
           </div>
 
-          {/* Grid de productos */}
           <div className="productos-grid">
             {productos.map(prod => (
               <div key={prod.id_producto} className="producto-card">
-                <h3>{prod.nombre_producto}</h3>
-                <p>{prod.descripcion_producto}</p>
-                <p><b>Precio:</b> ${prod.precio}</p>
-                <p><b>Ubicación:</b> {prod.ubicacion_producto}</p>
+                <img src={prod.foto_producto || '/img/default-product.jpg'} alt={prod.nombre_producto} className="producto-img" />
+                <div className="producto-info">
+                  <h3>{prod.nombre_producto}</h3>
+                  <p>{prod.descripcion_producto}</p>
+                  <p><b>Precio:</b> ${prod.precio}</p>
+                  <p><b>Ubicación:</b> {prod.ubicacion_producto}</p>
+                </div>
               </div>
             ))}
           </div>
