@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Navbar from '../../componentes/NavBar'
 import Footer from '../../componentes/footer'
 import Sidebar from '../../componentes/SideBar'
@@ -6,16 +7,17 @@ import Carrusel from '../../componentes/carrusel'
 import { Productos } from '../../data/MockProducto'
 import type { IFeria } from '../../entidades/Feria'
 import type { IUsuario } from '../../entidades/IUsuario'
-import { useLocation } from 'react-router-dom'
 
 const Home: React.FC = () => {
   const location = useLocation()
   const usuario = (location.state as { usuario?: IUsuario })?.usuario ?? null
 
-  const [allProductos] = useState(Productos)
+  // Productos
+  const allProductos = Productos
   const [productos, setProductos] = useState(allProductos)
 
-  const [ferias] = useState<IFeria[]>([
+  // Ferias
+  const ferias: IFeria[] = [
     {
       id: 1,
       nombre: 'Feria de Emprendimiento 2025',
@@ -32,8 +34,9 @@ const Home: React.FC = () => {
       fechaFin: '2025-11-10',
       reglas: 'Se aceptan proyectos individuales o grupales de máximo 4 integrantes.'
     }
-  ])
+  ]
 
+  // Filtrado de productos
   const handleSearch = (query: string) => {
     setProductos(
       allProductos.filter(
@@ -44,14 +47,18 @@ const Home: React.FC = () => {
     )
   }
 
+  // Carrusel: imágenes + ferias
   const imagenes = ['/img/imagen1.jpg', '/img/imagen2.jpg', '/img/imagen3.jpg']
 
   const slides = useMemo(() => {
-    const imageSlides: Array<string | React.ReactNode> = imagenes.slice()
+    const imageSlides = imagenes.map((src, idx) => (
+      <img key={`img-${idx}`} src={src} alt={`Slide ${idx + 1}`} />
+    ))
 
-    const feriaSlides: Array<React.ReactNode> = ferias.map((f) => (
+    const feriaSlides = ferias.map((f) => (
       <div
         key={`feria-${f.id}`}
+        className="feria-slide"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -62,6 +69,7 @@ const Home: React.FC = () => {
         }}
       >
         <div
+          className="feria-card"
           style={{
             width: '100%',
             maxWidth: 800,
@@ -116,6 +124,7 @@ const Home: React.FC = () => {
         <Navbar onSearch={handleSearch} />
 
         <div className="home-content" style={{ padding: 20 }}>
+          {/* Banner de bienvenida */}
           <div className="home-banner" style={{ marginBottom: 18 }}>
             <h2>Bienvenido a la Feria, {usuario?.nombre || 'Invitado'}!</h2>
             <p style={{ color: '#555' }}>
@@ -123,22 +132,28 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          {/* 🔹 Carrusel mixto: imágenes + ferias */}
+          {/* Carrusel */}
           <div style={{ marginBottom: 30 }}>
             <Carrusel slides={slides} interval={4500} />
           </div>
 
-          {/* 🔹 Acciones */}
+          {/* Acciones */}
           <div className="home-actions" style={{ margin: '30px 0' }}>
             {!usuario?.esAdmin && (
-              <button className="btn-primary" style={{ marginRight: 10 }}>
+              <button
+                className="btn-primary"
+                style={{ marginRight: 10 }}
+                onClick={() => console.log('Subir Producto')}
+              >
                 Subir Producto
               </button>
             )}
-            <button className="btn-secondary">Explorar Productos</button>
+            <button className="btn-secondary" onClick={() => console.log('Explorar Productos')}>
+              Explorar Productos
+            </button>
           </div>
 
-          {/* 🔹 Lista de productos */}
+          {/* Grid de productos */}
           <div className="productos-grid">
             {productos.map((prod) => (
               <div key={prod.id_producto} className="producto-card">
