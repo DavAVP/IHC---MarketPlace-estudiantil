@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Navbar from '../../componentes/NavBar'
@@ -10,6 +11,7 @@ import type { IUsuario } from '../../entidades/IUsuario'
 
 const Home: React.FC = () => {
   const location = useLocation()
+  const navigate = useNavigate();
   const usuario = (location.state as { usuario?: IUsuario })?.usuario ?? null
 
   // Productos
@@ -140,14 +142,11 @@ const Home: React.FC = () => {
           {/* Acciones */}
           <div className="home-actions" style={{ margin: '30px 0' }}>
             {!usuario?.esAdmin && (
-              <button
-                className="btn-primary"
+              <button className="btn-primary"
                 style={{ marginRight: 10 }}
-                onClick={() => console.log('Subir Producto')}
-              >
-                Subir Producto
-              </button>
+                onClick={() => navigate('/subir-productos')}> Subir Producto </button>
             )}
+
             <button className="btn-secondary" onClick={() => console.log('Explorar Productos')}>
               Explorar Productos
             </button>
