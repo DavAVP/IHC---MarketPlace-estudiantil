@@ -1,7 +1,7 @@
-import { useState } from 'react'; 
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUsuario } from '../../context/UsuarioContext';
-import { supabase } from '../../../supabase.config';
+import { authService } from '../../services/auth.services';
 
 const Login: React.FC = () => {
   const { setUsuario } = useUsuario();
@@ -10,38 +10,39 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLoginEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
     try {
-      const { data, error: authError } = await supabase.auth.signInWithPassword({
-        email: correo,
-        password: password
-      });
-
-      if (authError || !data.user) {
+      const usuario = await authService.loginWithEmail(correo, password);
+      if (!usuario) {
         setError('Correo o contraseña incorrectos');
         return;
       }
-
-      // Opcional: traer datos adicionales de tu tabla 'usuarios'
-      const { data: usuarioDB, error: dbError } = await supabase
-        .from('Usuarios')
-        .select('*')
-        .eq('auth_id', data.user.id) 
-        .maybeSingle();
-
-      if (!usuarioDB) {
-        setError('Usuario no encontrado en la base de datos');
-        return;
-      }
-      setUsuario(usuarioDB);
+      setUsuario(usuario);
       navigate('/home');
-
     } catch (err: any) {
       console.error(err);
-      setError('Ocurrió un error en el login');
+      setError(err.message || 'Error en el login');
+    }
+  };
+
+  const handleLoginGoogle = async () => {
+    try {
+      await authService.loginWithGoogle();
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message);
+    }
+  };
+
+  const handleLoginGithub = async () => {
+    try {
+      await authService.loginWithGithub();
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message);
     }
   };
 
@@ -49,22 +50,23 @@ const Login: React.FC = () => {
     <div className="page-container">
       <div className="login-card">
         <h2>Iniciar Sesión</h2>
-        <form onSubmit={handleLogin}>
+        {error && <p className="error">{error}</p>}
+
+        <form onSubmit={handleLoginEmail}>
           <input
             type="email"
             placeholder="Correo electrónico"
             value={correo}
-            onChange={e => setCorreo(e.target.value)}
+            onChange={(e) => setCorreo(e.target.value)}
             required
           />
           <input
             type="password"
             placeholder="Contraseña"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {error && <p className="error">{error}</p>}
           <button type="submit">Ingresar</button>
         </form>
 
@@ -77,6 +79,36 @@ const Login: React.FC = () => {
             Regístrate aquí
           </span>
         </p>
+
+        <p style={{ marginTop: '12px' }}>O inicia sesión con tus redes:</p>
+        <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
+          <button
+            onClick={handleLoginGoogle}
+            style={{
+              backgroundColor: '#db4437',
+              color: 'white',
+              border: 'none',
+              padding: '8px 12px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Google
+          </button>
+          <button
+            onClick={handleLoginGithub}
+            style={{
+              backgroundColor: '#333',
+              color: 'white',
+              border: 'none',
+              padding: '8px 12px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            GitHub
+          </button>
+        </div>
       </div>
     </div>
   );

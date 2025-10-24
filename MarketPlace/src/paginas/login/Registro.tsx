@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUsuario } from '../../context/UsuarioContext';
-import { supabase } from '../../../supabase.config';
+import { authService } from '../../services/auth.services';
 
 const Registro: React.FC = () => {
   const [nombre, setNombre] = useState('');
@@ -20,46 +20,20 @@ const Registro: React.FC = () => {
       return;
     }
 
-    // ✅ Validación de contraseña
     if (password.length < 6) {
-      setError('La contraseña es insegura. Debe tener al menos 6 caracteres.');
+      setError('La contraseña debe tener al menos 6 caracteres');
       return;
     }
 
     try {
-      // 1️⃣ Crear usuario en Auth
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: correo,
-        password,
-      });
+      const usuario = await authService.registerWithEmail(correo, password, nombre);
+      if (!usuario) throw new Error('No se pudo registrar el usuario');
 
-      if (authError) throw authError;
-      if (!authData.user) throw new Error('No se creó el usuario en Auth');
-
-      const authId = authData.user.id;
-
-      // 2️⃣ Insertar en tabla Usuarios
-      const { data: usuarioDB, error: dbError } = await supabase
-        .from('Usuarios')
-        .insert({
-          auth_id: authId,
-          nombre,
-          correo,
-          isAdmin: false,
-        })
-        .select();
-
-      if (dbError) throw dbError;
-      if (!usuarioDB || usuarioDB.length === 0)
-        throw new Error('No se guardó el usuario en la tabla');
-
-      // 3️⃣ Guardar en contexto y redirigir
-      setUsuario(usuarioDB[0]);
+      setUsuario(usuario);
       navigate('/home');
-
     } catch (err: any) {
-      console.error('Error registro:', err);
-      setError(err.message || 'Ocurrió un error durante el registro');
+      console.error(err);
+      setError(err.message || 'Error en el registro');
     }
   };
 

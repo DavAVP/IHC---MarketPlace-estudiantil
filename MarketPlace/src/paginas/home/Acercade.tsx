@@ -24,7 +24,7 @@ const AcercaDe: React.FC = () => {
     <div className="home-page flex">
       <Sidebar />
       <div className="home-main flex-1">
-        <Navbar />
+        <Navbar onSearch={() => {}} />
 
         <div className="home-content px-8 py-4">
           <div className="home-banner bg-green-100 rounded-xl p-6 flex items-center justify-between mb-6">

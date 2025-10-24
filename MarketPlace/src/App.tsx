@@ -3,10 +3,11 @@ import Login from './paginas/login/Login';
 import Registro from './paginas/login/Registro';
 import Home from './paginas/home/Home';
 import AdminFeria from './paginas/administrador/AdminFeria';
-import SubirProductos from './paginas/Edicion/Subir_producto';
+import SubirProductos from './paginas/Productos/Subir_producto';
 import AcercaDe from './paginas/home/Acercade';
 import { UsuarioProvider, useUsuario } from './context/UsuarioContext';
 import type { JSX } from 'react';
+
 
 const PrivateRoute = ({ children, admin }: { children: JSX.Element, admin?: boolean }) => {
   const { usuario } = useUsuario();
@@ -27,6 +28,8 @@ function App() {
         <Route path="/admin/feria" element={<PrivateRoute admin><AdminFeria /></PrivateRoute>} />
         <Route path="/acerca-de" element={<PrivateRoute><AcercaDe /></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/login" />} />
+
+
       </Routes>
     </UsuarioProvider>
   );

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState} from 'react';
 import type { IUsuario } from '../entidades/IUsuario';
 import type { ReactNode } from 'react';
-import { supabase } from '../../supabase.config';
+import { supabase } from '../data/supabase.config';
 import { useEffect } from 'react';
 
 interface UsuarioContextType {

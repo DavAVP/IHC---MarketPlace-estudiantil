@@ -1,4 +1,4 @@
-import { supabase } from '../../supabase.config';
+import { supabase } from './supabase.config';
 
 export async function obtenerUsuarioCompleto() {
   const { data: { user } } = await supabase.auth.getUser();

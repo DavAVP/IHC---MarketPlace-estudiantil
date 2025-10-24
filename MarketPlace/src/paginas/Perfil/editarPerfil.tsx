@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import type { IUsuario } from '../../entidades/IUsuario';
-import { supabase } from './../../../supabase.config'
+import { supabase } from '../../data/supabase.config'
 
 export interface IUsuarioProp {
   usuario?: IUsuario | null;

@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { FaHome, FaUser, FaCog, FaBoxOpen, FaShoppingCart, FaSignOutAlt, FaInfoCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useUsuario } from '../context/UsuarioContext';
+import { supabase } from '../data/supabase.config'; // 👈 importa tu cliente
 
 const Sidebar: React.FC = () => {
-  const [expanded, setExpanded] = useState(false); // sidebar inicia cerrado
+  const [expanded, setExpanded] = useState(false);
   const { setUsuario } = useUsuario();
   const navigate = useNavigate();
 
@@ -14,12 +15,23 @@ const Sidebar: React.FC = () => {
     { icon: <FaShoppingCart />, label: 'Mis Compras', link: '/compras' },
     { icon: <FaUser />, label: 'Perfil', link: '/perfil' },
     { icon: <FaCog />, label: 'Configuración', link: '/config' },
-    { icon: <FaInfoCircle />, label: 'Acerca de', link: '/acerca-de' }, // 🔹 nuevo botón
+    { icon: <FaInfoCircle />, label: 'Acerca de', link: '/acerca-de' },
   ];
 
-  const handleLogout = () => {
-    setUsuario(null);
-    navigate('/login');
+  const handleLogout = async () => {
+    try {
+      // 🔹 Cierra sesión en Supabase
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+
+      // 🔹 Limpia el contexto global de usuario
+      setUsuario(null);
+
+      // 🔹 Redirige al login
+      navigate('/login');
+    } catch (err) {
+      console.error("Error al cerrar sesión:", err);
+    }
   };
 
   return (

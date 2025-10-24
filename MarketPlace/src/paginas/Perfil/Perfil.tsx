@@ -1,5 +1,5 @@
 import React from 'react';
-import EditarPerfil from '../Edicion/editarPerfil';
+import EditarPerfil from './editarPerfil';
 import { useUsuario } from '../../context/UsuarioContext';
 
 export const Perfil: React.FC = () => {
