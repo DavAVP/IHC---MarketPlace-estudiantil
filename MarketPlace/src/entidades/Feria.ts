@@ -1,6 +1,6 @@
 export interface IFeria {
-  id: number;
-  nombre: string;
+  id_feria: string;
+  nombre_feria: string;
   tipo: string;
   fechaInicio: string;
   fechaFin: string;

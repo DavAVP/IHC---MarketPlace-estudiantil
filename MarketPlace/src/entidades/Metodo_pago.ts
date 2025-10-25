@@ -1,7 +1,7 @@
 export interface IMetodo_pago{
-    id_metodoPago: number
-    usuario_id: number
-    producto_id?: number
+    id_metodoPago: string
+    usuario_id: string
+    producto_id?: string
     tipo_pago: 'efectivo' | 'transferencia' | 'paypal'
     nombre: string
     detalles: string

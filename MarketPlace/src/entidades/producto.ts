@@ -1,7 +1,7 @@
 export interface IProducto{
-    id_producto: number
-    Usuario_id: number
-    categoria_id: number
+    id_producto: string
+    Usuario_id: string
+    categoria_id: string
     nombre_producto: string
     precio: number
     descripcion_producto: string

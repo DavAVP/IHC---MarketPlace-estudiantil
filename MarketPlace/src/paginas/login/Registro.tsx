@@ -30,7 +30,7 @@ const Registro: React.FC = () => {
       if (!usuario) throw new Error('No se pudo registrar el usuario');
 
       setUsuario(usuario);
-      navigate('/home');
+      navigate('/login');
     } catch (err: any) {
       console.error(err);
       setError(err.message || 'Error en el registro');

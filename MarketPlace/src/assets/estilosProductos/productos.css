@@ -1,0 +1,54 @@
+.subir-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 30px;
+  text-align: center;
+}
+
+.subir-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.subir-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.subir-form input,
+.subir-form textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+.subir-form textarea {
+  resize: none;
+  height: 100px;
+}
+
+.btn-subir {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-subir:hover {
+  background-color: #1b5e20;
+}
+
+.mensaje {
+  margin-top: 15px;
+  font-weight: bold;
+}
