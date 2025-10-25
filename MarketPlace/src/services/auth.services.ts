@@ -2,6 +2,7 @@ import { supabase } from "../data/supabase.config";
 import type { IUsuario } from "../entidades/IUsuario";
 
 export const authService = {
+  
   //Login con email/password
   loginWithEmail: async (email: string, password: string): Promise<IUsuario | null> => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
