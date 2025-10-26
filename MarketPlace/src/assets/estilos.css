@@ -293,6 +293,7 @@ html, body, #root {
 
 /* === FOOTER === */
 .footer {
+  width: 100%;
   text-align: center;
   padding: 18px;
   background-color: #0077cc;
@@ -612,4 +613,34 @@ html, body, #root {
     max-width: 100%;
     border-radius: 12px;
   }
+}
+
+
+.contenedor-principal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e6f0fa;
+  gap: 40px; /* 👈 añade un espacio de 40px entre los cuadros */
+}
+
+.caja {
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  width: 380px;
+}
+
+.caja h2 {
+  color: #0072ce;
+  margin-bottom: 20px;
+}
+
+.subir-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  flex-grow: 1; /* ocupa todo el espacio restante */
 }

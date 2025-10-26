@@ -120,25 +120,6 @@ const Home: React.FC = () => {
           {/* Banner de ferias activas */}
           <BannerFerias ferias={ferias} />
 
-          {/* Acciones principales */}
-          <div className="home-actions flex gap-3 mt-8">
-            {!usuario?.esAdmin && (
-              <button
-                className="btn-primary px-6 py-2 rounded-md shadow hover:shadow-md"
-                onClick={() => navigate('/subir-productos')}
-              >
-                Subir Producto
-              </button>
-            )}
-
-            <button
-              className="btn-secondary px-6 py-2 rounded-md shadow hover:shadow-md"
-              onClick={() => console.log('Explorar productos')}
-            >
-              Explorar Productos
-            </button>
-          </div>
-
           {/* Grid de productos */}
           <div className="productos-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
             {filteredProductos.length === 0 ? (

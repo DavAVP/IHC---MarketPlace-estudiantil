@@ -1,0 +1,23 @@
+// src/pages/Catalogo.tsx
+import React from 'react';
+import Sidebar from '../../componentes/SideBar';
+import Navbar from '../../componentes/NavBar';
+import Footer from '../../componentes/footer';
+
+const Catalogo: React.FC = () => {
+  return (
+    <div className="flex home-page min-h-screen">
+      <Sidebar />
+      <div className="home-main flex flex-col min-h-screen">
+        <Navbar onSearch={() => {}} />
+        <div className="px-8 py-6 flex-1">
+          <h2 className="text-2xl font-semibold mb-4">Catálogo de Productos</h2>
+          <p>Aquí se mostrará la lista de todos los productos disponibles.</p>
+        </div>
+        <Footer />
+      </div>
+    </div>
+  );
+};
+
+export default Catalogo;

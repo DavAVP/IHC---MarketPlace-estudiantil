@@ -8,4 +8,5 @@ export interface IProducto{
     foto_producto?: string
     ubicacion_producto: string
     fecha_Publicacion: string
+    feria_id?: string 
 }

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { FaHome, FaUser, FaCog, FaBoxOpen, FaShoppingCart, FaSignOutAlt, FaInfoCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useUsuario } from '../context/UsuarioContext';
-import { supabase } from '../data/supabase.config'; // 👈 importa tu cliente
+import { supabase } from '../data/supabase.config';
+import { Link } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
@@ -11,23 +12,20 @@ const Sidebar: React.FC = () => {
 
   const menuItems = [
     { icon: <FaHome />, label: 'Inicio', link: '/home' },
-    { icon: <FaBoxOpen />, label: 'Productos', link: '/productos' },
-    { icon: <FaShoppingCart />, label: 'Mis Compras', link: '/compras' },
+    { icon: <FaBoxOpen />, label: 'Subir productos', link: '/subir-productos' },
+    { icon: <FaShoppingCart />, label: 'carrito', link: '/carrito' },
     { icon: <FaUser />, label: 'Perfil', link: '/perfil' },
-    { icon: <FaCog />, label: 'Configuración', link: '/config' },
+    { icon: <FaCog />, label: 'Configuración', link: '/editar-perfil' },
     { icon: <FaInfoCircle />, label: 'Acerca de', link: '/acerca-de' },
   ];
 
   const handleLogout = async () => {
     try {
-      // 🔹 Cierra sesión en Supabase
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
 
-      // 🔹 Limpia el contexto global de usuario
       setUsuario(null);
 
-      // 🔹 Redirige al login
       navigate('/login');
     } catch (err) {
       console.error("Error al cerrar sesión:", err);
@@ -42,13 +40,12 @@ const Sidebar: React.FC = () => {
 
       <nav className="sidebar-nav">
         {menuItems.map((item, i) => (
-          <a href={item.link} key={i} className="sidebar-item">
+          <Link to={item.link} key={i} className="sidebar-item">
             {item.icon}
             {expanded && <span className="sidebar-label">{item.label}</span>}
-          </a>
+          </Link>
         ))}
 
-        {/* 🔹 Botón Cerrar Sesión */}
         <button
           onClick={handleLogout}
           className="sidebar-item logout-btn"

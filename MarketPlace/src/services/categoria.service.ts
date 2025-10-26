@@ -2,30 +2,21 @@ import { supabase } from "../data/supabase.config";
 import type { ICategoria } from "../entidades/Categoria";
 
 export const CategoriaService = {
-    async CrearCategoria(nombre_categoria: ICategoria): Promise<ICategoria | null>{
-        const {data, error} = await supabase
+    CrearCategoria: async (categoria: Omit<ICategoria, 'id_categoria'>): Promise<ICategoria> => {
+        const { data, error } = await supabase
         .from('Categoria')
-        .insert([nombre_categoria])
+        .insert([categoria])
         .select()
-        .single()
-
-        if(error){
-            console.log('Error al crear una categoria', error.message)
-            return null
-        }
-        return data as ICategoria
+        if (error) throw error
+        return data[0]
     },
 
-    async ObtenerCategoria(): Promise<ICategoria[] | null>{
-        const {data, error} = await supabase
+    ObtenerCategoria: async (): Promise<ICategoria[]> => {
+        const { data, error } = await supabase
         .from('Categoria')
         .select('*')
-
-        if(error){
-            console.log('Error al encontrar las categorias', error.message)
-            return []
-        }
-        return data as ICategoria[]
+        if (error) throw error
+        return data || []
     },
 
     async ObtenerCategoriaId(id_categoria: string): Promise<ICategoria | null>{

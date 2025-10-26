@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUsuario } from '../../context/UsuarioContext';
 import { authService } from '../../services/auth.services';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Registro: React.FC = () => {
   const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
+  const [mostrarPass, setMostrarPass] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { setUsuario } = useUsuario();
@@ -56,12 +58,28 @@ const Registro: React.FC = () => {
             value={correo}
             onChange={(e) => setCorreo(e.target.value)}
           />
-          <input
-            type="password"
-            placeholder="********"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div style={{ position: 'relative' }}>
+            <input
+              type={mostrarPass ? 'text' : 'password'}
+              placeholder="********"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ paddingRight: '35px' }}
+            />
+            <span
+              onClick={() => setMostrarPass(!mostrarPass)}
+              style={{
+                position: 'absolute',
+                right: '10px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                cursor: 'pointer',
+                color: '#333',
+              }}
+            >
+              {mostrarPass ? <FaEyeSlash /> : <FaEye />}
+            </span>
+          </div>
           <button type="submit">Registrarse</button>
         </form>
       </div>
