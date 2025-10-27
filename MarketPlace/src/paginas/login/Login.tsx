@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUsuario } from '../../context/UsuarioContext';
 import { authService } from '../../services/auth.services';
@@ -17,6 +17,7 @@ const Login: React.FC = () => {
   // Seguridad y bloqueo temporal
   const [intentosFallidos, setIntentosFallidos] = useState(0);
   const [bloqueado, setBloqueado] = useState(false);
+  const bloqueoRef = useRef<number | null>(null);
 
   // Precargar correo guardado
   useEffect(() => {
@@ -34,13 +35,25 @@ const Login: React.FC = () => {
 
     if (nuevosIntentos >= 3) {
       setBloqueado(true);
-      toast.error('Demasiados intentos. Espera 30 segundos.');
-      setTimeout(() => {
+      toast.error('⚠️ Demasiados intentos fallidos. Espera 30 segundos.');
+      bloqueoRef.current = setTimeout(() => {
         setIntentosFallidos(0);
         setBloqueado(false);
+        toast.success('✅ Puedes volver a intentar iniciar sesión.');
       }, 30000);
+    } else {
+      toast.error(`Intento ${nuevosIntentos} de 3 fallido.`);
     }
   };
+
+  // Limpieza al desmontar el componente (buena práctica)
+  useEffect(() => {
+    return () => {
+      if (bloqueoRef.current) {
+        window.clearTimeout(bloqueoRef.current);
+      }
+    };
+  }, []);
 
   // 🔐 Login normal con email y contraseña
   const handleLoginEmail = async (e: React.FormEvent) => {
@@ -48,12 +61,13 @@ const Login: React.FC = () => {
     setError('');
 
     if (bloqueado) {
-      toast.error('Cuenta bloqueada temporalmente. Espera unos segundos.');
+      toast.error('⛔ Cuenta bloqueada temporalmente. Espera unos segundos.');
       return;
     }
 
     try {
       const usuario = await authService.loginWithEmail(correo, password);
+
       if (!usuario) {
         manejarIntentosFallidos();
         setError('Correo o contraseña incorrectos');
@@ -71,10 +85,15 @@ const Login: React.FC = () => {
         localStorage.removeItem('recordarEmail');
       }
 
-      toast.success('Inicio de sesión exitoso');
+      // Reiniciar intentos fallidos
+      setIntentosFallidos(0);
+
+      toast.success('🎉 Inicio de sesión exitoso');
+      alert(`Bienvenido ${usuario.nombre || 'usuario'} 😎`);
       navigate('/home');
     } catch (err: any) {
       console.error(err);
+      manejarIntentosFallidos();
       setError(err.message || 'Error en el login');
     }
   };
@@ -83,6 +102,7 @@ const Login: React.FC = () => {
   const handleLoginGoogle = async () => {
     try {
       await authService.loginWithGoogle();
+      alert('Inicio de sesión con Google completado 🎉');
     } catch (err: any) {
       console.error(err);
       toast.error(err.message);
@@ -93,6 +113,7 @@ const Login: React.FC = () => {
   const handleLoginGithub = async () => {
     try {
       await authService.loginWithGithub();
+      alert('Inicio de sesión con GitHub completado 🎉');
     } catch (err: any) {
       console.error(err);
       toast.error(err.message);
@@ -109,7 +130,7 @@ const Login: React.FC = () => {
     try {
       const { error } = await authService.resetPassword(correo);
       if (error) throw error;
-      toast.success('Correo de recuperación enviado.');
+      toast.success('📧 Correo de recuperación enviado.');
     } catch (err: any) {
       console.error(err);
       toast.error('Error al enviar correo de recuperación.');
@@ -239,6 +260,7 @@ const Login: React.FC = () => {
               value={correo}
               onChange={(e) => setCorreo(e.target.value)}
               required
+              disabled={bloqueado}
               style={{
                 width: '100%',
                 padding: '10px',
@@ -253,6 +275,7 @@ const Login: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={bloqueado}
               style={{
                 width: '100%',
                 padding: '10px',
@@ -274,18 +297,19 @@ const Login: React.FC = () => {
 
             <button
               type="submit"
+              disabled={bloqueado}
               style={{
                 width: '100%',
-                backgroundColor: '#0077cc',
+                backgroundColor: bloqueado ? '#aaa' : '#0077cc',
                 color: 'white',
                 border: 'none',
                 padding: '10px',
                 borderRadius: '6px',
-                cursor: 'pointer',
+                cursor: bloqueado ? 'not-allowed' : 'pointer',
                 fontWeight: 'bold',
               }}
             >
-              Ingresar
+              {bloqueado ? 'Bloqueado...' : 'Ingresar'}
             </button>
           </form>
 
