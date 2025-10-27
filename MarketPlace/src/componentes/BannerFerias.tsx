@@ -22,10 +22,10 @@ const BannerFerias: React.FC<BannerFeriasProps> = ({ ferias }) => {
       <div className="flex flex-wrap justify-center gap-6 px-6">
         {ferias.map((feria) => (
           <div
-            key={feria.id}
+            key={feria.id_feria}
             className="bg-white text-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all w-72 p-5"
           >
-            <h3 className="text-lg font-bold text-blue-700 mb-2">{feria.nombre}</h3>
+            <h3 className="text-lg font-bold text-blue-700 mb-2">{feria.nombre_feria}</h3>
             <p className="text-sm text-gray-600 mb-2">
               <strong>Tipo:</strong> {feria.tipo}
             </p>

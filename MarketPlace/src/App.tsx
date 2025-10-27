@@ -10,6 +10,7 @@ import Catalogo from './paginas/home/catalogo';
 import { Perfil } from './paginas/Perfil/Perfil';
 import EditarPerfil from './paginas/Perfil/editarPerfil';
 import RecuperarPassword from './paginas/login/RecuperarPassword'
+import Ver_producto from './paginas/Productos/Ver_producto';
 
 import { UsuarioProvider, useUsuario } from './context/UsuarioContext';
 import type { JSX } from 'react';
@@ -41,6 +42,8 @@ function App() {
         <Route path="/perfil" element={<PrivateRoute><Perfil /></PrivateRoute>} />
         <Route path="/editar-perfil" element={<PrivateRoute><EditarPerfil /></PrivateRoute>} />
         <Route path="/recuperar-password" element={<RecuperarPassword />} />
+        <Route path="/ver-producto/:id" element={<Ver_producto />} />
+
         <Route path="*" element={<Navigate to="/login" />} />
 
 

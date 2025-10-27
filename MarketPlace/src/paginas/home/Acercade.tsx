@@ -4,6 +4,7 @@ import Sidebar from '../../componentes/SideBar'
 import Navbar from '../../componentes/NavBar'
 import Footer from '../../componentes/footer'
 import { useUsuario } from '../../context/UsuarioContext'
+import '../../assets/estilosHome/acercaDe.css' // importar estilos
 
 const AcercaDe: React.FC = () => {
   const { usuario } = useUsuario()
@@ -27,13 +28,12 @@ const AcercaDe: React.FC = () => {
         <Navbar onSearch={() => {}} />
 
         <div className="home-content px-8 py-4">
-          <div className="home-banner bg-green-100 rounded-xl p-6 flex items-center justify-between mb-6">
+          {/* Banner principal */}
+          <div className="home-banner mb-6">
             <div>
-              <h2 className="text-2xl font-semibold text-green-800">
-                ¡Bienvenido a StudentsPlace, {usuario?.nombre || 'Invitado'}!
-              </h2>
-              <p className="text-gray-700 mt-2">
-                StudentsPlace es una plataforma para que los estudiantes puedan descubrir, compartir y comprar productos dentro de su comunidad universitaria.
+              <h2>¡Bienvenido a StudentsPlace, {usuario?.nombre || 'Invitado'}!</h2>
+              <p>
+                StudentsPlace es la plataforma donde estudiantes pueden descubrir, compartir y comprar productos dentro de su comunidad universitaria.
               </p>
             </div>
             {usuario?.fotoPerfil && (
@@ -46,44 +46,54 @@ const AcercaDe: React.FC = () => {
           </div>
 
           {/* Sección de desarrolladores */}
-          <div className="bg-white p-6 rounded-xl shadow-md mb-8">
-            <h3 className="text-xl font-semibold mb-4">Desarrolladores</h3>
-            <ul className="list-disc list-inside text-gray-700">
+          <div className="card-section">
+            <h3>Desarrolladores</h3>
+            <ul className="list-disc list-inside">
               <li>Taylor Steven Alava Gresely</li>
               <li>David Alejandro Vilañez Palma</li>
             </ul>
           </div>
 
           {/* Sección de ubicación */}
-          <div className="bg-white p-6 rounded-xl shadow-md mb-8">
-            <h3 className="text-xl font-semibold mb-4">Ubicación</h3>
-            <p className="text-gray-700">
-              Universidad Laica Eloy Alfaro de Manabí (ULEAM)
-            </p>
+          <div className="card-section">
+            <h3>Ubicación</h3>
+            <p>Universidad Laica Eloy Alfaro de Manabí (ULEAM)</p>
           </div>
 
           {/* Sección de contacto */}
-          <div className="bg-white p-6 rounded-xl shadow-md mb-8">
-            <h3 className="text-xl font-semibold mb-4">Contacto</h3>
-            <p className="text-gray-700 mb-4">
-              Puedes contactarnos vía correo electrónico o dejándonos un mensaje aquí:
-            </p>
+          <div className="card-section">
+            <h3>Contacto</h3>
+            <p>Puedes contactarnos vía correo electrónico o dejándonos un mensaje aquí:</p>
             <form onSubmit={handleComentarioSubmit}>
               <textarea
                 value={comentario}
                 onChange={handleComentarioChange}
                 rows={4}
-                className="input-field w-full mb-4"
+                className="input-field"
                 placeholder="Escribe tu comentario..."
               />
-              <button
-                type="submit"
-                className="btn-primary px-6 py-2 rounded-md shadow-sm hover:shadow-md"
-              >
+              <button type="submit" className="btn-primary mt-2">
                 Enviar Comentario
               </button>
             </form>
           </div>
+
+          {/* Sección de Política y Términos de Uso */}
+          <div className="card-section">
+            <h3>Política y Términos de Uso</h3>
+            <ul className="list-disc list-inside text-gray-700">
+              <li>Solo usuarios mayores de 18 años pueden registrarse y publicar productos.</li>
+              <li>No se permite publicar contenido extraño, ofensivo o inapropiado.</li>
+              <li>Todos los productos deben ser válidos y cumplir con las normas de la plataforma.</li>
+              <li>Los vendedores deben asegurarse de que los productos ofrecidos sean apropiados para estudiantes y usuarios del sistema.</li>
+              <li>StudentsPlace se reserva el derecho de eliminar publicaciones que infrinjan estas políticas.</li>
+              <li>Al usar la plataforma, aceptas seguir todas las políticas y normas profesionales establecidas para garantizar un entorno seguro y confiable.</li>
+            </ul>
+            <p className="mt-2 text-gray-600">
+              Estas políticas buscan proteger a nuestra comunidad y asegurar que StudentsPlace se mantenga como un espacio profesional y confiable para todos los estudiantes.
+            </p>
+          </div>
+
         </div>
 
         <Footer />

@@ -1,0 +1,35 @@
+{
+    "login": {
+        "title": "Login",
+        "subtitle": "Welcome to the ULEAM Entrepreneurship Fair",
+        "email": "Email",
+        "password": "Password",
+        "remember": "Remember me",
+        "forgotPassword": "Forgot your password?",
+        "loginButton": "Sign In",
+        "googleLogin": "Sign in with Google",
+        "githubLogin": "Sign in with GitHub",
+        "error": "Incorrect email or password",
+        "blocked": "Too many attempts. Please wait 30 seconds.",
+        "success": "Login successful"
+    },
+    "home": {
+        "welcome": "Welcome to the Fair,",
+        "explore": "Explore the most featured products, learn about active fairs, and be part of our community.",
+        "fairs": "🎪 Active Fairs",
+        "noFairs": "No active fairs at the moment.",
+        "featured": "Featured Products",
+        "noProducts": "No products available.",
+        "loading": "Loading products..."
+    },
+    "acercaDe": {
+        "welcome": "Welcome to StudentsPlace,",
+        "description": "StudentsPlace is a platform where students can discover, share, and sell products within their university community.",
+        "developers": "Developers",
+        "location": "Location",
+        "contact": "Contact",
+        "commentPlaceholder": "Write your comment...",
+        "sendComment": "Send Comment",
+        "thanks": "Thanks for your comment:"
+    }
+}

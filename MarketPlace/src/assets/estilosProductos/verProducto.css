@@ -1,0 +1,89 @@
+/* src/assets/estiloshome/ver_producto.css */
+.producto-detalle-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  max-width: 700px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.producto-img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+
+.descripcion {
+  font-size: 1rem;
+  color: #4b5563;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.precio {
+  color: #2563eb;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-comprar,
+.btn-volver,
+.btn-comentar {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-comprar {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.btn-comprar:hover {
+  background-color: #1e40af;
+}
+
+.btn-volver {
+  background-color: #6b7280;
+  color: #fff;
+}
+
+.btn-volver:hover {
+  background-color: #4b5563;
+}
+
+.btn-comentar {
+  background-color: #10b981;
+  color: #fff;
+}
+
+.btn-comentar:hover {
+  background-color: #047857;
+}
+
+.comentario-section {
+  width: 100%;
+}
+
+.comentario-section textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  resize: none;
+}

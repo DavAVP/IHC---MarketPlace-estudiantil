@@ -1,0 +1,96 @@
+/* src/assets/estilosComponentes/acercaDe.css */
+.home-content {
+  padding: 2rem;
+}
+
+.home-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0072ce; /* azul principal */
+  color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.home-banner h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+
+.home-banner p {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: #e0e7ff;
+}
+
+.card-section {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-section:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.card-section h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0072ce;
+  margin-bottom: 1rem;
+}
+
+.card-section p, .card-section ul {
+  font-size: 1rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.input-field {
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-field:focus {
+  border-color: #0072ce;
+  box-shadow: 0 0 0 3px #0072ce;
+}
+
+.btn-primary {
+  background-color: #0072ce;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0072ce;
+  box-shadow: 0 6px 15px #0072ce;
+}
+
+@media (max-width: 768px) {
+  .home-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .home-content {
+    padding: 1rem;
+  }
+}

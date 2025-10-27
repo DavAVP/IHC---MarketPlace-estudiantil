@@ -644,3 +644,24 @@ html, body, #root {
   padding: 2rem;
   flex-grow: 1; /* ocupa todo el espacio restante */
 }
+
+/* 🎠 Animación suave entre slides */
+.carrusel-track {
+  transition: transform 1s ease-in-out;
+}
+
+.fade-slide {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,35 @@
+{
+    "login": {
+        "title": "Iniciar Sesión",
+        "subtitle": "Bienvenido a la Feria de Emprendimientos ULEAM",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "remember": "Recordarme",
+        "forgotPassword": "¿Olvidaste tu contraseña?",
+        "loginButton": "Ingresar",
+        "googleLogin": "Iniciar con Google",
+        "githubLogin": "Iniciar con GitHub",
+        "error": "Correo o contraseña incorrectos",
+        "blocked": "Demasiados intentos. Espera 30 segundos.",
+        "success": "Inicio de sesión exitoso"
+    },
+    "home": {
+        "welcome": "Bienvenido a la Feria,",
+        "explore": "Explora los productos más destacados, conoce las ferias activas y forma parte de nuestra comunidad.",
+        "fairs": "🎪 Ferias Activas",
+        "noFairs": "No hay ferias activas por el momento.",
+        "featured": "Productos destacados",
+        "noProducts": "No hay productos disponibles.",
+        "loading": "Cargando productos..."
+    },
+    "acercaDe": {
+        "welcome": "¡Bienvenido a StudentsPlace,",
+        "description": "StudentsPlace es una plataforma donde los estudiantes pueden descubrir, compartir y vender productos dentro de su comunidad universitaria.",
+        "developers": "Desarrolladores",
+        "location": "Ubicación",
+        "contact": "Contacto",
+        "commentPlaceholder": "Escribe tu comentario...",
+        "sendComment": "Enviar Comentario",
+        "thanks": "Gracias por tu comentario:"
+    }
+}
