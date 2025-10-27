@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import BarraBusqueda from './BarraBusqueda';
 import { useUsuario } from '../context/UsuarioContext';
-import { useState } from 'react';
 import "../assets/estilosComponentes/componentes.css"
 
 const Navbar: React.FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {

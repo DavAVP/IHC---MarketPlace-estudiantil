@@ -1,41 +1,50 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Sidebar from '../../componentes/SideBar'
-import Navbar from '../../componentes/NavBar'
-import Footer from '../../componentes/footer'
-import Carrusel from '../../componentes/carrusel'
-import { FeriaService } from '../../services/feria.service'
-import { productoServices } from '../../services/producto.services'
-import { useUsuario } from '../../context/UsuarioContext'
-import type { IFeria } from '../../entidades/Feria'
-import type { IProducto } from '../../entidades/producto'
+// Home.tsx
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import Sidebar from '../../componentes/SideBar';
+import Navbar from '../../componentes/NavBar';
+import Footer from '../../componentes/footer';
+import Carrusel from '../../componentes/carrusel';
+import { FeriaService } from '../../services/feria.service';
+import { productoServices } from '../../services/producto.services';
+import { useUsuario } from '../../context/UsuarioContext';
+import type { IFeria } from '../../entidades/Feria';
+import type { IProducto } from '../../entidades/producto';
+
+// 🔹 Función debounce para evitar demasiadas llamadas a la DB
+function debounce<F extends (...args: any[]) => void>(func: F, wait: number) {
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  return (...args: Parameters<F>) => {
+    if (timeout !== undefined) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(() => func(...args), wait);
+  };
+}
 
 const Home: React.FC = () => {
-  const { usuario } = useUsuario()
-  const navigate = useNavigate()
-  const [ferias, setFerias] = useState<IFeria[]>([])
-  const [productos, setProductos] = useState<IProducto[]>([])
-  const [loading, setLoading] = useState(true)
+  const { usuario } = useUsuario();
+  const [ferias, setFerias] = useState<IFeria[]>([]);
+  const [productos, setProductos] = useState<IProducto[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // 📦 Cargar ferias y productos desde Supabase
+  // Cargar ferias y productos iniciales
   useEffect(() => {
     const cargarDatos = async () => {
       try {
-        const feriasData = await FeriaService.ObtenerFerias()
-        const productosData = await productoServices.ObtenerProductos()
-
-        setFerias(feriasData || [])
-        setProductos(productosData || [])
+        const feriasData = await FeriaService.ObtenerFerias();
+        const productosData = await productoServices.ObtenerProductos();
+        setFerias(feriasData || []);
+        setProductos(productosData || []);
       } catch (error) {
-        console.error('Error cargando datos:', error)
+        console.error('Error cargando datos:', error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    cargarDatos()
-  }, [])
+    };
+    cargarDatos();
+  }, []);
 
-  // 🎠 Slides del carrusel (solo ferias activas)
+  // Carrusel dinámico solo con ferias
   const slides = useMemo(() => {
     return ferias.map((f) => (
       <div
@@ -58,17 +67,31 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
-    ))
-  }, [ferias])
+    ));
+  }, [ferias]);
 
-  // 🏆 Productos destacados (máximo 6)
-  const productosDestacados = productos.slice(0, 6)
+  // Productos destacados (máximo 6)
+  const productosDestacados = productos.slice(0, 6);
+
+  // 🔹 Función de búsqueda
+  const buscarProductos = async (termino: string) => {
+    if (termino.trim() === '') {
+      const productosData = await productoServices.ObtenerProductos();
+      setProductos(productosData || []);
+    } else {
+      const productosFiltrados = await productoServices.BuscarProductoCategoria(termino);
+      setProductos(productosFiltrados || []);
+    }
+  };
+
+  // 🔹 Debounce para no saturar la DB
+  const handleSearch = useCallback(debounce(buscarProductos, 300), []);
 
   return (
     <div className="home-page flex">
       <Sidebar />
       <div className="home-main flex-1">
-        <Navbar onSearch={() => {}} />
+        <Navbar onSearch={handleSearch} />
 
         <div className="home-content px-8 py-4">
           {/* Banner de bienvenida */}
@@ -114,9 +137,7 @@ const Home: React.FC = () => {
                       <h3 className="font-semibold text-lg text-blue-700">
                         {prod.nombre_producto}
                       </h3>
-                      <p className="text-gray-700 mt-1">
-                        {prod.descripcion_producto}
-                      </p>
+                      <p className="text-gray-700 mt-1">{prod.descripcion_producto}</p>
                       <p className="mt-2 text-sm text-gray-600">
                         <b>Precio:</b> ${prod.precio}
                       </p>
@@ -131,7 +152,7 @@ const Home: React.FC = () => {
         <Footer />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
