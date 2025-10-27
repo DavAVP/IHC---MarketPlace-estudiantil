@@ -51,6 +51,11 @@ export const authService = {
     };
   },
 
+  resetPassword(email: string) {
+  return supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: 'http://localhost:5173/reset-password', // cambia según tu URL
+  });
+  },
   //Login con Google
   loginWithGoogle: async (): Promise<void> => {
     const { error } = await supabase.auth.signInWithOAuth({

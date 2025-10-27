@@ -1,26 +1,77 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUsuario } from '../../context/UsuarioContext';
 import { authService } from '../../services/auth.services';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Login: React.FC = () => {
   const { setUsuario } = useUsuario();
   const navigate = useNavigate();
+
+  // Estados principales
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [recordarme, setRecordarme] = useState(false);
 
+  // Seguridad y bloqueo temporal
+  const [intentosFallidos, setIntentosFallidos] = useState(0);
+  const [bloqueado, setBloqueado] = useState(false);
+
+  // Precargar correo guardado
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('recordarEmail');
+    if (savedEmail) {
+      setCorreo(savedEmail);
+      setRecordarme(true);
+    }
+  }, []);
+
+  // Manejo de intentos fallidos
+  const manejarIntentosFallidos = () => {
+    const nuevosIntentos = intentosFallidos + 1;
+    setIntentosFallidos(nuevosIntentos);
+
+    if (nuevosIntentos >= 3) {
+      setBloqueado(true);
+      toast.error('Demasiados intentos. Espera 30 segundos.');
+      setTimeout(() => {
+        setIntentosFallidos(0);
+        setBloqueado(false);
+      }, 30000);
+    }
+  };
+
+  // 🔐 Login normal con email y contraseña
   const handleLoginEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
+    if (bloqueado) {
+      toast.error('Cuenta bloqueada temporalmente. Espera unos segundos.');
+      return;
+    }
+
     try {
       const usuario = await authService.loginWithEmail(correo, password);
       if (!usuario) {
+        manejarIntentosFallidos();
         setError('Correo o contraseña incorrectos');
         return;
       }
+
+      // Guardar usuario en contexto
       setUsuario(usuario);
+      sessionStorage.setItem('user', JSON.stringify(usuario));
+
+      // Guardar email si el usuario marca "recordarme"
+      if (recordarme) {
+        localStorage.setItem('recordarEmail', correo);
+      } else {
+        localStorage.removeItem('recordarEmail');
+      }
+
+      toast.success('Inicio de sesión exitoso');
       navigate('/home');
     } catch (err: any) {
       console.error(err);
@@ -28,21 +79,40 @@ const Login: React.FC = () => {
     }
   };
 
+  // 🔹 Login con Google
   const handleLoginGoogle = async () => {
     try {
       await authService.loginWithGoogle();
     } catch (err: any) {
       console.error(err);
-      setError(err.message);
+      toast.error(err.message);
     }
   };
 
+  // 🔹 Login con GitHub
   const handleLoginGithub = async () => {
     try {
       await authService.loginWithGithub();
     } catch (err: any) {
       console.error(err);
-      setError(err.message);
+      toast.error(err.message);
+    }
+  };
+
+  // 🔹 Recuperar contraseña
+  const handleRecuperarPassword = async () => {
+    if (!correo) {
+      toast.error('Por favor ingresa tu correo primero.');
+      return;
+    }
+
+    try {
+      const { error } = await authService.resetPassword(correo);
+      if (error) throw error;
+      toast.success('Correo de recuperación enviado.');
+    } catch (err: any) {
+      console.error(err);
+      toast.error('Error al enviar correo de recuperación.');
     }
   };
 
@@ -56,6 +126,8 @@ const Login: React.FC = () => {
         backgroundColor: '#e8f0fe',
       }}
     >
+      <Toaster position="top-right" />
+
       <div
         style={{
           display: 'flex',
@@ -65,10 +137,10 @@ const Login: React.FC = () => {
           overflow: 'hidden',
           width: '900px',
           maxWidth: '95%',
-          height: '500px', // 🔹 Ambos paneles tendrán la misma altura
+          height: '500px',
         }}
       >
-        {/* 🔹 Panel Izquierdo */}
+        {/* Panel Izquierdo */}
         <div
           style={{
             flex: 1,
@@ -102,7 +174,7 @@ const Login: React.FC = () => {
           </p>
         </div>
 
-        {/* 🔹 Panel Derecho */}
+        {/* Panel Derecho */}
         <div
           style={{
             flex: 1,
@@ -124,9 +196,9 @@ const Login: React.FC = () => {
           >
             Iniciar Sesión
           </h2>
-          {error && (
-            <p style={{ color: 'red', textAlign: 'center', marginBottom: '10px' }}>{error}</p>
-          )}
+
+          {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '10px' }}>{error}</p>}
+
           <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
             <button
               onClick={handleLoginGoogle}
@@ -189,6 +261,17 @@ const Login: React.FC = () => {
                 border: '1px solid #ccc',
               }}
             />
+
+            <label style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+              <input
+                type="checkbox"
+                checked={recordarme}
+                onChange={() => setRecordarme(!recordarme)}
+                style={{ marginRight: '5px' }}
+              />
+              Recordar usuario
+            </label>
+
             <button
               type="submit"
               style={{
@@ -205,6 +288,18 @@ const Login: React.FC = () => {
               Ingresar
             </button>
           </form>
+
+          <p
+            style={{
+              marginTop: '10px',
+              color: '#0077cc',
+              cursor: 'pointer',
+              textAlign: 'center',
+            }}
+            onClick={handleRecuperarPassword}
+          >
+            ¿Olvidaste tu contraseña?
+          </p>
 
           <p style={{ marginTop: '12px', textAlign: 'center' }}>
             ¿No tienes cuenta?{' '}

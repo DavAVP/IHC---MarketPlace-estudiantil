@@ -87,13 +87,6 @@ const Home: React.FC = () => {
     return [...imageSlides, ...feriaSlides]
   }, [ferias])
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen text-lg text-gray-700">
-        Cargando contenido...
-      </div>
-    )
-  }
 
   return (
     <div className="home-page flex">

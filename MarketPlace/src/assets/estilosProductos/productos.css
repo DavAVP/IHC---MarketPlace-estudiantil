@@ -34,7 +34,7 @@
 }
 
 .btn-subir {
-  background-color: #2e7d32;
+  background-color: #0072ce;
   color: white;
   border: none;
   padding: 12px;
@@ -45,7 +45,7 @@
 }
 
 .btn-subir:hover {
-  background-color: #1b5e20;
+  background-color: #0072ce;
 }
 
 .mensaje {

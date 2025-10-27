@@ -9,6 +9,7 @@ import Carrito from './paginas/carrito/carrito';
 import Catalogo from './paginas/home/catalogo';
 import { Perfil } from './paginas/Perfil/Perfil';
 import EditarPerfil from './paginas/Perfil/editarPerfil';
+import RecuperarPassword from './paginas/login/RecuperarPassword'
 
 import { UsuarioProvider, useUsuario } from './context/UsuarioContext';
 import type { JSX } from 'react';
@@ -39,6 +40,7 @@ function App() {
         <Route path="/catalogo" element={<PrivateRoute><Catalogo /></PrivateRoute>} />
         <Route path="/perfil" element={<PrivateRoute><Perfil /></PrivateRoute>} />
         <Route path="/editar-perfil" element={<PrivateRoute><EditarPerfil /></PrivateRoute>} />
+        <Route path="/recuperar-password" element={<RecuperarPassword />} />
         <Route path="*" element={<Navigate to="/login" />} />
 
 
