@@ -13,11 +13,13 @@ import '../../assets/estilosProductos/productos.css'
 
 const SubirProducto: React.FC = () => {
   const navigate = useNavigate()
+  const [imagen, setImagen] = useState<File | null>(null);
 
   const [producto, setProducto] = useState<Omit<IProducto, 'id_producto' | 'Usuario_id'>>({
     categoria_id: '',
     feria_id: '',
     nombre_producto: '',
+    foto_producto: null,
     precio: 0,
     descripcion_producto: '',
     ubicacion_producto: '',
@@ -45,17 +47,19 @@ const SubirProducto: React.FC = () => {
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      // Aquí podrías subir la imagen o manejar el archivo
+    const file = e.target.files?.[0];
+    if (file) {
+      console.log("Imagen seleccionada:", file);
+      setImagen(file);
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setMensaje('Subiendo producto...')
 
     try {
-      await productoServices.crearProducto(producto)
+      await productoServices.crearProducto(producto, imagen || undefined)
       setMensaje('Producto subido correctamente')
       setTimeout(() => navigate('/home'), 1500)
     } catch (error) {

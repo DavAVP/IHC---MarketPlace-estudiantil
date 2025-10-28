@@ -5,7 +5,7 @@ export interface IProducto{
     nombre_producto: string
     precio: number
     descripcion_producto: string
-    foto_producto?: string
+    foto_producto: string | null;
     ubicacion_producto: string
     fecha_Publicacion: string
     feria_id?: string 

@@ -1,64 +1,110 @@
-import type { IProducto } from "../entidades/producto";
+import type { IProducto } from "../entidades/producto"; 
 import { supabase } from "../data/supabase.config";
+import { uploadFile } from "./storageService";
 
-// crear producto
 export const productoServices = {
     async crearProducto(
-    producto: Omit<IProducto, 'id_producto' | 'Usuario_id'>
-    ): Promise<IProducto | null> {
-    // Obtener el usuario autenticado
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+        producto: Omit<IProducto, 'id_producto' | 'Usuario_id'>, imagen?: File ): Promise<IProducto | null> {
+        try {
+            // Verificar sesión
+            const { data: { user }, error: userError } = await supabase.auth.getUser();
+            if (userError || !user) {
+                console.error("No hay usuario logueado:", userError);
+                alert("Debes iniciar sesión para subir un producto");
+                return null;
+            }
 
-    if (userError || !user) {
-        console.error("No hay usuario logueado");
-        alert("Debes iniciar sesión para subir un producto");
-        return null;
-    }
+            // Obtener ID de usuario desde la tabla Usuarios
+            const { data: usuarioDB, error: usuarioError } = await supabase
+                .from("Usuarios")
+                .select("id")
+                .eq("auth_id", user.id)
+                .maybeSingle();
 
-    // Buscar el id real de la tabla Usuarios usando el auth_id
-    const { data: usuarioDB, error: usuarioError } = await supabase
-        .from("Usuarios")
-        .select("id")
-        .eq("auth_id", user.id)
-        .maybeSingle();
+            if (usuarioError || !usuarioDB) {
+                console.error("Error al obtener usuario:", usuarioError);
+                return null;
+            }
 
-    if (usuarioError || !usuarioDB) {
-        console.error("Usuario no encontrado en la base de datos");
-        alert("Error: Usuario no registrado");
-        return null;
-    }
+            let fotoUrl: string | null = null;
 
-    // Preparar el producto para insertar
-    const productoParaInsertar = {
-        ...producto,
-        Usuario_id: usuarioDB.id, // <-- id correcto
-        categoria_id: producto.categoria_id,
-        feria_id: producto.feria_id || null, // opcional
-    };
+            // Subir imagen si existe
+            if (imagen) {
+                console.log("Iniciando subida de imagen:", {
+                    nombre: imagen.name,
+                    tipo: imagen.type,
+                    tamaño: imagen.size
+                });
 
-    // Insertar producto
-    const { data, error } = await supabase
-        .from('Producto')
-        .insert([productoParaInsertar])
-        .select()
-        .single();
+                const fileName = `${Date.now()}-${imagen.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+                const filePath = `productos/${usuarioDB.id}/${fileName}`;
 
-    if (error) {
-        console.error("No se puede subir producto:", error.message);
-        alert("Error al subir producto: " + error.message);
-        return null;
-    }
+                console.log("Intentando subir a:", {
+                    bucket: 'ImagenesProductos',
+                    ruta: filePath
+                });
 
-    return data as IProducto;
+                const { data: uploadData, error: uploadError } = await supabase
+                    .storage
+                    .from('ImagenesProductos')
+                    .upload(filePath, imagen);
+
+                if (uploadError) {
+                    console.error("Error al subir imagen:", uploadError.message);
+                    throw new Error(`Error al subir imagen: ${uploadError.message}`);
+                }
+
+                // Obtener URL pública
+                const { data: publicUrlData } = supabase
+                    .storage
+                    .from('ImagenesProductos')
+                    .getPublicUrl(filePath);
+
+                fotoUrl = publicUrlData.publicUrl;
+                console.log("URL pública generada:", fotoUrl);
+
+            } else {
+                console.log("No se recibió imagen para subir");
+            }
+
+            // Crear objeto del producto
+            const productoParaInsertar = {
+                ...producto,
+                Usuario_id: usuarioDB.id,
+                categoria_id: producto.categoria_id,
+                feria_id: producto.feria_id || null,
+                foto_producto: fotoUrl
+            };
+
+            console.log("Insertando producto:", productoParaInsertar);
+
+            // Insertar en la base de datos
+            const { data, error } = await supabase
+                .from('Producto')
+                .insert([productoParaInsertar])
+                .select()
+                .single();
+
+            if (error) {
+                throw new Error(`Error al insertar: ${error.message}`);
+            }
+
+            console.log("Producto creado exitosamente:", data);
+            return data as IProducto;
+
+        } catch (error) {
+            console.error("Error en crearProducto:", error);
+            alert(error instanceof Error ? error.message : "Error al crear producto");
+            return null;
+        }
     },
-
 
     // Obtener todos los productos
     async ObtenerProductos(): Promise<IProducto[]> {
         const { data, error } = await supabase.from('Producto').select('*');
         if (error) {
-        console.error('Error al obtener productos:', error.message);
-        return [];
+            console.error('Error al obtener productos:', error.message);
+            return [];
         }
         return data as IProducto[];
     },
@@ -66,13 +112,13 @@ export const productoServices = {
     // Obtener producto por Id
     async ObtenerProductoId(id_producto: string): Promise<IProducto | null> {
         const { data, error } = await supabase
-        .from('Producto')
-        .select('*')
-        .eq('id_producto', id_producto)
-        .single();
+            .from('Producto')
+            .select('*')
+            .eq('id_producto', id_producto)
+            .single();
         if (error) {
-        console.error('Error al obtener producto:', error.message);
-        return null;
+            console.error('Error al obtener producto:', error.message);
+            return null;
         }
         return data as IProducto;
     },
@@ -80,14 +126,14 @@ export const productoServices = {
     // Actualizar producto
     async ActualizarProducto(id_producto: string, producto: Partial<IProducto>): Promise<IProducto | null> {
         const { data, error } = await supabase
-        .from('Producto')
-        .update(producto)
-        .eq('id_producto', id_producto)
-        .select()
-        .single();
+            .from('Producto')
+            .update(producto)
+            .eq('id_producto', id_producto)
+            .select()
+            .single();
         if (error) {
-        console.error('Error al actualizar producto:', error.message);
-        return null;
+            console.error('Error al actualizar producto:', error.message);
+            return null;
         }
         return data as IProducto;
     },
@@ -95,12 +141,12 @@ export const productoServices = {
     // Eliminar producto
     async EliminarProducto(id_producto: string): Promise<boolean> {
         const { error } = await supabase
-        .from('Producto')
-        .delete()
-        .eq("id_producto", id_producto);
+            .from('Producto')
+            .delete()
+            .eq("id_producto", id_producto);
         if (error) {
-        console.error('Error al eliminar producto:', error.message);
-        return false;
+            console.error('Error al eliminar producto:', error.message);
+            return false;
         }
         return true;
     },
@@ -108,33 +154,27 @@ export const productoServices = {
     // Obtener productos por usuario
     async ObtenerProductoPorUsuario(usuario_id: string): Promise<IProducto[]> {
         const { data, error } = await supabase
-        .from('Producto')
-        .select('*')
-        .eq('Usuario_id', usuario_id);
+            .from('Producto')
+            .select('*')
+            .eq('Usuario_id', usuario_id);
         if (error) {
-        console.error('Error al obtener productos por usuario:', error.message);
-        return [];
+            console.error('Error al obtener productos por usuario:', error.message);
+            return [];
         }
         return data as IProducto[];
     },
 
-    async BuscarProductoCategoria(termino: string): Promise<IProducto[]>{
-        const {data, error} = await supabase
-        .from('Producto')
-        .select('*')
-        .or(`nombre_producto.ilike.%${termino}%, categoria_id.ilike.%${termino}%`)
+    // Buscar productos por nombre o categoría
+    async BuscarProductoCategoria(termino: string): Promise<IProducto[]> {
+        const { data, error } = await supabase
+            .from('Producto')
+            .select('*')
+            .or(`nombre_producto.ilike.%${termino}%, categoria_id.ilike.%${termino}%`);
         
-        if(error){
-            console.log('Error al encontrar producto', error.message)
-            return []
+        if (error) {
+            console.log('Error al encontrar producto', error.message);
+            return [];
         }
-        return data as IProducto[]
-
+        return data as IProducto[];
     }
-
-
-
-
-
-}
-
+};
