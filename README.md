@@ -45,4 +45,54 @@ El sistema también permite a los administradores crear y gestionar las ferias, 
 ---
 
 ## 🧠 Arquitectura general
+studentsplaces/
+├── src/
+│ ├── componentes/ # Componentes reutilizables (Navbar, Sidebar, etc.)
+│ ├── paginas/ # Vistas principales del sistema (Home, Perfil, Ferias, etc.)
+│ ├── servicios/ # Lógica de conexión con Supabase
+│ ├── entidades/ # Interfaces y tipos TypeScript
+│ └── data/ # Configuración del proyecto (supabase.config.ts)
+├── public/
+├── package.json
+└── vite.config.js
+
+
+---
+
+## 👥 Integrantes del equipo
+
+| Nombre completo | Rol principal |
+|-----------------|----------------|
+| **Taylor Steven Álava Gresely** | Desarrollador Full Stack / Diseño de interfaz |
+| **David Alejandro Vilañez Palma** | Desarrollador Full Stack / Lógica de negocio y estructura del sistema |
+
+---
+
+## 🎯 Objetivo del proyecto
+
+Impulsar el talento estudiantil mediante una plataforma accesible y colaborativa, donde los jóvenes puedan **mostrar su trabajo, aprender del comercio digital y conectarse con nuevas oportunidades**.
+
+---
+
+## 💡 Futuras mejoras
+
+- Integración de **pagos en línea** mediante pasarelas seguras.
+- Sistema de **notificaciones y chat entre estudiantes**.
+- Implementación de **ranking de productos** por popularidad.
+- **Panel de administración avanzado** con métricas y reportes.
+
+---
+
+## 📸 Vista previa (opcional)
+
+*(Aquí puedes añadir capturas de pantalla o gifs del sistema si ya tienes vistas creadas.)*
+
+---
+
+## 📜 Licencia
+
+Este proyecto es de uso académico y fue desarrollado como parte de un proyecto universitario.  
+Todos los derechos reservados © 2025 — *StudentsPlaces Team*.
+
+---
 
