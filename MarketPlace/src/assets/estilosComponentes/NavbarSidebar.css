@@ -1,0 +1,129 @@
+/* === SIDEBAR === */
+.sidebar {
+  background-color: #0077cc;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.sidebar-expanded { width: 220px; }
+.sidebar-collapsed { width: 60px; }
+
+.sidebar-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.sidebar-nav { display: flex; flex-direction: column; margin-top: 20px; }
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.sidebar-item:hover { background-color: #005fa3; }
+.sidebar-label { margin-left: 12px; }
+
+/* === NAVBAR === */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background-color: #0077cc;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  gap: 20px;
+  width: 100%;
+}
+
+.navbar-logo { font-weight: 600; font-size: 22px; }
+.navbar-links { display: flex; align-items: center; gap: 12px; }
+.navbar-links a { margin: 0 12px; color: white; text-decoration: none; font-weight: 500; }
+.navbar-links a:hover { text-decoration: underline; }
+
+.navbar-search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin: 0 15px;
+}
+
+.search-bar { display: flex; width: 100%; max-width: 300px; }
+.search-bar input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 8px 0 0 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+.search-bar button {
+  padding: 6px 10px;
+  border-radius: 0 8px 8px 0;
+  border: none;
+  background-color: #005fa3;
+  color: white;
+  cursor: pointer;
+}
+
+/* === MEDIA QUERIES === */
+@media (max-width: 992px) {
+  .navbar { flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .navbar-search { order: 3; width: 100%; }
+  .navbar-links { order: 2; }
+}
+
+@media (max-width: 600px) {
+  .navbar { flex-direction: column; align-items: flex-start; padding: 15px; }
+  .navbar-links { flex-wrap: wrap; gap: 8px; }
+  .sidebar-expanded { width: 180px; }
+}
+
+
+.layout-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f2f8fc;
+}
+
+/* Main: columna con navbar arriba, contenido flexible y footer al final */
+.layout-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+}
+
+/* Navbar ocupa todo el ancho */
+.layout-main .navbar {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+/* Footer ocupa todo el ancho también */
+.layout-main footer {
+  width: 100%;
+  margin-top: auto;
+}

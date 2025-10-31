@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { FaHome, FaUser, FaCog, FaBoxOpen, FaShoppingCart, FaSignOutAlt, FaInfoCircle } from 'react-icons/fa';
+import { FaHome, FaUser, FaCog, FaBoxOpen, FaShoppingCart, FaSignOutAlt, FaInfoCircle, FaListAlt} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useUsuario } from '../context/UsuarioContext';
 import { supabase } from '../data/supabase.config';
 import { Link } from 'react-router-dom';
-
+import "../assets/estilosComponentes/NavbarSidebar.css";
 const Sidebar: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
   const { setUsuario } = useUsuario();
@@ -13,9 +13,9 @@ const Sidebar: React.FC = () => {
   const menuItems = [
     { icon: <FaHome />, label: 'Inicio', link: '/home' },
     { icon: <FaBoxOpen />, label: 'Subir productos', link: '/subir-productos' },
+    { icon: <FaListAlt />, label: 'Mis productos', link: '/mis-productos' }, 
     { icon: <FaShoppingCart />, label: 'carrito', link: '/carrito' },
     { icon: <FaUser />, label: 'Perfil', link: '/perfil' },
-    { icon: <FaCog />, label: 'Configuración', link: '/editar-perfil' },
     { icon: <FaInfoCircle />, label: 'Acerca de', link: '/acerca-de' },
   ];
 

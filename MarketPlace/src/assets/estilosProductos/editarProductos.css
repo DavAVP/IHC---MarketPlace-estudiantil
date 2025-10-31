@@ -1,0 +1,114 @@
+/* === Layout general === */
+.editar-producto-page {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f2f8fc;
+}
+.editar-producto-page .flex-1 {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Esto es clave para que los hijos no sobrepasen el contenedor */
+}
+
+/* Contenedor del contenido dentro de flex-1 */
+.editar-producto-page .flex-1 > .p-8 {
+  flex: 1 1 auto;   /* permite crecer y encoger */
+  min-width: 0;      /* evita overflow horizontal */
+  padding: 40px 30px;
+  overflow-y: auto;  /* scroll solo vertical */
+  overflow-x: hidden; /* elimina scroll horizontal */
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Formulario */
+.editar-producto-page form {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+  padding: 24px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* Inputs y textarea */
+.editar-producto-page input,
+.editar-producto-page textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+
+.editar-producto-page textarea {
+  resize: none;
+}
+
+/* Labels */
+.editar-producto-page label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+/* Botón guardar */
+.editar-producto-page button[type="submit"] {
+  background-color: #0077cc;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.editar-producto-page button[type="submit"]:hover {
+  background-color: #005fa3;
+  transform: translateY(-1px);
+}
+
+.editar-producto-page button[type="submit"]:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Vista previa de imagen */
+.editar-producto-page img {
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  object-fit: cover;
+}
+
+/* Título de la página */
+.editar-producto-page h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0077cc;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .editar-producto-page .flex-1 > .p-8 {
+    padding: 20px 15px;
+  }
+
+  .editar-producto-page form {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .editar-producto-page .flex-1 {
+    margin-left: 0;
+  }
+}

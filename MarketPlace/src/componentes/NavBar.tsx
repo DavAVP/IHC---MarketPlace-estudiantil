@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import BarraBusqueda from './BarraBusqueda';
 import { useUsuario } from '../context/UsuarioContext';
 import "../assets/estilosComponentes/componentes.css"
+import "../assets/estilosComponentes/NavbarSidebar.css";
+
 
 const Navbar: React.FC<{ onSearch: (query: string) => void }> = ({ onSearch }) => {
   const { usuario } = useUsuario();
@@ -16,6 +18,7 @@ const Navbar: React.FC<{ onSearch: (query: string) => void }> = ({ onSearch }) =
         {!usuario?.esAdmin && <Link to="/subir-productos">Subir Producto</Link>}
         {usuario?.esAdmin && <Link to="/admin/feria">Panel de Ferias</Link>}
         <Link to="/acerca-de">Acerca de</Link>
+        <Link to="/mis-productos">Mis Productos</Link>
       </div>
 
       <div className="navbar-search">

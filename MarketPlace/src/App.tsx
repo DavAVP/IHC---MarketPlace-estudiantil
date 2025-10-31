@@ -7,10 +7,11 @@ import SubirProductos from './paginas/Productos/Subir_producto';
 import AcercaDe from './paginas/home/Acercade';
 import Carrito from './paginas/carrito/carrito';
 import Catalogo from './paginas/home/catalogo';
-import { Perfil } from './paginas/Perfil/Perfil';
-import EditarPerfil from './paginas/Perfil/editarPerfil';
+import Perfil from './paginas/Perfil/Perfil';
 import RecuperarPassword from './paginas/login/RecuperarPassword'
 import Ver_producto from './paginas/Productos/Ver_producto';
+import MisProductos from './paginas/Productos/Mis_productos';
+import EditarProducto from './paginas/Productos/Editar_producto';
 
 import { UsuarioProvider, useUsuario } from './context/UsuarioContext';
 import type { JSX } from 'react';
@@ -40,8 +41,9 @@ function App() {
         <Route path="/carrito" element={<PrivateRoute><Carrito /></PrivateRoute>} />
         <Route path="/catalogo" element={<PrivateRoute><Catalogo /></PrivateRoute>} />
         <Route path="/perfil" element={<PrivateRoute><Perfil /></PrivateRoute>} />
-        <Route path="/editar-perfil" element={<PrivateRoute><EditarPerfil /></PrivateRoute>} />
         <Route path="/recuperar-password" element={<RecuperarPassword />} />
+        <Route path="/mis-productos" element={<PrivateRoute><MisProductos /></PrivateRoute>} />
+        <Route path="/editar-producto/:id_producto" element={<PrivateRoute><EditarProducto /></PrivateRoute>} />
         <Route path="/ver-producto/:id" element={<Ver_producto />} />
 
         <Route path="*" element={<Navigate to="/login" />} />

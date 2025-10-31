@@ -3,7 +3,7 @@ import type { IUsuario } from "../entidades/IUsuario";
 
 export const UsuarioServices = {
     async CrearUsuario(usuario: IUsuario): Promise<IUsuario | null>{
-        const {data, error} = await supabase.from('Usuario').insert([usuario]).select().single()
+        const {data, error} = await supabase.from('Usuarios').insert([usuario]).select().single()
 
         if (error){
             console.log('Error al crear el usuario', error.message)
@@ -44,13 +44,12 @@ export const UsuarioServices = {
         .update(usuario)
         .eq('id', id)
         .select()
-        .single()
 
         if(error){
             console.log('Error al actualizar usuario', error.message)
             return null
         }
-        return data as IUsuario
+        return data && data.length > 0 ? data[0] as IUsuario : null;
     },
 
     async EliminarUsuario(id: string): Promise<boolean>{

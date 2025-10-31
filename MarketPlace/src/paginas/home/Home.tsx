@@ -1,4 +1,3 @@
-// Home.tsx
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import Sidebar from '../../componentes/SideBar';
 import Navbar from '../../componentes/NavBar';
@@ -27,12 +26,21 @@ const Home: React.FC = () => {
   const [productos, setProductos] = useState<IProducto[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Cargar ferias y productos iniciales
+  // 🔹 Cargar ferias y productos del usuario logueado
   useEffect(() => {
     const cargarDatos = async () => {
       try {
         const feriasData = await FeriaService.ObtenerFerias();
-        const productosData = await productoServices.ObtenerProductos();
+        let productosData: IProducto[] = [];
+
+        if (usuario?.id) {
+          // Solo productos del usuario logueado
+          productosData = await productoServices.ObtenerProductoPorUsuario(usuario.id);
+        } else {
+          // Si no hay usuario, dejamos la lista vacía
+          productosData = [];
+        }
+
         setFerias(feriasData || []);
         setProductos(productosData || []);
       } catch (error) {
@@ -42,7 +50,7 @@ const Home: React.FC = () => {
       }
     };
     cargarDatos();
-  }, []);
+  }, [usuario]);
 
   // Carrusel dinámico solo con ferias
   const slides = useMemo(() => {
@@ -75,17 +83,21 @@ const Home: React.FC = () => {
 
   // 🔹 Función de búsqueda
   const buscarProductos = async (termino: string) => {
+    if (!usuario?.id) return; // Evita buscar si no hay usuario logueado
+
     if (termino.trim() === '') {
-      const productosData = await productoServices.ObtenerProductos();
+      const productosData = await productoServices.ObtenerProductoPorUsuario(usuario.id);
       setProductos(productosData || []);
     } else {
       const productosFiltrados = await productoServices.BuscarProductoCategoria(termino);
-      setProductos(productosFiltrados || []);
+      // Filtrar solo los productos del usuario
+      const productosDelUsuario = productosFiltrados.filter(p => p.Usuario_id === usuario.id);
+      setProductos(productosDelUsuario || []);
     }
   };
 
   // 🔹 Debounce para no saturar la DB
-  const handleSearch = useCallback(debounce(buscarProductos, 300), []);
+  const handleSearch = useCallback(debounce(buscarProductos, 300), [usuario]);
 
   return (
     <div className="home-page flex">
@@ -100,7 +112,7 @@ const Home: React.FC = () => {
               Bienvenido a la Feria, {usuario?.nombre || 'Invitado'}!
             </h2>
             <p className="text-gray-700 mt-2">
-              Explora los productos más destacados, conoce las ferias activas y forma parte de nuestra comunidad.
+              Explora tus productos más destacados, conoce las ferias activas y forma parte de nuestra comunidad.
             </p>
           </div>
 
@@ -116,11 +128,11 @@ const Home: React.FC = () => {
 
           {/* Productos destacados */}
           <section className="mt-10">
-            <h2 className="text-xl font-semibold text-blue-800 mb-4">Productos destacados</h2>
+            <h2 className="text-xl font-semibold text-blue-800 mb-4">Tus productos destacados</h2>
             {loading ? (
               <p className="text-gray-600">Cargando productos...</p>
             ) : productosDestacados.length === 0 ? (
-              <p className="text-gray-600">No hay productos disponibles.</p>
+              <p className="text-gray-600">No has subido productos todavía.</p>
             ) : (
               <div className="productos-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {productosDestacados.map((prod) => (
@@ -142,13 +154,19 @@ const Home: React.FC = () => {
                         <b>Precio:</b> ${prod.precio}
                       </p>
                     </div>
+                              {/* 🔹 Botón para editar producto */}
+                    <button
+                      onClick={() => window.location.href = `/editar-producto/${prod.id_producto}`}
+                      className="mt-3 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition"
+                      >
+                      ✏️ Editar Producto
+                    </button>
                   </div>
                 ))}
               </div>
             )}
           </section>
         </div>
-
         <Footer />
       </div>
     </div>
