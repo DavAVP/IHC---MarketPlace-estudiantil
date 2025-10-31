@@ -83,12 +83,6 @@ Impulsar el talento estudiantil mediante una plataforma accesible y colaborativa
 
 ---
 
-## 📸 Vista previa (opcional)
-
-*(Aquí puedes añadir capturas de pantalla o gifs del sistema si ya tienes vistas creadas.)*
-
----
-
 ## 📜 Licencia
 
 Este proyecto es de uso académico y fue desarrollado como parte de un proyecto universitario.  
