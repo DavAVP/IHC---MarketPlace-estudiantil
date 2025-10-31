@@ -63,8 +63,8 @@ studentsplaces/
 
 | Nombre completo | Rol principal |
 |-----------------|----------------|
-| **Taylor Steven Álava Gresely** | Desarrollador Full Stack / Diseño de interfaz |
-| **David Alejandro Vilañez Palma** | Desarrollador Full Stack / Lógica de negocio y estructura del sistema |
+| **Taylor Steven Álava Gresely** | Desarrollador Full Stack / Lógica de negocio y estructura del sistema  |
+| **David Alejandro Vilañez Palma** | Desarrollador Full Stack / Diseño de interfaz|
 
 ---
 
