@@ -1,9 +1,13 @@
+import { useIdioma } from "../context/IdiomasContext";
+
 const Footer: React.FC = () => {
+  const { translate } = useIdioma();
+
   return (
     <footer className="footer">
-      <p>© 2025 Feria Estudiantil. Todos los derechos reservados.</p>
+      <p>{translate("footer.copy")}</p>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

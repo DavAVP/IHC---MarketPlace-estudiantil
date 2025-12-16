@@ -1,35 +1,327 @@
 {
+    "common": {
+        "brand": "StudentsPlace",
+        "guest": "Invitado",
+        "searchPlaceholder": "Buscar productos, categorías...",
+        "loading": "Cargando...",
+        "price": "Precio",
+        "states": {
+            "empty": "No hay resultados disponibles."
+        },
+        "actions": {
+            "edit": "Editar",
+            "delete": "Eliminar",
+            "view": "Ver",
+            "saveChanges": "Guardar cambios",
+            "saving": "Guardando...",
+            "upload": "Subir producto",
+            "buy": "Comprar",
+            "comment": "Comentar",
+            "send": "Enviar",
+            "back": "Volver",
+            "close": "Cerrar",
+            "readAloud": "Leer en voz alta",
+            "stopReading": "Detener lectura"
+        },
+        "voice": {
+            "intro": "Bienvenido a StudentsPlace. Usa el menú para explorar las ferias y productos disponibles.",
+            "unsupported": "La lectura por voz no es compatible con este navegador."
+        }
+    },
+    "navbar": {
+        "toggle": "Abrir menú",
+        "links": {
+            "home": "Inicio",
+            "catalog": "Catálogo",
+            "upload": "Subir Producto",
+            "admin": "Panel de Ferias",
+            "about": "Acerca de",
+            "myProducts": "Mis Productos",
+            "cart": "Carrito",
+            "profile": "Perfil"
+        }
+    },
+    "sidebar": {
+        "logout": "Cerrar Sesión"
+    },
+    "footer": {
+        "copy": "© 2025 Feria Estudiantil. Todos los derechos reservados."
+    },
     "login": {
         "title": "Iniciar Sesión",
         "subtitle": "Bienvenido a la Feria de Emprendimientos ULEAM",
+        "introOne": "Bienvenido a la Feria de Emprendimientos Estudiantiles de la Universidad Laica Eloy Alfaro de Manabí (ULEAM).",
+        "introTwo": "Un marketplace estudiantil donde los alumnos pueden subir, mostrar y vender sus productos o proyectos.",
+        "introThree": "Crea tu cuenta, publica tus productos y conecta con otros emprendedores de la ULEAM.",
         "email": "Correo electrónico",
         "password": "Contraseña",
         "remember": "Recordarme",
         "forgotPassword": "¿Olvidaste tu contraseña?",
         "loginButton": "Ingresar",
+        "registerButton": "Crear cuenta",
         "googleLogin": "Iniciar con Google",
         "githubLogin": "Iniciar con GitHub",
-        "error": "Correo o contraseña incorrectos",
-        "blocked": "Demasiados intentos. Espera 30 segundos.",
-        "success": "Inicio de sesión exitoso"
+        "registerPrompt": "¿No tienes cuenta?",
+        "registerLink": "Regístrate aquí",
+        "rememberUser": "Recordar usuario",
+        "blocked": "Cuenta bloqueada temporalmente. Espera unos segundos.",
+        "failedAttempt": "Intento {count} de 3 fallido.",
+        "retry": "✅ Puedes volver a intentar iniciar sesión.",
+        "blockedShort": "Bloqueado...",
+        "success": "Inicio de sesión exitoso",
+        "invalidCredentials": "Correo o contraseña incorrectos",
+        "recoveryEmailMissing": "Por favor ingresa tu correo primero.",
+        "recoverySent": "📧 Correo de recuperación enviado.",
+        "loginToBuy": "Por favor, inicia sesión para comprar este producto."
+    },
+    "register": {
+        "title": "Crear Cuenta",
+        "name": "Nombre completo",
+        "email": "correo@ejemplo.com",
+        "password": "Contraseña",
+        "submit": "Registrarse",
+        "errors": {
+            "missing": "Completa todos los campos",
+            "passwordLength": "La contraseña debe tener al menos 6 caracteres"
+        }
+    },
+    "resetPassword": {
+        "title": "Restablecer Contraseña",
+        "password": "Nueva contraseña",
+        "confirm": "Confirmar contraseña",
+        "submit": "Guardar nueva contraseña",
+        "mismatch": "Las contraseñas no coinciden",
+        "success": "Contraseña actualizada correctamente",
+        "error": "Error al actualizar la contraseña"
     },
     "home": {
-        "welcome": "Bienvenido a la Feria,",
-        "explore": "Explora los productos más destacados, conoce las ferias activas y forma parte de nuestra comunidad.",
-        "fairs": "🎪 Ferias Activas",
+        "bannerTitle": "Bienvenido a la Feria, {name}!",
+        "bannerSubtitle": "Explora tus productos, conoce las ferias activas y forma parte de nuestra comunidad.",
+        "fairsTitle": "🎪 Ferias Activas",
         "noFairs": "No hay ferias activas por el momento.",
-        "featured": "Productos destacados",
-        "noProducts": "No hay productos disponibles.",
-        "loading": "Cargando productos..."
+        "featuredTitle": "Tus productos destacados",
+        "noProducts": "No has subido productos todavía.",
+        "loading": "Cargando productos...",
+        "editButton": "✏️ Editar Producto",
+        "fairTypeLabel": "Tipo:",
+        "fairDatesLabel": "📅 {start} → {end}",
+        "rulesLabel": "Reglas"
     },
-    "acercaDe": {
-        "welcome": "¡Bienvenido a StudentsPlace,",
-        "description": "StudentsPlace es una plataforma donde los estudiantes pueden descubrir, compartir y vender productos dentro de su comunidad universitaria.",
+    "categories": {
+        "loading": "Cargando categorías...",
+        "empty": "No hay categorías disponibles.",
+        "all": "Todas",
+        "title": "Categorías",
+        "subtitle": "Explora productos por categoría"
+    },
+    "catalog": {
+        "title": "Catálogo de Productos",
+        "subtitle": "Explora todos los productos disponibles en StudentsPlace.",
+        "categories": "Categorías",
+        "products": "Productos",
+        "empty": "No hay productos disponibles en esta categoría.",
+        "view": "🔍 Ver Producto"
+    },
+    "cart": {
+        "title": "Carrito de Compras",
+        "empty": "Tu carrito de Marketplace está vacío.",
+        "cartInfo": "Para utilizar el carrito de compras, asegúrate de iniciar sesión.",
+        "quantity": "Cantidad",
+        "payment": "Pagar",
+        "subtotal": "Subtotal",
+        "add": "Agregar al Carrito",
+        "added": "Agregado al Carrito"
+
+    },
+    "payment": {
+        "title": "Pasarela de pago",
+        "subtitle": "Completa tu compra simulando un pago con un banco ecuatoriano. No se ejecutarán cargos reales.",
+        "help": "Selecciona el banco con el que deseas simular el pago:",
+        "bankLabel": "Bancos disponibles",
+        "banks": {
+            "guayaquil": "Banco Guayaquil",
+            "pichincha": "Banco Pichincha"
+        },
+        "form": {
+            "cardholder": "Nombre del titular",
+            "cardNumber": "Número de tarjeta",
+            "expiry": "Vencimiento (MM/AA)",
+            "cvv": "CVV",
+            "idNumber": "Cédula / RUC",
+            "installments": "Cuotas",
+            "remember": "Guardar esta tarjeta para futuras compras"
+        },
+        "cardPreview": "Vista previa de la tarjeta",
+        "installments": {
+            "1": "1 pago (sin intereses)",
+            "3": "3 pagos",
+            "6": "6 pagos"
+        },
+        "button": "Pagar ahora",
+        "processing": "Procesando pago...",
+        "success": "✅ Pago aprobado por el banco seleccionado.",
+        "error": "Revisa los campos resaltados.",
+        "errors": {
+            "cardholder": "Ingresa el nombre completo del titular.",
+            "cardNumber": "Ingresa un número de tarjeta de 16 dígitos.",
+            "expiry": "Usa el formato MM/AA.",
+            "cvv": "Ingresa un CVV de 3 dígitos.",
+            "idNumber": "La identificación debe tener al menos 8 caracteres."
+        },
+        "summary": {
+            "title": "Resumen del pedido",
+            "products": "Productos",
+            "shipping": "Envío",
+            "total": "Total",
+            "help": "Estos valores son ilustrativos para la simulación."
+        },
+        "disclaimer_title": "Agregar identificación para desaduanamiento",
+        "disclaimer_description": "Las regulaciones aduaneras del Ecuador exigen que, para esta dirección de envío, se proporcione el número de identificación. Dicho dato será resguardado de forma segura y se utilizará únicamente para los procesos de validación y autorización ante la aduana, lo que puede implicar su compartición con transportistas y autoridades aduaneras, tanto para este pedido como para compras futuras y posibles devoluciones."
+
+    },
+    "about": {
+        "welcome": "¡Bienvenido a StudentsPlace, {name}!",
+        "description": "StudentsPlace es la plataforma donde estudiantes pueden descubrir, compartir y comprar productos dentro de su comunidad universitaria.",
         "developers": "Desarrolladores",
         "location": "Ubicación",
         "contact": "Contacto",
+        "contactText": "Puedes contactarnos vía correo electrónico o dejándonos un mensaje aquí:",
         "commentPlaceholder": "Escribe tu comentario...",
         "sendComment": "Enviar Comentario",
-        "thanks": "Gracias por tu comentario:"
+        "thanks": "Gracias por tu comentario:",
+        "policiesTitle": "Política y Términos de Uso",
+        "policies": [
+            "Solo usuarios mayores de 18 años pueden registrarse y publicar productos.",
+            "No se permite publicar contenido extraño, ofensivo o inapropiado.",
+            "Todos los productos deben cumplir con las normas de la plataforma.",
+            "Los vendedores deben asegurarse de que los productos ofrecidos sean apropiados para estudiantes y usuarios del sistema.",
+            "StudentsPlace se reserva el derecho de eliminar publicaciones que infrinjan estas políticas.",
+            "Al usar la plataforma, aceptas seguir todas las normas para garantizar un entorno seguro y confiable."
+        ],
+        "policiesNote": "Estas políticas buscan proteger a nuestra comunidad y asegurar que StudentsPlace se mantenga como un espacio profesional y confiable."
+    },
+    "profile": {
+        "title": "👤 Perfil de Usuario",
+        "subtitle": "Consulta tu información y actualízala cuando quieras.",
+        "info": "Información actual",
+        "name": "Nombre",
+        "email": "Correo",
+        "edit": "Editar información",
+        "password": "Contraseña (opcional)",
+        "passwordPlaceholder": "Mínimo 6 caracteres",
+        "save": "Guardar cambios",
+        "loading": "Guardando...",
+        "loginPrompt": "Por favor, inicia sesión para ver tu perfil.",
+        "messages": {
+            "userUnavailable": "Usuario no disponible.",
+            "nameRequired": "El nombre es requerido.",
+            "passwordLength": "La contraseña debe tener al menos 6 caracteres.",
+            "success": "✅ Cambios guardados correctamente.",
+            "error": "Error al guardar cambios."
+        }
+    },
+    "myProducts": {
+        "title": "📦 Mis Productos",
+        "loading": "Cargando productos...",
+        "empty": "No has subido ningún producto todavía.",
+        "edit": "✏️ Editar",
+        "delete": "🗑️ Eliminar"
+    },
+    "upload": {
+        "title": "Subir nuevo producto",
+        "name": "Nombre del producto",
+        "price": "Precio",
+        "description": "Descripción",
+        "location": "Ubicación del producto",
+        "category": "Categoría",
+        "categoryPlaceholder": "Selecciona una categoría",
+        "fair": "Feria (opcional)",
+        "fairPlaceholder": "Sin feria",
+        "submit": "Subir producto"
+    },
+    "editProduct": {
+        "title": "✏️ Editar Producto",
+        "image": "Imagen del Producto",
+        "name": "Nombre del Producto",
+        "description": "Descripción",
+        "price": "Precio",
+        "category": "Categoría",
+        "categoryPlaceholder": "Seleccione una categoría",
+        "fair": "Feria (opcional)",
+        "fairPlaceholder": "Ninguna (Opcional)",
+        "save": "Guardar Cambios",
+        "saving": "Guardando..."
+    },
+    "productDetail": {
+        "loading": "Cargando producto...",
+        "buy": "🛒 Comprar",
+        "back": "🔙 Volver al Catálogo",
+        "commentTitle": "Deja tu comentario",
+        "commentPlaceholder": "Escribe tu comentario...",
+        "commentAction": "💬 Comentar"
+    },
+    "messages": {
+        "deleteConfirm": "¿Seguro que deseas eliminar este producto?",
+        "deleteSuccess": "✅ Producto eliminado correctamente",
+        "deleteError": "❌ Error al eliminar el producto",
+        "uploading": "Subiendo producto...",
+        "uploadSuccess": "Producto subido correctamente",
+        "uploadError": "Error al subir producto, inténtalo nuevamente",
+        "productNotFound": "Producto no encontrado",
+        "commentThanks": "Gracias por tu comentario:"
+    },
+    "admin": {
+        "accessDenied": {
+            "title": "Acceso denegado",
+            "message": "No tienes permisos para ver esta página."
+        },
+        "fair": {
+            "title": "Crear Feria",
+            "name": "Nombre de la feria",
+            "type": "Tipo de feria",
+            "start": "Fecha de inicio",
+            "end": "Fecha de fin",
+            "rules": "Reglas de la feria",
+            "placeholderName": "Ej: Feria Octubre 2025",
+            "placeholderRules": "Ej: Solo estudiantes activos pueden publicar.",
+            "create": "Crear Feria",
+            "creating": "Creando...",
+            "types": {
+                "virtual": "Virtual",
+                "inPerson": "Presencial",
+                "mixed": "Mixta"
+            }
+        },
+        "category": {
+            "title": "Crear Categoría",
+            "name": "Nombre de la categoría",
+            "description": "Descripción de la categoría",
+            "selectFair": "Selecciona la feria (opcional)",
+            "none": "-- Ninguna --",
+            "create": "Crear Categoría"
+        },
+        "edit": {
+            "fairs": "Editar Ferias",
+            "categories": "Editar Categorías"
+        },
+        "buttons": {
+            "edit": "Editar",
+            "delete": "Eliminar"
+        },
+        "confirm": {
+            "deleteFair": "¿Seguro que quieres eliminar esta feria?",
+            "deleteCategory": "¿Seguro que quieres eliminar esta categoría?"
+        },
+        "errors": {
+            "fillAll": "Completa todos los campos",
+            "fillAllCategory": "Completa todos los campos de la categoría",
+            "date": "La fecha de fin debe ser igual o posterior a la fecha de inicio",
+            "fairCreate": "No se pudo crear la feria",
+            "categoryCreate": "No se pudo crear la categoría"
+        },
+        "alerts": {
+            "fairCreated": "Feria creada con éxito 🎉",
+            "categoryCreated": "Categoría creada exitosamente 🎉"
+        }
     }
 }

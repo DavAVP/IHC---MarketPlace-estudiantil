@@ -11,6 +11,7 @@ import { uploadFile, deleteFile } from "../../services/storageService";
 import Sidebar from "../../componentes/SideBar";
 import Navbar from "../../componentes/NavBar";
 import Footer from "../../componentes/footer";
+import { useIdioma } from "../../context/IdiomasContext";
 import "../../assets/estilosProductos/editarProductos.css"
 
 const EditarProducto: React.FC = () => {
@@ -27,6 +28,7 @@ const EditarProducto: React.FC = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [guardando, setGuardando] = useState(false);
+  const { translate } = useIdioma();
 
   // --- NUEVO: Estados para las listas ---
   const [listaCategorias, setListaCategorias] = useState<ICategoria[]>([]);
@@ -138,11 +140,11 @@ const EditarProducto: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center h-screen text-gray-600">Cargando producto...</div>;
+    return <div className="flex items-center justify-center h-screen text-gray-600">{translate('productDetail.loading')}</div>;
   }
 
   if (!producto) {
-    return <div className="flex items-center justify-center h-screen text-gray-600">Producto no encontrado</div>;
+    return <div className="flex items-center justify-center h-screen text-gray-600">{translate('messages.productNotFound')}</div>;
   }
 
   return (
@@ -152,18 +154,18 @@ const EditarProducto: React.FC = () => {
         <Navbar onSearch={() => {}} />
         <div className="p-8">
 
-          <h1>✏️ Editar Producto</h1>
+          <h1>{translate('editProduct.title')}</h1>
 
           <form onSubmit={handleGuardar}>
 
             <div>
-              <label>Imagen del Producto</label>
+              <label>{translate('editProduct.image')}</label>
               {preview && <img src={preview} alt="Vista previa" style={{ width: '192px', height: '192px', marginBottom: '10px' }} />}
               <input type="file" accept="image/*" onChange={handleImagen} />
             </div>
 
             <div>
-              <label>Nombre del Producto</label>
+              <label>{translate('editProduct.name')}</label>
               <input
                 type="text"
                 value={nombre}
@@ -173,7 +175,7 @@ const EditarProducto: React.FC = () => {
             </div>
 
             <div>
-              <label>Descripción</label>
+              <label>{translate('editProduct.description')}</label>
               <textarea
                 value={descripcion}
                 onChange={(e) => setDescripcion(e.target.value)}
@@ -183,7 +185,7 @@ const EditarProducto: React.FC = () => {
             </div>
 
             <div>
-              <label>Precio</label>
+              <label>{translate('editProduct.price')}</label>
               <input
                 type="number"
                 value={precio}
@@ -194,13 +196,13 @@ const EditarProducto: React.FC = () => {
 
             {/* --- CAMBIO: Input a Select para Categoría --- */}
             <div>
-              <label>Categoría</label>
+              <label>{translate('editProduct.category')}</label>
               <select
                 value={categoria}
                 onChange={(e) => setCategoria(e.target.value)}
                 required
               >
-                <option value="">Seleccione una categoría</option>
+                <option value="">{translate('editProduct.categoryPlaceholder')}</option>
                 {listaCategorias.map((cat) => (
                   // Asumiendo que la entidad ICategoria tiene 'id_categoria' y 'nombre_categoria'
                   <option key={cat.id_categoria} value={cat.id_categoria}>
@@ -212,12 +214,12 @@ const EditarProducto: React.FC = () => {
 
             {/* --- CAMBIO: Input a Select para Feria --- */}
             <div>
-              <label>Feria (opcional)</label>
+              <label>{translate('editProduct.fair')}</label>
               <select
                 value={feria}
                 onChange={(e) => setFeria(e.target.value)}
               >
-                <option value="">Ninguna (Opcional)</option>
+                <option value="">{translate('editProduct.fairPlaceholder')}</option>
                 {listaFerias.map((f) => (
                    // Asumiendo que la entidad IFeria tiene 'id_feria' y 'nombre_feria'
                   <option key={f.id_feria} value={f.id_feria}>
@@ -231,7 +233,7 @@ const EditarProducto: React.FC = () => {
               type="submit"
               disabled={guardando}
             >
-              {guardando ? "Guardando..." : "Guardar Cambios"}
+              {guardando ? translate('editProduct.saving') : translate('editProduct.save')}
             </button>
           </form>
         </div>

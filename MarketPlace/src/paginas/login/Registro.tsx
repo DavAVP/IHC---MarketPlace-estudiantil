@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useUsuario } from '../../context/UsuarioContext';
 import { authService } from '../../services/auth.services';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useIdioma } from '../../context/IdiomasContext';
+import '../../assets/estilosAuth/auth.css';
 
 const Registro: React.FC = () => {
   const [nombre, setNombre] = useState('');
@@ -12,75 +14,92 @@ const Registro: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { setUsuario } = useUsuario();
+  const { translate } = useIdioma();
 
   const handleRegistro = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
     if (!nombre || !correo || !password) {
-      setError('Completa todos los campos');
+      setError(translate('register.errors.missing'));
       return;
     }
 
     if (password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres');
+      setError(translate('register.errors.passwordLength'));
       return;
     }
 
     try {
       const usuario = await authService.registerWithEmail(correo, password, nombre);
-      if (!usuario) throw new Error('No se pudo registrar el usuario');
+      if (!usuario) throw new Error('REGISTER_ERROR');
 
       setUsuario(usuario);
       navigate('/login');
     } catch (err: any) {
       console.error(err);
-      setError(err.message || 'Error en el registro');
+      const fallback = translate('register.errors.missing');
+      if (err.message === 'REGISTER_ERROR') {
+        setError(fallback);
+      } else {
+        setError(err.message || fallback);
+      }
     }
   };
 
   return (
-    <div className="page-container">
-      <div className="login-card">
-        <h2>Crear Cuenta</h2>
-        {error && <p className="error">{error}</p>}
+    <div className="auth-page">
+      <div className="auth-card auth-card--single">
+        <h2 className="auth-form__title">{translate('register.title')}</h2>
+        {error && <p className="auth-error">{error}</p>}
 
-        <form onSubmit={handleRegistro}>
-          <input
-            type="text"
-            placeholder="Nombre completo"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-          />
-          <input
-            type="email"
-            placeholder="correo@ejemplo.com"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-          />
-          <div style={{ position: 'relative' }}>
+        <form onSubmit={handleRegistro} className="auth-form">
+          <label className="auth-label">
+            <span>{translate('register.name')}</span>
             <input
-              type={mostrarPass ? 'text' : 'password'}
-              placeholder="********"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{ paddingRight: '35px' }}
+              type="text"
+              className="auth-input"
+              value={nombre}
+              placeholder={translate('register.name')}
+              onChange={(e) => setNombre(e.target.value)}
             />
-            <span
-              onClick={() => setMostrarPass(!mostrarPass)}
-              style={{
-                position: 'absolute',
-                right: '10px',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                cursor: 'pointer',
-                color: '#333',
-              }}
-            >
-              {mostrarPass ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
-          <button type="submit">Registrarse</button>
+          </label>
+
+          <label className="auth-label">
+            <span>{translate('register.email')}</span>
+            <input
+              type="email"
+              className="auth-input"
+              value={correo}
+              placeholder={translate('register.email')}
+              onChange={(e) => setCorreo(e.target.value)}
+            />
+          </label>
+
+          <label className="auth-label auth-label--password">
+            <span>{translate('register.password')}</span>
+            <div className="auth-password">
+              <input
+                type={mostrarPass ? 'text' : 'password'}
+                className="auth-input"
+                value={password}
+                placeholder="********"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="auth-password__toggle"
+                onClick={() => setMostrarPass((prev) => !prev)}
+                aria-label={mostrarPass ? 'Hide password' : 'Show password'}
+              >
+                {mostrarPass ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+          </label>
+
+          <button type="submit" className="auth-submit">
+            {translate('register.submit')}
+          </button>
         </form>
       </div>
     </div>

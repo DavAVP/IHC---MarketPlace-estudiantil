@@ -6,6 +6,7 @@ import Sidebar from "../../componentes/SideBar";
 import Navbar from "../../componentes/NavBar";
 import Footer from "../../componentes/footer";
 import '../../assets/estilosPerfil/perfil.css';
+import { useIdioma } from '../../context/IdiomasContext';
 
 export const Perfil: React.FC = () => {
   const { usuario } = useUsuario();
@@ -15,6 +16,8 @@ export const Perfil: React.FC = () => {
   const [contrasena, setContrasena] = useState<string>('');
   const [mensaje, setMensaje] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [mensajeTipo, setMensajeTipo] = useState<'success' | 'error' | null>(null);
+  const { translate } = useIdioma();
 
   useEffect(() => {
     if (usuario) {
@@ -28,15 +31,18 @@ export const Perfil: React.FC = () => {
     setMensaje('');
 
     if (!usuario?.id) {
-      setMensaje('Usuario no disponible.');
+      setMensaje(translate('profile.messages.userUnavailable'));
+      setMensajeTipo('error');
       return;
     }
     if (!nombre.trim()) {
-      setMensaje('El nombre es requerido.');
+      setMensaje(translate('profile.messages.nameRequired'));
+      setMensajeTipo('error');
       return;
     }
     if (contrasena && contrasena.length < 6) {
-      setMensaje('La contraseña debe tener al menos 6 caracteres.');
+      setMensaje(translate('profile.messages.passwordLength'));
+      setMensajeTipo('error');
       return;
     }
 
@@ -54,21 +60,22 @@ export const Perfil: React.FC = () => {
         if (authError) throw authError;
       }
 
-      setMensaje('✅ Cambios guardados correctamente.');
+      setMensaje(translate('profile.messages.success'));
+      setMensajeTipo('success');
       setContrasena('');
     } catch (err: any) {
       console.error('Error al guardar cambios:', err);
-      setMensaje(err?.message ?? 'Error al guardar cambios.');
+      setMensaje(err?.message ?? translate('profile.messages.error'));
+      setMensajeTipo('error');
     } finally {
       setLoading(false);
     }
   };
 
   const getMensajeClass = () => {
-    if (mensaje.includes('Error') || mensaje.includes('requerido')) {
-      return 'text-red';
-    }
-    return 'text-green';
+    if (mensajeTipo === 'error') return 'text-red';
+    if (mensajeTipo === 'success') return 'text-green';
+    return '';
   };
 
   return (
@@ -79,31 +86,31 @@ export const Perfil: React.FC = () => {
 
         <main className="perfil-container">
           <div className="perfil-header">
-            <h1>👤 Perfil de Usuario</h1>
-            <p>Consulta tu información y actualízala cuando quieras.</p>
+            <h1>{translate('profile.title')}</h1>
+            <p>{translate('profile.subtitle')}</p>
           </div>
 
           {usuario ? (
             <>
               <div className="perfil-info">
-                <h2>Información actual</h2>
+                <h2>{translate('profile.info')}</h2>
                 <div className="info-grid">
                   <div>
-                    <strong>Nombre:</strong>
+                    <strong>{translate('profile.name')}:</strong>
                     <p>{usuario.nombre}</p>
                   </div>
                   <div>
-                    <strong>Correo:</strong>
+                    <strong>{translate('profile.email')}:</strong>
                     <p>{usuario.correo}</p>
                   </div>
                 </div>
               </div>
 
               <div className="editar-perfil">
-                <h2>Editar información</h2>
+                <h2>{translate('profile.edit')}</h2>
                 <form onSubmit={handleSubmit}>
                   <div className="form-group">
-                    <label htmlFor="nombre">Nombre</label>
+                    <label htmlFor="nombre">{translate('profile.name')}</label>
                     <input
                       id="nombre"
                       type="text"
@@ -114,7 +121,7 @@ export const Perfil: React.FC = () => {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="correo">Correo</label>
+                    <label htmlFor="correo">{translate('profile.email')}</label>
                     <input
                       id="correo"
                       type="email"
@@ -124,11 +131,11 @@ export const Perfil: React.FC = () => {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="contrasena">Contraseña (opcional)</label>
+                    <label htmlFor="contrasena">{translate('profile.password')}</label>
                     <input
                       id="contrasena"
                       type="password"
-                      placeholder="Mínimo 6 caracteres"
+                      placeholder={translate('profile.passwordPlaceholder')}
                       value={contrasena}
                       onChange={(e) => setContrasena(e.target.value)}
                       disabled={loading}
@@ -136,7 +143,7 @@ export const Perfil: React.FC = () => {
                   </div>
 
                   <button type="submit" disabled={loading} className="btn-guardar">
-                    {loading ? 'Guardando...' : 'Guardar cambios'}
+                    {loading ? translate('profile.loading') : translate('profile.save')}
                   </button>
 
                   {mensaje && (
@@ -149,7 +156,7 @@ export const Perfil: React.FC = () => {
             </>
           ) : (
             <p className="text-gray">
-              Por favor, inicia sesión para ver tu perfil.
+              {translate('profile.loginPrompt')}
             </p>
           )}
         </main>

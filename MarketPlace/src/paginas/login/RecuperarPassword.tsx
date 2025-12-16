@@ -1,104 +1,69 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../data/supabase.config';
+import { useIdioma } from '../../context/IdiomasContext';
+import '../../assets/estilosAuth/auth.css';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmar, setConfirmar] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { translate } = useIdioma();
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
 
     if (password !== confirmar) {
-      alert('Las contraseñas no coinciden');
+      setError(translate('resetPassword.mismatch'));
       return;
     }
 
     try {
-      const { error } = await supabase.auth.updateUser({ password });
-      if (error) throw error;
-      alert('Contraseña actualizada correctamente');
+      const { error: updateError } = await supabase.auth.updateUser({ password });
+      if (updateError) throw updateError;
+      alert(translate('resetPassword.success'));
       navigate('/login');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert('Error al actualizar la contraseña');
+      setError(translate('resetPassword.error'));
     }
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        backgroundColor: '#e8f0fe',
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: 'white',
-          borderRadius: '16px',
-          boxShadow: '0 8px 20px rgba(0, 0, 0, 0.15)',
-          padding: '40px',
-          width: '400px',
-        }}
-      >
-        <h2
-          style={{
-            textAlign: 'center',
-            color: '#0077cc',
-            fontWeight: 'bold',
-            marginBottom: '20px',
-          }}
-        >
-          Restablecer Contraseña
-        </h2>
+    <div className="auth-page">
+      <div className="auth-card auth-card--single">
+        <h2 className="auth-form__title">{translate('resetPassword.title')}</h2>
+        {error && <p className="auth-error">{error}</p>}
 
-        <form onSubmit={handleResetPassword}>
-          <input
-            type="password"
-            placeholder="Nueva contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '6px',
-              border: '1px solid #ccc',
-            }}
-          />
-          <input
-            type="password"
-            placeholder="Confirmar contraseña"
-            value={confirmar}
-            onChange={(e) => setConfirmar(e.target.value)}
-            required
-            style={{
-              width: '100%',
-              padding: '10px',
-              marginBottom: '10px',
-              borderRadius: '6px',
-              border: '1px solid #ccc',
-            }}
-          />
-          <button
-            type="submit"
-            style={{
-              width: '100%',
-              backgroundColor: '#0077cc',
-              color: 'white',
-              border: 'none',
-              padding: '10px',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-            }}
-          >
-            Guardar nueva contraseña
+        <form onSubmit={handleResetPassword} className="auth-form">
+          <label className="auth-label">
+            <span>{translate('resetPassword.password')}</span>
+            <input
+              type="password"
+              className="auth-input"
+              value={password}
+              placeholder={translate('resetPassword.password')}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
+
+          <label className="auth-label">
+            <span>{translate('resetPassword.confirm')}</span>
+            <input
+              type="password"
+              className="auth-input"
+              value={confirmar}
+              placeholder={translate('resetPassword.confirm')}
+              onChange={(e) => setConfirmar(e.target.value)}
+              required
+            />
+          </label>
+
+          <button type="submit" className="auth-submit">
+            {translate('resetPassword.submit')}
           </button>
         </form>
       </div>

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { CategoriaService } from '../services/categoria.service';
 import type { ICategoria } from '../entidades/Categoria';
+import { useIdioma } from '../context/IdiomasContext';
 import '../assets/estilosComponentes/categorias.css';
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const Categorias: React.FC<Props> = ({ onSelectCategoria, categoriaSeleccionada }) => {
+  const { translate } = useIdioma();
   const [categorias, setCategorias] = useState<ICategoria[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,8 +29,8 @@ const Categorias: React.FC<Props> = ({ onSelectCategoria, categoriaSeleccionada 
     cargarCategorias();
   }, []);
 
-  if (loading) return <p>Cargando categorías...</p>;
-  if (categorias.length === 0) return <p>No hay categorías disponibles.</p>;
+  if (loading) return <p>{translate('categories.loading')}</p>;
+  if (categorias.length === 0) return <p>{translate('categories.empty')}</p>;
 
   return (
     <div className="categorias-grid">
@@ -36,7 +38,7 @@ const Categorias: React.FC<Props> = ({ onSelectCategoria, categoriaSeleccionada 
         className={`categoria-card ${!categoriaSeleccionada ? 'seleccionada' : ''}`}
         onClick={() => onSelectCategoria(null)}
       >
-        <h4>Todas</h4>
+        <h4>{translate('categories.all')}</h4>
       </div>
       {categorias.map((cat) => (
         <div

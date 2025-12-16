@@ -1,35 +1,324 @@
 {
+    "common": {
+        "brand": "StudentsPlace",
+        "guest": "Guest",
+        "searchPlaceholder": "Search products, categories...",
+        "loading": "Loading...",
+        "price": "Price",
+        "states": {
+            "empty": "No items available."
+        },
+        "actions": {
+            "edit": "Edit",
+            "delete": "Delete",
+            "view": "View",
+            "saveChanges": "Save changes",
+            "saving": "Saving...",
+            "upload": "Upload product",
+            "buy": "Buy",
+            "comment": "Comment",
+            "send": "Send",
+            "back": "Back",
+            "close": "Close",
+            "readAloud": "Read aloud",
+            "stopReading": "Stop reading"
+        },
+        "voice": {
+            "intro": "Welcome to StudentsPlace. Use the menu to explore available fairs and products.",
+            "unsupported": "Voice reading is not supported in this browser."
+        }
+    },
+    "navbar": {
+        "toggle": "Toggle menu",
+        "links": {
+            "home": "Home",
+            "catalog": "Catalog",
+            "upload": "Upload Product",
+            "admin": "Fairs Panel",
+            "about": "About",
+            "myProducts": "My Products",
+            "cart": "Cart",
+            "profile": "Profile"
+        }
+    },
+    "sidebar": {
+        "logout": "Log Out"
+    },
+    "footer": {
+        "copy": "© 2025 Student Fair. All rights reserved."
+    },
     "login": {
-        "title": "Login",
+        "title": "Sign In",
         "subtitle": "Welcome to the ULEAM Entrepreneurship Fair",
+        "introOne": "Welcome to the Student Entrepreneurship Fair at Universidad Laica Eloy Alfaro de Manabí (ULEAM).",
+        "introTwo": "A student marketplace where learners can upload, showcase, and sell their products or projects.",
+        "introThree": "Create your account, publish your products, and connect with other entrepreneurs at ULEAM.",
         "email": "Email",
         "password": "Password",
         "remember": "Remember me",
         "forgotPassword": "Forgot your password?",
         "loginButton": "Sign In",
-        "googleLogin": "Sign in with Google",
-        "githubLogin": "Sign in with GitHub",
-        "error": "Incorrect email or password",
-        "blocked": "Too many attempts. Please wait 30 seconds.",
-        "success": "Login successful"
+        "googleLogin": "Continue with Google",
+        "githubLogin": "Continue with GitHub",
+        "registerPrompt": "Don't have an account?",
+        "registerLink": "Register here",
+        "rememberUser": "Remember user",
+        "blocked": "Account temporarily locked. Please wait a moment.",
+        "failedAttempt": "Attempt {count} of 3 failed.",
+        "retry": "✅ You can try to sign in again.",
+        "blockedShort": "Locked...",
+        "success": "Login successful",
+        "invalidCredentials": "Incorrect email or password",
+        "recoveryEmailMissing": "Please enter your email first.",
+        "recoverySent": "📧 Recovery email sent."
+    },
+    "register": {
+        "title": "Create Account",
+        "name": "Full name",
+        "email": "email@example.com",
+        "password": "Password",
+        "submit": "Sign Up",
+        "errors": {
+            "missing": "Please complete all fields",
+            "passwordLength": "Password must be at least 6 characters"
+        }
+    },
+    "resetPassword": {
+        "title": "Reset Password",
+        "password": "New password",
+        "confirm": "Confirm password",
+        "submit": "Save new password",
+        "mismatch": "Passwords do not match",
+        "success": "Password updated successfully",
+        "error": "Error updating password"
     },
     "home": {
-        "welcome": "Welcome to the Fair,",
-        "explore": "Explore the most featured products, learn about active fairs, and be part of our community.",
-        "fairs": "🎪 Active Fairs",
+        "bannerTitle": "Welcome to the Fair, {name}!",
+        "bannerSubtitle": "Explore your products, discover active fairs, and join our community.",
+        "fairsTitle": "🎪 Active Fairs",
         "noFairs": "No active fairs at the moment.",
-        "featured": "Featured Products",
-        "noProducts": "No products available.",
-        "loading": "Loading products..."
+        "featuredTitle": "Your featured products",
+        "noProducts": "You have not uploaded any products yet.",
+        "loading": "Loading products...",
+        "editButton": "✏️ Edit Product",
+        "fairTypeLabel": "Type:",
+        "fairDatesLabel": "📅 {start} → {end}",
+        "rulesLabel": "Rules"
     },
-    "acercaDe": {
-        "welcome": "Welcome to StudentsPlace,",
-        "description": "StudentsPlace is a platform where students can discover, share, and sell products within their university community.",
+    "categories": {
+        "loading": "Loading categories...",
+        "empty": "No categories available.",
+        "all": "All",
+        "title": "Categories",
+        "subtitle": "Browse products by category"
+    },
+    "catalog": {
+        "title": "Product Catalog",
+        "subtitle": "Browse every product available at StudentsPlace.",
+        "categories": "Categories",
+        "products": "Products",
+        "empty": "There are no products available in this category.",
+        "view": "🔍 View Product"
+    },
+    "cart": {
+        "title": "Shopping Cart",
+        "empty": "Products you add to the cart will appear here.",
+        "carritoInfo": "Please sign in to add products to your cart or proceed to checkout.",
+        "quantity": "Quantity",
+        "payment": "Pay",
+        "subtotal": "Subtotal",
+        "add": "Add to Cart",
+        "added": "Added to Cart",
+        "addToCart": "Add to Cart"
+    },
+    "payment": {
+        "title": "Checkout",
+        "subtitle": "Complete your purchase by simulating a payment with an Ecuadorian bank. No real charges will be made.",
+        "help": "Choose the bank you would like to simulate your payment with:",
+        "bankLabel": "Available banks",
+        "banks": {
+            "guayaquil": "Banco Guayaquil",
+            "pichincha": "Banco Pichincha"
+        },
+        "form": {
+            "cardholder": "Cardholder name",
+            "cardNumber": "Card number",
+            "expiry": "Expiration (MM/YY)",
+            "cvv": "CVV",
+            "idNumber": "National ID / RUC",
+            "installments": "Installments",
+            "remember": "Save this card for next time"
+        },
+        "cardPreview": "Card preview",
+        "installments": {
+            "1": "1 payment (no interest)",
+            "3": "3 payments",
+            "6": "6 payments"
+        },
+        "button": "Pay now",
+        "processing": "Processing payment...",
+        "success": "✅ Payment approved by the selected bank.",
+        "error": "Please review the highlighted fields.",
+        "errors": {
+            "cardholder": "Enter the full cardholder name.",
+            "cardNumber": "Enter a 16-digit card number.",
+            "expiry": "Use the MM/YY format.",
+            "cvv": "Enter a 3-digit CVV.",
+            "idNumber": "ID must contain at least 8 characters."
+        },
+        "summary": {
+            "title": "Order summary",
+            "products": "Products",
+            "shipping": "Shipping",
+            "total": "Total",
+            "help": "These amounts are illustrative for the simulation."
+        },
+        "disclaimer_title": "Add ID for customs clearance",
+        "disclaimer_description": "Ecuadorian customs regulations require the identification number for this shipping address. The data will be stored securely and used only for validation with carriers and customs authorities for current and future orders."
+    },
+    "about": {
+        "welcome": "Welcome to StudentsPlace, {name}!",
+        "description": "StudentsPlace is the platform where students can discover, share, and buy products within their university community.",
         "developers": "Developers",
         "location": "Location",
         "contact": "Contact",
+        "contactText": "You can reach us via email or by leaving a message here:",
         "commentPlaceholder": "Write your comment...",
         "sendComment": "Send Comment",
-        "thanks": "Thanks for your comment:"
+        "thanks": "Thanks for your comment:",
+        "policiesTitle": "Policy and Terms of Use",
+        "policies": [
+            "Only users 18 or older can register and publish products.",
+            "Publishing strange, offensive, or inappropriate content is not allowed.",
+            "All products must comply with the platform guidelines.",
+            "Sellers must ensure their products are appropriate for students and platform users.",
+            "StudentsPlace reserves the right to remove listings that violate these policies.",
+            "By using the platform, you agree to follow all rules to guarantee a safe and trusted environment."
+        ],
+        "policiesNote": "These policies protect our community and keep StudentsPlace a professional, trustworthy space."
+    },
+    "profile": {
+        "title": "👤 User Profile",
+        "subtitle": "Check your information and update it whenever you need.",
+        "info": "Current information",
+        "name": "Name",
+        "email": "Email",
+        "edit": "Edit information",
+        "password": "Password (optional)",
+        "passwordPlaceholder": "At least 6 characters",
+        "save": "Save changes",
+        "loading": "Saving...",
+        "loginPrompt": "Please sign in to view your profile.",
+        "messages": {
+            "userUnavailable": "User not available.",
+            "nameRequired": "Name is required.",
+            "passwordLength": "Password must be at least 6 characters.",
+            "success": "✅ Changes saved successfully.",
+            "error": "Error saving changes."
+        }
+    },
+    "myProducts": {
+        "title": "📦 My Products",
+        "loading": "Loading products...",
+        "empty": "You have not uploaded any products yet.",
+        "edit": "✏️ Edit",
+        "delete": "🗑️ Delete"
+    },
+    "upload": {
+        "title": "Upload new product",
+        "name": "Product name",
+        "price": "Price",
+        "description": "Description",
+        "location": "Product location",
+        "category": "Category",
+        "categoryPlaceholder": "Select a category",
+        "fair": "Fair (optional)",
+        "fairPlaceholder": "No fair",
+        "submit": "Upload product"
+    },
+    "editProduct": {
+        "title": "✏️ Edit Product",
+        "image": "Product Image",
+        "name": "Product Name",
+        "description": "Description",
+        "price": "Price",
+        "category": "Category",
+        "categoryPlaceholder": "Select a category",
+        "fair": "Fair (optional)",
+        "fairPlaceholder": "None (Optional)",
+        "save": "Save Changes",
+        "saving": "Saving..."
+    },
+    "productDetail": {
+        "loading": "Loading product...",
+        "buy": "🛒 Buy",
+        "back": "🔙 Back to Catalog",
+        "commentTitle": "Leave your comment",
+        "commentPlaceholder": "Write your comment...",
+        "commentAction": "💬 Comment"
+    },
+    "messages": {
+        "deleteConfirm": "Are you sure you want to delete this product?",
+        "deleteSuccess": "✅ Product deleted successfully",
+        "deleteError": "❌ Error deleting the product",
+        "uploading": "Uploading product...",
+        "uploadSuccess": "Product uploaded successfully",
+        "uploadError": "Error uploading the product, please try again",
+        "productNotFound": "Product not found",
+        "commentThanks": "Thanks for your comment:"
+    },
+    "admin": {
+        "accessDenied": {
+            "title": "Access denied",
+            "message": "You do not have permission to view this page."
+        },
+        "fair": {
+            "title": "Create Fair",
+            "name": "Fair name",
+            "type": "Fair type",
+            "start": "Start date",
+            "end": "End date",
+            "rules": "Fair rules",
+            "placeholderName": "Ex: October 2025 Fair",
+            "placeholderRules": "Ex: Only active students can publish.",
+            "create": "Create Fair",
+            "creating": "Creating...",
+            "types": {
+                "virtual": "Virtual",
+                "inPerson": "In-person",
+                "mixed": "Hybrid"
+            }
+        },
+        "category": {
+            "title": "Create Category",
+            "name": "Category name",
+            "description": "Category description",
+            "selectFair": "Select fair (optional)",
+            "none": "-- None --",
+            "create": "Create Category"
+        },
+        "edit": {
+            "fairs": "Edit Fairs",
+            "categories": "Edit Categories"
+        },
+        "buttons": {
+            "edit": "Edit",
+            "delete": "Delete"
+        },
+        "confirm": {
+            "deleteFair": "Are you sure you want to delete this fair?",
+            "deleteCategory": "Are you sure you want to delete this category?"
+        },
+        "errors": {
+            "fillAll": "Please complete all fields",
+            "fillAllCategory": "Please complete every category field",
+            "date": "The end date must be the same or later than the start date",
+            "fairCreate": "Could not create the fair",
+            "categoryCreate": "Could not create the category"
+        },
+        "alerts": {
+            "fairCreated": "Fair created successfully 🎉",
+            "categoryCreated": "Category created successfully 🎉"
+        }
     }
 }

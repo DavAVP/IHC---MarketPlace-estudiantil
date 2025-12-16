@@ -7,9 +7,11 @@ import type { IFeria } from '../../entidades/Feria'
 import type { ICategoria } from '../../entidades/Categoria'
 import { FeriaService } from '../../services/feria.service'
 import { CategoriaService } from '../../services/categoria.service'
+import { useIdioma } from '../../context/IdiomasContext'
 
 const AdminFeria: React.FC = () => {
   const { usuario } = useUsuario()
+  const { translate } = useIdioma()
 
   // 🔹 Estados para ferias
   const [ferias, setFerias] = useState<IFeria[]>([])
@@ -31,14 +33,14 @@ const AdminFeria: React.FC = () => {
   // 🔹 Control de acceso: solo admins
   if (!usuario?.esAdmin) {
     return (
-      <div className="home-page" style={{ display: 'flex' }}>
+      <div className="home-page">
         <Sidebar />
-        <div className="home-main" style={{ flex: 1 }}>
+        <div className="home-main">
           <Navbar onSearch={() => {}} />
           <div className="home-content">
             <div className="admin-card">
-              <h2>Acceso denegado</h2>
-              <p>No tienes permisos para ver esta página.</p>
+              <h2>{translate('admin.accessDenied.title')}</h2>
+              <p>{translate('admin.accessDenied.message')}</p>
             </div>
           </div>
           <Footer />
@@ -63,11 +65,11 @@ const AdminFeria: React.FC = () => {
   const handleCrearFeria = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!nombre.trim() || !tipo || !fechaInicio || !fechaFin || !reglas.trim()) {
-      setError('Completa todos los campos')
+      setError(translate('admin.errors.fillAll'))
       return
     }
     if (new Date(fechaFin) < new Date(fechaInicio)) {
-      setError('La fecha de fin debe ser igual o posterior a la fecha de inicio')
+      setError(translate('admin.errors.date'))
       return
     }
 
@@ -90,11 +92,11 @@ const AdminFeria: React.FC = () => {
         setFechaInicio('')
         setFechaFin('')
         setReglas('')
-        alert('Feria creada con éxito 🎉')
+        alert(translate('admin.alerts.fairCreated'))
       }
     } catch (err) {
       console.error('Error al crear feria:', err)
-      setError('No se pudo crear la feria')
+      setError(translate('admin.errors.fairCreate'))
     } finally {
       setLoading(false)
     }
@@ -104,7 +106,7 @@ const AdminFeria: React.FC = () => {
   const handleCrearCategoria = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!nombreCategoria.trim() || !descripcionCategoria.trim()) {
-      setError('Completa todos los campos de la categoría')
+      setError(translate('admin.errors.fillAllCategory'))
       return
     }
 
@@ -121,76 +123,76 @@ const AdminFeria: React.FC = () => {
         setNombreCategoria('')
         setDescripcionCategoria('')
         setCategoriaFeriaSeleccionada('')
-        alert('Categoría creada exitosamente 🎉')
+        alert(translate('admin.alerts.categoryCreated'))
       }
     } catch (err) {
       console.error('Error al crear categoría:', err)
-      setError('No se pudo crear la categoría')
+      setError(translate('admin.errors.categoryCreate'))
     }
   }
 
   return (
-    <div className="home-page" style={{ display: 'flex' }}>
+    <div className="home-page">
       <Sidebar />
-      <div className="home-main" style={{ flex: 1 }}>
+      <div className="home-main">
         <Navbar onSearch={() => {}} />
 
         {/* 🔹 Contenedor principal en grid: formularios izquierda, edición derecha */}
-        <div className="home-content" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+        <div className="home-content admin-content-grid">
 
           {/* 🔹 Columna izquierda: Formularios */}
           <div>
             <div className="admin-card">
-              <h2>Crear Feria</h2>
+              <h2>{translate('admin.fair.title')}</h2>
               {error && <p className="error" role="alert">{error}</p>}
 
               <form onSubmit={handleCrearFeria} aria-label="form-crear-feria">
-                <label>Nombre de la feria</label>
-                <input type="text" value={nombre} onChange={e => setNombre(e.target.value)} placeholder="Ej: Feria Octubre 2025" />
+                <label>{translate('admin.fair.name')}</label>
+                <input type="text" value={nombre} onChange={e => setNombre(e.target.value)} placeholder={translate('admin.fair.placeholderName')} />
                 {/* 🔹 Nombre de la feria */}
 
-                <label>Tipo de feria</label>
+                <label>{translate('admin.fair.type')}</label>
                 <select value={tipo} onChange={e => setTipo(e.target.value as 'Virtual' | 'Presencial' | 'Mixta')}>
-                  <option value="Virtual">Virtual</option>
-                  <option value="Presencial">Presencial</option>
-                  <option value="Mixta">Mixta</option>
+                  <option value="Virtual">{translate('admin.fair.types.virtual')}</option>
+                  <option value="Presencial">{translate('admin.fair.types.inPerson')}</option>
+                  <option value="Mixta">{translate('admin.fair.types.mixed')}</option>
                 </select>
                 {/* 🔹 Selecciona tipo de feria */}
 
-                <label>Fecha de inicio</label>
+                <label>{translate('admin.fair.start')}</label>
                 <input type="date" value={fechaInicio} onChange={e => setFechaInicio(e.target.value)} />
                 {/* 🔹 Fecha de inicio */}
-                <label>Fecha de fin</label>
+                <label>{translate('admin.fair.end')}</label>
                 <input type="date" value={fechaFin} onChange={e => setFechaFin(e.target.value)} />
                 {/* 🔹 Fecha de fin */}
 
-                <label>Reglas de la feria</label>
-                <textarea value={reglas} onChange={e => setReglas(e.target.value)} placeholder="Ej: Solo estudiantes activos pueden publicar." />
+                <label>{translate('admin.fair.rules')}</label>
+                <textarea value={reglas} onChange={e => setReglas(e.target.value)} placeholder={translate('admin.fair.placeholderRules')} />
                 {/* 🔹 Reglas de la feria */}
 
-                <button type="submit" className="btn-primary">{loading ? 'Creando...' : 'Crear Feria'}</button>
+                <button type="submit" className="btn-primary">{loading ? translate('admin.fair.creating') : translate('admin.fair.create')}</button>
               </form>
 
-              <h3>Crear Categoría</h3>
+              <h3>{translate('admin.category.title')}</h3>
               <form onSubmit={handleCrearCategoria}>
-                <label>Nombre de la categoría</label>
+                <label>{translate('admin.category.name')}</label>
                 <input type="text" value={nombreCategoria} onChange={e => setNombreCategoria(e.target.value)} required />
                 {/* 🔹 Nombre de la categoría */}
 
-                <label>Descripción de la categoría</label>
+                <label>{translate('admin.category.description')}</label>
                 <textarea value={descripcionCategoria} onChange={e => setDescripcionCategoria(e.target.value)} required />
                 {/* 🔹 Descripción de la categoría */}
 
-                <label>Selecciona la feria (opcional)</label>
+                <label>{translate('admin.category.selectFair')}</label>
                 <select value={categoriaFeriaSeleccionada} onChange={e => setCategoriaFeriaSeleccionada(e.target.value)}>
-                  <option value="">-- Ninguna --</option>
+                  <option value="">{translate('admin.category.none')}</option>
                   {ferias.map(f => (
                     <option key={f.id_feria} value={f.id_feria}>{f.nombre_feria}</option>
                   ))}
                 </select>
                 {/* 🔹 Asociar categoría a una feria (opcional) */}
 
-                <button type="submit" className="btn-primary">Crear Categoría</button>
+                <button type="submit" className="btn-primary">{translate('admin.category.create')}</button>
               </form>
             </div>
           </div>
@@ -198,31 +200,31 @@ const AdminFeria: React.FC = () => {
           {/* 🔹 Columna derecha: Edición de ferias y categorías */}
           <div>
             <div className="admin-card">
-              <h2>Editar Ferias</h2>
+              <h2>{translate('admin.edit.fairs')}</h2>
               {ferias.map(feria => (
                 <div key={feria.id_feria} className="edit-item">
                   <span>{feria.nombre_feria}</span>
-                  <button className="btn-secondary" onClick={() => {/* abrir modal/editar */}}>Editar</button>
+                  <button className="btn-secondary" onClick={() => {/* abrir modal/editar */}}>{translate('admin.buttons.edit')}</button>
                   <button className="btn-danger" onClick={async () => {
-                    const confirmed = window.confirm('¿Seguro que quieres eliminar esta feria?')
+                    const confirmed = window.confirm(translate('admin.confirm.deleteFair'))
                     if (!confirmed) return
                     const success = await FeriaService.EliminarFeria(feria.id_feria!)
                     if (success) setFerias(prev => prev.filter(f => f.id_feria !== feria.id_feria))
-                  }}>Eliminar</button>
+                  }}>{translate('admin.buttons.delete')}</button>
                 </div>
               ))}
 
-              <h2>Editar Categorías</h2>
+              <h2>{translate('admin.edit.categories')}</h2>
               {categorias.map(cat => (
                 <div key={cat.id_categoria} className="edit-item">
                   <span>{cat.nombre_categoria}</span>
-                  <button className="btn-secondary" onClick={() => {/* abrir modal/editar */}}>Editar</button>
+                  <button className="btn-secondary" onClick={() => {/* abrir modal/editar */}}>{translate('admin.buttons.edit')}</button>
                   <button className="btn-danger" onClick={async () => {
-                    const confirmed = window.confirm('¿Seguro que quieres eliminar esta categoría?')
+                    const confirmed = window.confirm(translate('admin.confirm.deleteCategory'))
                     if (!confirmed) return
                     const success = await CategoriaService.EliminarCategoria(cat.id_categoria!)
                     if (success) setCategorias(prev => prev.filter(c => c.id_categoria !== cat.id_categoria))
-                  }}>Eliminar</button>
+                  }}>{translate('admin.buttons.delete')}</button>
                 </div>
               ))}
             </div>

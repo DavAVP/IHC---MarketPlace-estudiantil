@@ -8,6 +8,7 @@ import type { IProducto } from "../../entidades/producto";
 import Sidebar from "../../componentes/SideBar";
 import Navbar from "../../componentes/NavBar";
 import Footer from "../../componentes/footer";
+import { useIdioma } from "../../context/IdiomasContext";
 import "../../assets/estilosProductos/mis_productos.css"
 
 // 🔹 Función debounce (opcional para búsqueda futura)
@@ -20,7 +21,8 @@ function debounce<F extends (...args: any[]) => void>(func: F, wait: number) {
 }
 
 const MisProductos: React.FC = () => {
-  const navigate = useNavigate(); // Inicialización del hook useNavigate
+  const navigate = useNavigate();
+  const { translate } = useIdioma();
   const [productos, setProductos] = useState<IProducto[]>([]);
   const [loading, setLoading] = useState(true);
   const { usuario } = useUsuario();
@@ -50,7 +52,7 @@ const MisProductos: React.FC = () => {
 
   // 🔹 Eliminar producto (imagen + registro)
   const eliminarProducto = async (producto: IProducto) => {
-    if (!confirm("¿Seguro que deseas eliminar este producto?")) return;
+    if (!confirm(translate("messages.deleteConfirm"))) return;
 
     // Eliminar imagen del Storage si existe
     if (producto.foto_producto) {
@@ -66,10 +68,10 @@ const MisProductos: React.FC = () => {
     // Eliminar producto de Supabase
     const eliminado = await productoServices.EliminarProducto(producto.id_producto);
     if (eliminado) {
-      alert("✅ Producto eliminado correctamente");
+      alert(translate("messages.deleteSuccess"));
       cargarProductos();
     } else {
-      alert("❌ Error al eliminar el producto");
+      alert(translate("messages.deleteError"));
     }
   };
 
@@ -82,13 +84,13 @@ const MisProductos: React.FC = () => {
 
         <main className="misproductos-container">
           <div className="misproductos-header">
-            <h2>📦 Mis Productos</h2>
+            <h2>{translate("myProducts.title")}</h2>
           </div>
 
           {loading ? (
-            <p className="misproductos-loading">Cargando productos...</p>
+            <p className="misproductos-loading">{translate("myProducts.loading")}</p>
           ) : productos.length === 0 ? (
-            <p className="misproductos-empty">No has subido ningún producto todavía.</p>
+            <p className="misproductos-empty">{translate("myProducts.empty")}</p>
           ) : (
             <div className="misproductos-grid">
               {productos.map((p) => (
@@ -100,14 +102,14 @@ const MisProductos: React.FC = () => {
                   <div className="misproductos-info">
                     <h3>{p.nombre_producto}</h3>
                     <p>{p.descripcion_producto}</p>
-                    <p className="misproductos-precio">${p.precio}</p>
+                   <p className="misproductos-precio">${p.precio}</p>
                     <div className="misproductos-acciones">
                       {/* Botón Editar: Implementa la navegación a /editar-producto/:id_producto */}
                       <button 
                             className="btn-editar" 
                             onClick={() => handleEditar(p.id_producto)}
                         >
-                            ✏️ Editar
+              {translate("myProducts.edit")}
                         </button>
                         
                       {/* Botón Eliminar: Llama a la función eliminarProducto */}
@@ -115,7 +117,7 @@ const MisProductos: React.FC = () => {
                             className="btn-eliminar" 
                             onClick={() => eliminarProducto(p)}
                         >
-                            🗑️ Eliminar
+              {translate("myProducts.delete")}
                         </button>
                     </div>
                   </div>

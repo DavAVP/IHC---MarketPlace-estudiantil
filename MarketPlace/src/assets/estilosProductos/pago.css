@@ -1,0 +1,230 @@
+.pago-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  background: #f4f6fb;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.75rem);
+}
+
+.pago-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pago-header h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: #0f2a54;
+}
+
+.pago-header p {
+  margin: 0;
+  color: #52607d;
+}
+
+.pago-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: clamp(1rem, 2.2vw, 1.75rem);
+  align-items: start;
+}
+
+.pago-panel,
+.pago-summary-card,
+.pago-disclaimer {
+  background: #ffffff;
+  border: 1px solid #e4e7f1;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.pago-panel {
+  padding: clamp(1rem, 2vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.pago-banks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.pago-bank-option {
+  border: 1px solid #cfd5e5;
+  padding: 12px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 600;
+  color: #14345b;
+  transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  border-radius: 10px;
+}
+
+.pago-bank-option input { display: none; }
+
+.pago-bank-option-active {
+  border-color: #0b6edc;
+  box-shadow: 0 4px 12px rgba(11, 110, 220, 0.12);
+  transform: translateY(-1px);
+}
+
+.pago-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.pago-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pago-form-field label {
+  font-size: 0.95rem;
+  color: #1e2c48;
+  font-weight: 600;
+}
+
+.pago-form-field input,
+.pago-form-field select {
+  border: 1px solid #cad2e2;
+  padding: 11px 12px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pago-form-field input:focus,
+.pago-form-field select:focus {
+  outline: none;
+  border-color: #0b6edc;
+  box-shadow: 0 0 0 4px rgba(11, 110, 220, 0.12);
+}
+
+.pago-form-full { grid-column: 1 / -1; }
+
+.pago-remember {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  grid-column: 1 / -1;
+  font-size: 0.95rem;
+  color: #4a5874;
+}
+
+.pago-card-preview {
+  padding: 16px;
+  background: linear-gradient(135deg, #162447, #1f4068);
+  color: #fff;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 140px;
+}
+
+.pago-card-number {
+  letter-spacing: 2px;
+  font-size: 1.2rem;
+}
+
+.pago-card-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.pago-submit {
+  grid-column: 1 / -1;
+  padding: 14px;
+  border: none;
+  background: #0b6edc;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.pago-submit:hover:not(:disabled) {
+  background: #0a56ab;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(11, 86, 171, 0.22);
+}
+
+.pago-submit:disabled {
+  background: #9bbff5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.pago-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pago-summary-card {
+  padding: clamp(1rem, 2vw, 1.4rem);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pago-summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #26314f;
+}
+
+.pago-summary-total {
+  font-size: 1.15rem;
+  color: #0b6edc;
+}
+
+.pago-help {
+  font-size: 0.9rem;
+  color: #5a6684;
+}
+
+.pago-status {
+  margin-top: 12px;
+  font-weight: 700;
+}
+
+.pago-status-success { color: #1b7c3a; }
+.pago-status-error { color: #c82333; }
+
+.pago-disclaimer {
+  padding: clamp(0.9rem, 2vw, 1.2rem);
+  font-size: 0.95rem;
+  color: #6b4a00;
+}
+
+@media (max-width: 1024px) {
+  .pago-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .pago-form {
+    grid-template-columns: 1fr;
+  }
+
+  .pago-page {
+    padding: 1rem;
+  }
+}

@@ -9,11 +9,13 @@ import type { IFeria } from '../../entidades/Feria'
 import Sidebar from '../../componentes/SideBar'
 import Navbar from '../../componentes/NavBar'
 import Footer from '../../componentes/footer'
+import { useIdioma } from '../../context/IdiomasContext'
 import '../../assets/estilosProductos/productos.css'
 
 const SubirProducto: React.FC = () => {
   const navigate = useNavigate()
   const [imagen, setImagen] = useState<File | null>(null);
+  const { translate } = useIdioma()
 
   const [producto, setProducto] = useState<Omit<IProducto, 'id_producto' | 'Usuario_id'>>({
     categoria_id: '',
@@ -56,15 +58,15 @@ const SubirProducto: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setMensaje('Subiendo producto...')
+    setMensaje(translate('messages.uploading'))
 
     try {
       await productoServices.crearProducto(producto, imagen || undefined)
-      setMensaje('Producto subido correctamente')
+      setMensaje(translate('messages.uploadSuccess'))
       setTimeout(() => navigate('/home'), 1500)
     } catch (error) {
       console.error('Error al subir producto:', error)
-      setMensaje('Error al subir producto, inténtalo nuevamente')
+        setMensaje(translate('messages.uploadError'))
     }
   }
 
@@ -75,12 +77,12 @@ const SubirProducto: React.FC = () => {
         <Navbar onSearch={() => {}} />
 
         <div className="subir-container">
-          <h2 className="text-2xl font-semibold mb-4">Subir nuevo producto</h2>
+          <h2 className="text-2xl font-semibold mb-4">{translate('upload.title')}</h2>
           <form onSubmit={handleSubmit} className="subir-form flex flex-col gap-4">
             <input
               type="text"
               name="nombre_producto"
-              placeholder="Nombre del producto"
+              placeholder={translate('upload.name')}
               value={producto.nombre_producto}
               onChange={handleChange}
               required
@@ -89,7 +91,7 @@ const SubirProducto: React.FC = () => {
             <input
               type="number"
               name="precio"
-              placeholder="Precio"
+              placeholder={translate('upload.price')}
               value={producto.precio}
               onChange={handleChange}
               required
@@ -97,7 +99,7 @@ const SubirProducto: React.FC = () => {
 
             <textarea
               name="descripcion_producto"
-              placeholder="Descripción"
+              placeholder={translate('upload.description')}
               value={producto.descripcion_producto}
               onChange={handleChange}
               required
@@ -106,41 +108,41 @@ const SubirProducto: React.FC = () => {
             <input
               type="text"
               name="ubicacion_producto"
-              placeholder="Ubicación del producto"
+              placeholder={translate('upload.location')}
               value={producto.ubicacion_producto}
               onChange={handleChange}
               required
             />
 
             {/* Select de categoría */}
-            <label>Categoría</label>
+            <label>{translate('upload.category')}</label>
             <select
               name="categoria_id"
               value={producto.categoria_id}
               onChange={handleChange}
               required
             >
-              <option value="">Selecciona una categoría</option>
+              <option value="">{translate('upload.categoryPlaceholder')}</option>
               {categorias.map(c => (
                 <option key={c.id_categoria} value={c.id_categoria}>{c.nombre_categoria}</option>
               ))}
             </select>
 
             {/* Select de feria */}
-            <label>Feria (opcional)</label>
+            <label>{translate('upload.fair')}</label>
             <select
               name="feria_id"
               value={producto.feria_id || ''}
               onChange={handleChange}
             >
-              <option value="">Sin feria</option>
+              <option value="">{translate('upload.fairPlaceholder')}</option>
               {ferias.map(f => (
                 <option key={f.id_feria} value={f.id_feria}>{f.nombre_feria}</option>
               ))}
             </select>
 
             <input type="file" accept="image/*" onChange={handleFileChange} />
-            <button type="submit" className="btn-subir">Subir producto</button>
+            <button type="submit" className="btn-subir">{translate('upload.submit')}</button>
           </form>
           {mensaje && <p className="mensaje mt-4">{mensaje}</p>}
         </div>

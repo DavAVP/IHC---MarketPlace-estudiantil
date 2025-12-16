@@ -6,13 +6,20 @@ import Navbar from '../../componentes/NavBar';
 import Footer from '../../componentes/footer';
 import { productoServices } from '../../services/producto.services';
 import type { IProducto } from '../../entidades/producto';
+import { useIdioma } from '../../context/IdiomasContext';
+import { useUsuario } from '../../context/UsuarioContext';
+import { CarritoService } from '../../services/carrito.service';
 import '../../assets/estilosProductos/verProducto.css';
+import { toast } from 'react-hot-toast';
 
 const Ver_producto: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [producto, setProducto] = useState<IProducto | null>(null);
   const [comentario, setComentario] = useState('');
+  const { translate } = useIdioma();
+  const { usuario } = useUsuario();
+  const [agregando, setAgregando] = useState(false);
 
   useEffect(() => {
     const cargarProducto = async () => {
@@ -27,11 +34,32 @@ const Ver_producto: React.FC = () => {
   const handleComentarioSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!comentario) return;
-    alert(`Gracias por tu comentario: "${comentario}"`);
+    alert(`${translate('messages.commentThanks')} "${comentario}"`);
     setComentario('');
   };
 
-  if (!producto) return <p className="px-8 py-6">Cargando producto...</p>;
+  const handleAgregarCarrito = async () => {
+    if (!producto) return;
+    if (!usuario?.id) {
+      toast.error(translate('messages.loginToBuy'));
+      navigate('/login');
+      return;
+    }
+
+    try {
+      setAgregando(true);
+      await CarritoService.agregarProducto(producto, usuario.id, 1);
+      toast.success(translate('cart.added') || 'Agregado al carrito');
+    } catch (err: any) {
+      console.error('Error al agregar al carrito:', err);
+      const detalle = err?.message ? `\n${err.message}` : '';
+      alert(`No se pudo agregar el producto al carrito. Intenta nuevamente.${detalle}`);
+    } finally {
+      setAgregando(false);
+    }
+  };
+
+  if (!producto) return <p className="px-8 py-6">{translate('productDetail.loading')}</p>;
 
   return (
     <div className="flex home-page min-h-screen">
@@ -51,22 +79,24 @@ const Ver_producto: React.FC = () => {
             <p className="precio">${producto.precio}</p>
 
             <div className="btn-group mt-4">
-              <button className="btn-comprar">🛒 Comprar</button>
+              <button className="btn-comprar" onClick={handleAgregarCarrito} disabled={agregando}>
+                {agregando ? translate('payment.processing') : translate('cart.add') || 'Agregar al carrito'}
+              </button>
               <button className="btn-volver" onClick={() => navigate('/catalogo')}>
-                🔙 Volver al Catálogo
+                {translate('productDetail.back')}
               </button>
             </div>
 
             <div className="comentario-section mt-6">
-              <h3>Deja tu comentario</h3>
+              <h3>{translate('productDetail.commentTitle')}</h3>
               <form onSubmit={handleComentarioSubmit}>
                 <textarea
                   value={comentario}
                   onChange={(e) => setComentario(e.target.value)}
                   rows={4}
-                  placeholder="Escribe tu comentario..."
+                  placeholder={translate('productDetail.commentPlaceholder')}
                 />
-                <button type="submit" className="btn-comentar mt-2">💬 Comentar</button>
+                <button type="submit" className="btn-comentar mt-2">{translate('productDetail.commentAction')}</button>
               </form>
             </div>
           </div>

@@ -2,34 +2,37 @@
 
 .home-content {
   padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .home-banner {
-  background-color: #0072ce;
-  color: #ffffff;
-  padding: 2rem;
+  background-color: #ffffff;
+  color: #0f172a;
+  padding: 1.5rem;
   border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  margin-bottom: 2rem;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+  margin-bottom: 1.5rem;
 }
 
 .home-banner h2 {
-  font-size: 1.875rem;
+  font-size: 1.75rem;
   font-weight: 700;
+  margin: 0;
 }
 
 .home-banner p {
-  font-size: 1rem;
-  margin-top: 0.5rem;
-  color: #e0e7ff;
+  font-size: 0.98rem;
+  margin-top: 0.35rem;
+  color: #4b5563;
 }
 
 .card-section {
   background-color: #ffffff;
   border-radius: 1rem;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -56,25 +59,27 @@
 /* Grid de productos */
 .productos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
 }
 
 /* Card de producto */
 .producto-card {
   background: #fff;
-  border-radius: 1rem;
-  padding: 1rem;
+  border-radius: 0.9rem;
+  padding: 0.85rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 320px;
+  margin: 0 auto;
 }
 
 .producto-card img {
   width: 100%;
-  height: 140px;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   border-radius: 0.75rem;
   margin-bottom: 0.5rem;
@@ -96,6 +101,12 @@
 .producto-card .precio {
   font-weight: 600;
   color: #2563eb;
+}
+
+@media (min-width: 1024px) {
+  .productos-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 /* Categoría seleccionada */

@@ -4,10 +4,12 @@ import Sidebar from '../../componentes/SideBar'
 import Navbar from '../../componentes/NavBar'
 import Footer from '../../componentes/footer'
 import { useUsuario } from '../../context/UsuarioContext'
-import '../../assets/estilosHome/acercaDe.css' // importar estilos
+import { useIdioma } from '../../context/IdiomasContext'
+import '../../assets/estilosHome/acercaDe.css'
 
 const AcercaDe: React.FC = () => {
   const { usuario } = useUsuario()
+  const { translate, t } = useIdioma()
   const [comentario, setComentario] = useState('')
 
   const handleComentarioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -17,7 +19,7 @@ const AcercaDe: React.FC = () => {
   const handleComentarioSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!comentario) return
-    alert(`Gracias por tu comentario: "${comentario}"`)
+    alert(`${translate('messages.commentThanks')} "${comentario}"`)
     setComentario('')
   }
 
@@ -31,9 +33,9 @@ const AcercaDe: React.FC = () => {
           {/* Banner principal */}
           <div className="home-banner mb-6">
             <div>
-              <h2>¡Bienvenido a StudentsPlace, {usuario?.nombre || 'Invitado'}!</h2>
+              <h2>{translate('about.welcome').replace('{name}', usuario?.nombre || translate('common.guest'))}</h2>
               <p>
-                StudentsPlace es la plataforma donde estudiantes pueden descubrir, compartir y comprar productos dentro de su comunidad universitaria.
+                {translate('about.description')}
               </p>
             </div>
             {usuario?.fotoPerfil && (
@@ -47,7 +49,7 @@ const AcercaDe: React.FC = () => {
 
           {/* Sección de desarrolladores */}
           <div className="card-section">
-            <h3>Desarrolladores</h3>
+            <h3>{translate('about.developers')}</h3>
             <ul className="list-disc list-inside">
               <li>Taylor Steven Alava Gresely</li>
               <li>David Alejandro Vilañez Palma</li>
@@ -56,41 +58,38 @@ const AcercaDe: React.FC = () => {
 
           {/* Sección de ubicación */}
           <div className="card-section">
-            <h3>Ubicación</h3>
+            <h3>{translate('about.location')}</h3>
             <p>Universidad Laica Eloy Alfaro de Manabí (ULEAM)</p>
           </div>
 
           {/* Sección de contacto */}
           <div className="card-section">
-            <h3>Contacto</h3>
-            <p>Puedes contactarnos vía correo electrónico o dejándonos un mensaje aquí:</p>
+            <h3>{translate('about.contact')}</h3>
+            <p>{translate('about.contactText')}</p>
             <form onSubmit={handleComentarioSubmit}>
               <textarea
                 value={comentario}
                 onChange={handleComentarioChange}
                 rows={4}
                 className="input-field"
-                placeholder="Escribe tu comentario..."
+                placeholder={translate('about.commentPlaceholder')}
               />
               <button type="submit" className="btn-primary mt-2">
-                Enviar Comentario
+                {translate('about.sendComment')}
               </button>
             </form>
           </div>
 
           {/* Sección de Política y Términos de Uso */}
           <div className="card-section">
-            <h3>Política y Términos de Uso</h3>
+            <h3>{translate('about.policiesTitle')}</h3>
             <ul className="list-disc list-inside text-gray-700">
-              <li>Solo usuarios mayores de 18 años pueden registrarse y publicar productos.</li>
-              <li>No se permite publicar contenido extraño, ofensivo o inapropiado.</li>
-              <li>Todos los productos deben ser válidos y cumplir con las normas de la plataforma.</li>
-              <li>Los vendedores deben asegurarse de que los productos ofrecidos sean apropiados para estudiantes y usuarios del sistema.</li>
-              <li>StudentsPlace se reserva el derecho de eliminar publicaciones que infrinjan estas políticas.</li>
-              <li>Al usar la plataforma, aceptas seguir todas las políticas y normas profesionales establecidas para garantizar un entorno seguro y confiable.</li>
+              {(t.about?.policies ?? []).map((policy: string, index: number) => (
+                <li key={index}>{policy}</li>
+              ))}
             </ul>
             <p className="mt-2 text-gray-600">
-              Estas políticas buscan proteger a nuestra comunidad y asegurar que StudentsPlace se mantenga como un espacio profesional y confiable para todos los estudiantes.
+              {translate('about.policiesNote')}
             </p>
           </div>
 

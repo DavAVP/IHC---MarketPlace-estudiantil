@@ -8,6 +8,7 @@ import { productoServices } from '../../services/producto.services';
 import { useUsuario } from '../../context/UsuarioContext';
 import type { IFeria } from '../../entidades/Feria';
 import type { IProducto } from '../../entidades/producto';
+import { useIdioma } from '../../context/IdiomasContext';
 
 // 🔹 Función debounce para evitar demasiadas llamadas a la DB
 function debounce<F extends (...args: any[]) => void>(func: F, wait: number) {
@@ -22,6 +23,7 @@ function debounce<F extends (...args: any[]) => void>(func: F, wait: number) {
 
 const Home: React.FC = () => {
   const { usuario } = useUsuario();
+  const { translate } = useIdioma();
   const [ferias, setFerias] = useState<IFeria[]>([]);
   const [productos, setProductos] = useState<IProducto[]>([]);
   const [loading, setLoading] = useState(true);
@@ -66,17 +68,23 @@ const Home: React.FC = () => {
           <div className="flex-1">
             <h3 className="text-xl font-semibold text-blue-800">{f.nombre_feria}</h3>
             <p className="text-gray-600">
-              <b>Tipo:</b> {f.tipo}
+              <b>{translate('home.fairTypeLabel')}</b> {f.tipo}
             </p>
             <p className="text-gray-600">
-              📅 {f.fechaInicio} → {f.fechaFin}
+              {translate('home.fairDatesLabel')
+                .replace('{start}', f.fechaInicio ?? '')
+                .replace('{end}', f.fechaFin ?? '')}
             </p>
-            <p className="text-gray-700 mt-2">{f.reglas}</p>
+            {f.reglas && (
+              <p className="text-gray-700 mt-2">
+                <b>{translate('home.rulesLabel')}:</b> {f.reglas}
+              </p>
+            )}
           </div>
         </div>
       </div>
     ));
-  }, [ferias]);
+  }, [ferias, translate]);
 
   // Productos destacados (máximo 6)
   const productosDestacados = productos.slice(0, 6);
@@ -109,30 +117,30 @@ const Home: React.FC = () => {
           {/* Banner de bienvenida */}
           <div className="home-banner bg-blue-100 rounded-xl p-6 mb-6 shadow-sm">
             <h2 className="text-2xl font-semibold text-blue-800">
-              Bienvenido a la Feria, {usuario?.nombre || 'Invitado'}!
+              {translate('home.bannerTitle').replace('{name}', usuario?.nombre || translate('common.guest'))}
             </h2>
             <p className="text-gray-700 mt-2">
-              Explora tus productos más destacados, conoce las ferias activas y forma parte de nuestra comunidad.
+              {translate('home.bannerSubtitle')}
             </p>
           </div>
 
           {/* Carrusel dinámico solo con ferias */}
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">🎪 Ferias Activas</h2>
+            <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">{translate('home.fairsTitle')}</h2>
             {ferias.length > 0 ? (
               <Carrusel slides={slides} interval={5000} />
             ) : (
-              <p className="text-gray-600 text-center">No hay ferias activas por el momento.</p>
+              <p className="text-gray-600 text-center">{translate('home.noFairs')}</p>
             )}
           </div>
 
           {/* Productos destacados */}
           <section className="mt-10">
-            <h2 className="text-xl font-semibold text-blue-800 mb-4">Tus productos destacados</h2>
+            <h2 className="text-xl font-semibold text-blue-800 mb-4">{translate('home.featuredTitle')}</h2>
             {loading ? (
-              <p className="text-gray-600">Cargando productos...</p>
+              <p className="text-gray-600">{translate('home.loading')}</p>
             ) : productosDestacados.length === 0 ? (
-              <p className="text-gray-600">No has subido productos todavía.</p>
+              <p className="text-gray-600">{translate('home.noProducts')}</p>
             ) : (
               <div className="productos-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {productosDestacados.map((prod) => (
@@ -151,7 +159,7 @@ const Home: React.FC = () => {
                       </h3>
                       <p className="text-gray-700 mt-1">{prod.descripcion_producto}</p>
                       <p className="mt-2 text-sm text-gray-600">
-                        <b>Precio:</b> ${prod.precio}
+                        <b>{translate('common.price')}:</b> ${prod.precio}
                       </p>
                     </div>
                               {/* 🔹 Botón para editar producto */}
@@ -159,7 +167,7 @@ const Home: React.FC = () => {
                       onClick={() => window.location.href = `/editar-producto/${prod.id_producto}`}
                       className="mt-3 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition"
                       >
-                      ✏️ Editar Producto
+                      {translate('home.editButton')}
                     </button>
                   </div>
                 ))}
