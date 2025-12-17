@@ -18,7 +18,7 @@ export const productoServices = {
             const { data: usuarioDB, error: usuarioError } = await supabase
                 .from("Usuarios")
                 .select("id")
-                .eq("auth_id", user.id)
+                .eq("id", user.id)
                 .maybeSingle();
 
             if (usuarioError || !usuarioDB) {
@@ -176,5 +176,19 @@ export const productoServices = {
             return [];
         }
         return data as IProducto[];
+    },
+
+    async ObtenerProductosPorFeria(feriaId: string): Promise<IProducto[]> {
+        const { data, error } = await supabase
+            .from('Producto')
+            .select('*')
+            .eq('feria_id', feriaId);
+
+        if (error) {
+            console.error('Error al obtener productos por feria:', error.message);
+            return [];
+        }
+
+        return (data ?? []) as IProducto[];
     }
 };

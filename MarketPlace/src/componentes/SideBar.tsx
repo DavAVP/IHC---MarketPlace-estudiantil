@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from 'react';
-import { FaHome, FaUser, FaBoxOpen, FaShoppingCart, FaSignOutAlt, FaInfoCircle, FaListAlt } from 'react-icons/fa';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FaHome, FaUser, FaBoxOpen, FaShoppingCart, FaSignOutAlt, FaInfoCircle, FaListAlt, FaCalendarAlt } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUsuario } from '../context/UsuarioContext';
 import { supabase } from '../data/supabase.config';
 import { useIdioma } from '../context/IdiomasContext';
+import { ParticipacionService } from '../services/participacion.service';
 import "../assets/estilosComponentes/NavbarSidebar.css";
 
 const Sidebar: React.FC = () => {
@@ -11,6 +12,32 @@ const Sidebar: React.FC = () => {
   const { usuario, setUsuario } = useUsuario();
   const navigate = useNavigate();
   const { translate } = useIdioma();
+  const [tieneFerias, setTieneFerias] = useState(false);
+
+  useEffect(() => {
+    let activo = true;
+
+    const cargarParticipaciones = async () => {
+      if (!usuario?.id) {
+        if (activo) setTieneFerias(false);
+        return;
+      }
+
+      try {
+        const participaciones = await ParticipacionService.obtenerParticipacionesPorUsuario(usuario.id);
+        if (activo) setTieneFerias(participaciones.length > 0);
+      } catch (error) {
+        console.error('Error al verificar participaciones del usuario:', error);
+        if (activo) setTieneFerias(false);
+      }
+    };
+
+    cargarParticipaciones();
+
+    return () => {
+      activo = false;
+    };
+  }, [usuario?.id]);
 
   const menuItems = [
     { icon: <FaHome />, label: translate('navbar.links.home'), link: '/home' },
@@ -18,6 +45,7 @@ const Sidebar: React.FC = () => {
       ? { icon: <FaBoxOpen />, label: translate('navbar.links.admin'), link: '/admin/feria' }
       : { icon: <FaBoxOpen />, label: translate('navbar.links.upload'), link: '/subir-productos' },
     { icon: <FaListAlt />, label: translate('navbar.links.myProducts'), link: '/mis-productos' },
+    ...(tieneFerias ? [{ icon: <FaCalendarAlt />, label: translate('navbar.links.myFairs'), link: '/mis-ferias' }] : []),
     { icon: <FaShoppingCart />, label: translate('navbar.links.cart'), link: '/carrito' },
     { icon: <FaUser />, label: translate('navbar.links.profile'), link: '/perfil' },
     { icon: <FaInfoCircle />, label: translate('navbar.links.about'), link: '/acerca-de' }

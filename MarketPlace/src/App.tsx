@@ -13,6 +13,8 @@ import RecuperarPassword from './paginas/login/RecuperarPassword'
 import Ver_producto from './paginas/Productos/Ver_producto';
 import MisProductos from './paginas/Productos/Mis_productos';
 import EditarProducto from './paginas/Productos/Editar_producto';
+import ParticipacionFeria from './paginas/ferias/ParticipacionFeria';
+import MisFerias from './paginas/ferias/MisFerias';
 
 import { UsuarioProvider, useUsuario } from './context/UsuarioContext';
 import type { JSX } from 'react';
@@ -50,8 +52,10 @@ function App() {
         <Route path="/perfil" element={<PrivateRoute><Perfil /></PrivateRoute>} />
         <Route path="/recuperar-password" element={<RecuperarPassword />} />
         <Route path="/mis-productos" element={<PrivateRoute><MisProductos /></PrivateRoute>} />
+        <Route path="/mis-ferias" element={<PrivateRoute><MisFerias /></PrivateRoute>} />
         <Route path="/editar-producto/:id_producto" element={<PrivateRoute><EditarProducto /></PrivateRoute>} />
         <Route path="/ver-producto/:id" element={<Ver_producto />} />
+        <Route path="/ferias/:id/participacion" element={<PrivateRoute><ParticipacionFeria /></PrivateRoute>} />
         <Route path='/pago' element={<PrivateRoute><Pago /></PrivateRoute>} />
 
         <Route path="*" element={<Navigate to="/login" />} />

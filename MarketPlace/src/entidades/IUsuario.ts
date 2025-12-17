@@ -4,7 +4,6 @@ export interface IUsuario{
     nombre: string
     correo: string
     esAdmin?: boolean; 
-    password: string
     fotoPerfil?: string
 }
 

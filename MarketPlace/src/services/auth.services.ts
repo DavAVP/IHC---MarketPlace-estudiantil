@@ -2,7 +2,7 @@ import { supabase } from "../data/supabase.config";
 import type { IUsuario } from "../entidades/IUsuario";
 
 export const authService = {
-  
+
   //Login con email/password
   loginWithEmail: async (email: string, password: string): Promise<IUsuario | null> => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -12,7 +12,7 @@ export const authService = {
     const { data: usuarioDB } = await supabase
       .from("Usuarios")
       .select("*")
-      .eq("auth_id", data.user.id)
+      .eq("id", data.user.id)
       .maybeSingle();
 
     if (!usuarioDB) return null;
@@ -21,7 +21,6 @@ export const authService = {
       id: usuarioDB.id,
       nombre: usuarioDB.nombre,
       correo: usuarioDB.correo,
-      password,
       esAdmin: usuarioDB.esAdmin,
       fotoPerfil: usuarioDB.fotoPerfil,
     };
@@ -33,19 +32,31 @@ export const authService = {
     if (error) throw new Error(error.message);
     if (!data.user) return null;
 
-    const { data: usuarioDB, error: dbError } = await supabase
+    const userId = data.user.id;
+
+    const { error: insertError } = await supabase
       .from("Usuarios")
-      .insert([{ auth_id: data.user.id, correo: email, nombre, esAdmin: false }])
-      .select()
+      .insert([{ id: userId, correo: email, nombre }]);
+
+    if (insertError) {
+      if (insertError.message.includes("row-level security")) {
+        throw new Error("Revisa las políticas RLS de la tabla Usuarios; el usuario autenticado debe poder insertar su propio registro.");
+      }
+      throw new Error(insertError.message);
+    }
+
+    const { data: usuarioDB, error: fetchError } = await supabase
+      .from("Usuarios")
+      .select("*")
+      .eq("id", userId)
       .maybeSingle();
 
-    if (dbError || !usuarioDB) throw new Error(dbError?.message || "Error al crear usuario");
+    if (fetchError || !usuarioDB) throw new Error(fetchError?.message || "Error al recuperar usuario");
 
     return {
       id: usuarioDB.id,
       nombre: usuarioDB.nombre,
       correo: usuarioDB.correo,
-      password, // opcional
       esAdmin: usuarioDB.esAdmin,
       fotoPerfil: usuarioDB.fotoPerfil,
     };
@@ -79,7 +90,7 @@ export const authService = {
     const { data: usuarioDB, error: dbError } = await supabase
       .from("Usuarios")
       .select("*")
-      .eq("auth_id", authUser.id)
+      .eq("id", authUser.id)
       .maybeSingle();
 
     if (dbError) throw new Error(dbError.message);
@@ -89,7 +100,6 @@ export const authService = {
         id: usuarioDB.id,
         nombre: usuarioDB.nombre,
         correo: usuarioDB.correo,
-        password: "",
         esAdmin: usuarioDB.esAdmin,
         fotoPerfil: usuarioDB.fotoPerfil,
       };
@@ -98,22 +108,27 @@ export const authService = {
       const { data: newUser, error: insertError } = await supabase
         .from("Usuarios")
         .insert([{
-          auth_id: authUser.id,
+          id: authUser.id,
           nombre: authUser.user_metadata?.full_name || authUser.email.split("@")[0],
           correo: authUser.email,
-          esAdmin: false,
           fotoPerfil: authUser.user_metadata?.avatar_url || null,
         }])
         .select()
         .maybeSingle();
 
-      if (insertError || !newUser) throw new Error(insertError?.message || "Error al crear usuario OAuth");
+      if (insertError) {
+        if (insertError.message.includes("row-level security")) {
+          throw new Error("Revisa las políticas RLS de la tabla Usuarios para permitir inserciones del propietario en OAuth.");
+        }
+        throw new Error(insertError.message);
+      }
+
+      if (!newUser) throw new Error("Error al crear usuario OAuth");
 
       return {
         id: newUser.id,
         nombre: newUser.nombre,
         correo: newUser.correo,
-        password: "",
         esAdmin: newUser.esAdmin,
         fotoPerfil: newUser.fotoPerfil,
       };

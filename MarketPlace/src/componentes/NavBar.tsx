@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import BarraBusqueda from './BarraBusqueda';
 import { LanguageSelector } from './LanguageSelector';
 import { useUsuario } from '../context/UsuarioContext';
 import { useIdioma } from '../context/IdiomasContext';
+import { ParticipacionService } from '../services/participacion.service';
 import '../assets/estilosComponentes/componentes.css';
 import '../assets/estilosComponentes/NavbarSidebar.css';
 
@@ -11,6 +12,32 @@ const Navbar: React.FC<{ onSearch: (query: string) => void }> = ({ onSearch }) =
   const { usuario } = useUsuario();
   const { translate } = useIdioma();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [tieneFerias, setTieneFerias] = useState(false);
+
+  useEffect(() => {
+    let activo = true;
+
+    const cargarParticipaciones = async () => {
+      if (!usuario?.id) {
+        if (activo) setTieneFerias(false);
+        return;
+      }
+
+      try {
+        const participaciones = await ParticipacionService.obtenerParticipacionesPorUsuario(usuario.id);
+        if (activo) setTieneFerias(participaciones.length > 0);
+      } catch (error) {
+        console.error('Error al verificar participaciones del usuario:', error);
+        if (activo) setTieneFerias(false);
+      }
+    };
+
+    cargarParticipaciones();
+
+    return () => {
+      activo = false;
+    };
+  }, [usuario?.id]);
 
   const navLinks = useMemo(
     () => {
@@ -35,9 +62,16 @@ const Navbar: React.FC<{ onSearch: (query: string) => void }> = ({ onSearch }) =
         });
       }
 
+      if (tieneFerias) {
+        links.splice(5, 0, {
+          to: '/mis-ferias',
+          label: translate('navbar.links.myFairs')
+        });
+      }
+
       return links;
     },
-    [translate, usuario?.esAdmin]
+    [translate, usuario?.esAdmin, tieneFerias]
   );
 
   const navId = 'primary-navigation';

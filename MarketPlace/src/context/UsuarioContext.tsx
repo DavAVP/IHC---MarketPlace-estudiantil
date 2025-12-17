@@ -33,7 +33,7 @@ export const UsuarioProvider: React.FC<{ children: ReactNode }> = ({ children })
         const { data, error } = await supabase
           .from('Usuarios')
           .select('*')
-          .eq('auth_id', userAuth.id)
+          .eq('id', userAuth.id)
           .maybeSingle();
 
         if (error) {

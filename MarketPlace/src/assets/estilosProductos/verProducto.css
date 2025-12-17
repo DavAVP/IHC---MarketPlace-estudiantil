@@ -80,8 +80,152 @@
   width: 100%;
 }
 
+.comentario-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.comentario-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: 600;
+  color: #374151;
+}
+
+.comentario-label select {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+}
+
 .comentario-section textarea {
   width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  resize: none;
+}
+
+.comentarios-lista {
+  margin-top: 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comentario-item {
+  background: #f9fafb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+}
+
+.comentario-item-respuesta {
+  background: #ffffff;
+  border-color: #d1d5db;
+}
+
+.comentario-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.comentario-usuario {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.95rem;
+}
+
+.comentario-calificacion {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+.comentario-descripcion {
+  color: #4b5563;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.comentario-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.comentario-actions .btn-accion,
+.comentario-actions .btn-guardar,
+.comentario-actions .btn-cancelar {
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+.comentario-actions .btn-accion.eliminar {
+  background-color: #f87171;
+  color: #ffffff;
+}
+
+.comentario-actions .btn-accion:hover,
+.comentario-actions .btn-guardar:hover,
+.comentario-actions .btn-cancelar:hover {
+  transform: translateY(-1px);
+}
+
+.comentario-actions .btn-guardar {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.comentario-actions .btn-cancelar {
+  background-color: #9ca3af;
+  color: #ffffff;
+}
+
+.comentario-actions .btn-accion:disabled,
+.comentario-actions .btn-guardar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.comentario-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.comentario-respuestas {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+  border-left: 2px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.respuesta-form {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.respuesta-form textarea {
   padding: 0.5rem;
   border-radius: 0.5rem;
   border: 1px solid #d1d5db;

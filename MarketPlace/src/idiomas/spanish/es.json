@@ -20,8 +20,10 @@
             "send": "Enviar",
             "back": "Volver",
             "close": "Cerrar",
+            "reply": "Responder",
             "readAloud": "Leer en voz alta",
-            "stopReading": "Detener lectura"
+            "stopReading": "Detener lectura",
+            "cancel": "Cancelar"
         },
         "voice": {
             "intro": "Bienvenido a StudentsPlace. Usa el menú para explorar las ferias y productos disponibles.",
@@ -37,6 +39,7 @@
             "admin": "Panel de Ferias",
             "about": "Acerca de",
             "myProducts": "Mis Productos",
+            "myFairs": "Mis Ferias",
             "cart": "Carrito",
             "profile": "Perfil"
         }
@@ -105,7 +108,8 @@
         "editButton": "✏️ Editar Producto",
         "fairTypeLabel": "Tipo:",
         "fairDatesLabel": "📅 {start} → {end}",
-        "rulesLabel": "Reglas"
+        "rulesLabel": "Reglas",
+        "joinFair": "Participar en esta feria"
     },
     "categories": {
         "loading": "Cargando categorías...",
@@ -129,9 +133,8 @@
         "quantity": "Cantidad",
         "payment": "Pagar",
         "subtotal": "Subtotal",
-        "add": "Agregar al Carrito",
-        "added": "Agregado al Carrito"
-
+        "add": "Agregar al carrito",
+        "added": "Producto agregado al carrito"
     },
     "payment": {
         "title": "Pasarela de pago",
@@ -227,6 +230,12 @@
         "edit": "✏️ Editar",
         "delete": "🗑️ Eliminar"
     },
+    "myFairs": {
+        "title": "Ferias en las que participas",
+        "subtitle": "Accede a las ferias donde te has registrado.",
+        "empty": "Aún no participas en ninguna feria.",
+        "cta": "Abrir feria"
+    },
     "upload": {
         "title": "Subir nuevo producto",
         "name": "Nombre del producto",
@@ -237,6 +246,7 @@
         "categoryPlaceholder": "Selecciona una categoría",
         "fair": "Feria (opcional)",
         "fairPlaceholder": "Sin feria",
+        "fairNote": "Únete a una feria para vincular tu producto.",
         "submit": "Subir producto"
     },
     "editProduct": {
@@ -258,7 +268,15 @@
         "back": "🔙 Volver al Catálogo",
         "commentTitle": "Deja tu comentario",
         "commentPlaceholder": "Escribe tu comentario...",
-        "commentAction": "💬 Comentar"
+        "commentAction": "💬 Comentar",
+        "ratingLabel": "Calificación",
+        "commentsListTitle": "Comentarios recientes",
+        "noComments": "Aún no hay comentarios para este producto.",
+        "commentBy": "Usuario: {user}",
+        "anonymousUser": "Usuario desconocido",
+        "replyPlaceholder": "Escribe tu respuesta...",
+        "replying": "Enviando respuesta...",
+        "replyThanks": "Respuesta publicada."
     },
     "messages": {
         "deleteConfirm": "¿Seguro que deseas eliminar este producto?",
@@ -268,7 +286,31 @@
         "uploadSuccess": "Producto subido correctamente",
         "uploadError": "Error al subir producto, inténtalo nuevamente",
         "productNotFound": "Producto no encontrado",
-        "commentThanks": "Gracias por tu comentario:"
+        "commentThanks": "Gracias por tu comentario:",
+        "loginToBuy": "Inicia sesión para comprar.",
+        "loginToComment": "Inicia sesión para comentar.",
+        "loginToParticipate": "Inicia sesión para participar en la feria.",
+        "commentError": "No se pudo guardar el comentario.",
+        "commentUpdated": "Comentario actualizado correctamente.",
+        "commentDeleted": "Comentario eliminado.",
+        "commentDeleteConfirm": "¿Seguro que deseas eliminar este comentario?",
+        "commentDeleteError": "No se pudo eliminar el comentario."
+    },
+    "feriaParticipation": {
+        "title": "Participa en {name}",
+        "subtitle": "Descubre todos los productos inscritos en esta feria y súmate a la experiencia estudiantil.",
+        "dateRange": "Fechas: {start} → {end}",
+        "type": "Modalidad: {type}",
+        "rules": "Reglas",
+        "joinButton": "Participar en la feria",
+        "joining": "Registrando...",
+        "participating": "Ya estás participando",
+        "joinSuccess": "Te has unido a la feria.",
+        "joinError": "No se pudo registrar tu participación.",
+        "productsTitle": "Productos inscritos",
+        "empty": "Aún no hay productos asociados a esta feria.",
+        "notFound": "La feria no está disponible.",
+        "loadError": "No se pudo cargar la información de la feria."
     },
     "admin": {
         "accessDenied": {

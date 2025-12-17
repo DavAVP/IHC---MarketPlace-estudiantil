@@ -63,8 +63,5 @@ export const UsuarioServices = {
             return false
         }
         return true
-
     }
-
-
 }

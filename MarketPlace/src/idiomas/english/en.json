@@ -20,8 +20,10 @@
             "send": "Send",
             "back": "Back",
             "close": "Close",
+            "reply": "Reply",
             "readAloud": "Read aloud",
-            "stopReading": "Stop reading"
+            "stopReading": "Stop reading",
+            "cancel": "Cancel"
         },
         "voice": {
             "intro": "Welcome to StudentsPlace. Use the menu to explore available fairs and products.",
@@ -37,6 +39,7 @@
             "admin": "Fairs Panel",
             "about": "About",
             "myProducts": "My Products",
+            "myFairs": "My Fairs",
             "cart": "Cart",
             "profile": "Profile"
         }
@@ -103,7 +106,8 @@
         "editButton": "✏️ Edit Product",
         "fairTypeLabel": "Type:",
         "fairDatesLabel": "📅 {start} → {end}",
-        "rulesLabel": "Rules"
+        "rulesLabel": "Rules",
+        "joinFair": "Join this fair"
     },
     "categories": {
         "loading": "Loading categories...",
@@ -123,13 +127,12 @@
     "cart": {
         "title": "Shopping Cart",
         "empty": "Products you add to the cart will appear here.",
-        "carritoInfo": "Please sign in to add products to your cart or proceed to checkout.",
+        "cartInfo": "Please sign in to add products to your cart or proceed to checkout.",
         "quantity": "Quantity",
         "payment": "Pay",
         "subtotal": "Subtotal",
-        "add": "Add to Cart",
-        "added": "Added to Cart",
-        "addToCart": "Add to Cart"
+        "add": "Add to cart",
+        "added": "Product added to cart"
     },
     "payment": {
         "title": "Checkout",
@@ -224,6 +227,12 @@
         "edit": "✏️ Edit",
         "delete": "🗑️ Delete"
     },
+    "myFairs": {
+        "title": "Joined fairs",
+        "subtitle": "Access every fair you are participating in.",
+        "empty": "You are not participating in any fairs yet.",
+        "cta": "Open fair"
+    },
     "upload": {
         "title": "Upload new product",
         "name": "Product name",
@@ -234,6 +243,7 @@
         "categoryPlaceholder": "Select a category",
         "fair": "Fair (optional)",
         "fairPlaceholder": "No fair",
+        "fairNote": "Join a fair to link your product.",
         "submit": "Upload product"
     },
     "editProduct": {
@@ -255,7 +265,15 @@
         "back": "🔙 Back to Catalog",
         "commentTitle": "Leave your comment",
         "commentPlaceholder": "Write your comment...",
-        "commentAction": "💬 Comment"
+        "commentAction": "💬 Comment",
+        "ratingLabel": "Rating",
+        "commentsListTitle": "Recent comments",
+        "noComments": "There are no comments for this product yet.",
+        "commentBy": "User: {user}",
+        "anonymousUser": "Unknown user",
+        "replyPlaceholder": "Write your reply...",
+        "replying": "Sending reply...",
+        "replyThanks": "Reply sent."
     },
     "messages": {
         "deleteConfirm": "Are you sure you want to delete this product?",
@@ -265,7 +283,31 @@
         "uploadSuccess": "Product uploaded successfully",
         "uploadError": "Error uploading the product, please try again",
         "productNotFound": "Product not found",
-        "commentThanks": "Thanks for your comment:"
+        "commentThanks": "Thanks for your comment:",
+        "loginToBuy": "Please sign in to buy.",
+        "loginToComment": "Please sign in to comment.",
+        "loginToParticipate": "Please sign in to join the fair.",
+        "commentError": "We could not save the comment.",
+        "commentUpdated": "Comment updated successfully.",
+        "commentDeleted": "Comment deleted.",
+        "commentDeleteConfirm": "Are you sure you want to delete this comment?",
+        "commentDeleteError": "We could not delete the comment."
+    },
+    "feriaParticipation": {
+        "title": "Join {name}",
+        "subtitle": "Explore every product registered in this fair and join the student marketplace experience.",
+        "dateRange": "Dates: {start} → {end}",
+        "type": "Mode: {type}",
+        "rules": "Rules",
+        "joinButton": "Join the fair",
+        "joining": "Registering...",
+        "participating": "You are already participating",
+        "joinSuccess": "You have joined the fair.",
+        "joinError": "We could not register your participation.",
+        "productsTitle": "Registered products",
+        "empty": "There are no products linked to this fair yet.",
+        "notFound": "This fair is not available.",
+        "loadError": "We couldn't load the fair information."
     },
     "admin": {
         "accessDenied": {

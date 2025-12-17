@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../componentes/SideBar';
 import Navbar from '../../componentes/NavBar';
 import Footer from '../../componentes/footer';
@@ -24,6 +25,7 @@ function debounce<F extends (...args: any[]) => void>(func: F, wait: number) {
 const Home: React.FC = () => {
   const { usuario } = useUsuario();
   const { translate } = useIdioma();
+  const navigate = useNavigate();
   const [ferias, setFerias] = useState<IFeria[]>([]);
   const [productos, setProductos] = useState<IProducto[]>([]);
   const [loading, setLoading] = useState(true);
@@ -80,11 +82,18 @@ const Home: React.FC = () => {
                 <b>{translate('home.rulesLabel')}:</b> {f.reglas}
               </p>
             )}
+            <button
+              type="button"
+              className="feria-participar-btn mt-4"
+              onClick={() => navigate(`/ferias/${f.id_feria}/participacion`)}
+            >
+              {translate('home.joinFair')}
+            </button>
           </div>
         </div>
       </div>
     ));
-  }, [ferias, translate]);
+  }, [ferias, navigate, translate]);
 
   // Productos destacados (máximo 6)
   const productosDestacados = productos.slice(0, 6);

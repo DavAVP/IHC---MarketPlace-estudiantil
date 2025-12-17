@@ -20,8 +20,10 @@ const Catalogo: React.FC = () => {
   useEffect(() => {
     const cargarProductos = async () => {
       const data = await productoServices.ObtenerProductos();
-      setProductos(data);
-      setProductosFiltrados(data);
+      // Hide products that are already tied to a fair.
+      const disponibles = (data ?? []).filter((producto) => !producto.feria_id);
+      setProductos(disponibles);
+      setProductosFiltrados(disponibles);
     };
     cargarProductos();
   }, []);

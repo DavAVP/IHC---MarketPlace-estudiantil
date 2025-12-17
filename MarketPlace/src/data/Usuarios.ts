@@ -8,7 +8,7 @@ export async function obtenerUsuarioCompleto(): Promise<IUsuario | null> {
   const { data, error } = await supabase
     .from("Usuarios")
     .select("*")
-    .eq("auth_id", user.id)
+    .eq("id", user.id)
     .single();
 
   if (error || !data) {
@@ -20,7 +20,6 @@ export async function obtenerUsuarioCompleto(): Promise<IUsuario | null> {
     id: data.id,
     nombre: data.nombre,
     correo: data.correo,
-    password: "",
     esAdmin: data.esAdmin,
     fotoPerfil: data.fotoPerfil,
   };

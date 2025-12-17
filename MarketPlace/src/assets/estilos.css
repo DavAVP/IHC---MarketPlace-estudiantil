@@ -134,6 +134,22 @@ html, body, #root {
   background-color: #005fa3;
 }
 
+.feria-participar-btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.75rem;
+  border: none;
+  background-color: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feria-participar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
 /* === GRID DE PRODUCTOS === */
 .productos-grid {
   display: grid;
