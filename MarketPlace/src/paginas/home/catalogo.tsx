@@ -7,7 +7,7 @@ import Footer from '../../componentes/footer';
 import Categorias from '../../componentes/categorias';
 import { productoServices } from '../../services/producto.services';
 import type { IProducto } from '../../entidades/producto';
-import '../../assets/estiloshome/catalogo.css';
+import '../../assets/estilosHome/catalogo.css';
 import { useIdioma } from '../../context/IdiomasContext';
 
 const Catalogo: React.FC = () => {
