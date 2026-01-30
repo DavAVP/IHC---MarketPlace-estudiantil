@@ -1,6 +1,5 @@
 import type { IProducto } from "../entidades/producto"; 
 import { supabase } from "../data/supabase.config";
-import { uploadFile } from "./storageService";
 
 export const productoServices = {
     async crearProducto(
@@ -44,7 +43,7 @@ export const productoServices = {
                     ruta: filePath
                 });
 
-                const { data: uploadData, error: uploadError } = await supabase
+                const { error: uploadError } = await supabase
                     .storage
                     .from('ImagenesProductos')
                     .upload(filePath, imagen);

@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIdioma } from "../../context/IdiomasContext";
 import { useUsuario } from "../../context/UsuarioContext";
@@ -93,10 +93,24 @@ const Pago: React.FC = () => {
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value, type, checked } = event.target;
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement || target instanceof HTMLSelectElement)) {
+      return;
+    }
+
+    const { name, value } = target;
+
+    if (target instanceof HTMLInputElement && target.type === "checkbox") {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: target.checked,
+      }));
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 

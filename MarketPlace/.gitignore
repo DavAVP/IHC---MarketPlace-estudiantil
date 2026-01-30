@@ -8,6 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 .env
 
+vercel.json
+
 node_modules
 dist
 dist-ssr

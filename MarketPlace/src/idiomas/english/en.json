@@ -61,6 +61,7 @@
         "remember": "Remember me",
         "forgotPassword": "Forgot your password?",
         "loginButton": "Sign In",
+        "registerButton": "Create account",
         "googleLogin": "Continue with Google",
         "githubLogin": "Continue with GitHub",
         "registerPrompt": "Don't have an account?",
@@ -73,7 +74,8 @@
         "success": "Login successful",
         "invalidCredentials": "Incorrect email or password",
         "recoveryEmailMissing": "Please enter your email first.",
-        "recoverySent": "📧 Recovery email sent."
+        "recoverySent": "📧 Recovery email sent.",
+        "loginToBuy": "Please sign in to purchase this product."
     },
     "register": {
         "title": "Create Account",

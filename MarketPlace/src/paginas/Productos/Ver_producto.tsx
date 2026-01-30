@@ -308,7 +308,7 @@ const Ver_producto: React.FC = () => {
     }
   };
 
-  const renderComentario = (coment: ComentarioNodo): JSX.Element => {
+  const renderComentario = (coment: ComentarioNodo): React.ReactElement => {
     const correoAutor = coment.usuario?.correo || translate('productDetail.anonymousUser');
     const esPropio = coment.usuarioId === usuario?.id;
     const esRespuesta = Boolean(coment.parentId);
